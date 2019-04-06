@@ -1,4 +1,11 @@
 package Views;
 
-public class GameScreen {
+import javax.swing.*;
+
+public class GameScreen extends JPanel implements Runnable{
+
+    @Override
+    public void run() {
+
+    }
 }
