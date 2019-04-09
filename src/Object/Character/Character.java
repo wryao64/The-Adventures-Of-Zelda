@@ -1,34 +1,50 @@
 package Object.Character;
 
-import java.awt.image.BufferedImage;
+import Object.Object;
 
-public class Character {
+public class Character extends Object {
 
-    protected int posX, posY;
+    public Character(int w, int h, int x, int y){
+        super(w,h,x,y);
+    }
+
     protected int speedX, speedY;
-    protected int width, height;
-
     protected int attackDamage;
 
-    protected BufferedImage image;
+    /*
+    Horizontal movement of the character.
+     */
+    public void move(){
+        posX = posX + speedX;
+    }
 
     /*
-    Getters and Setters for the position and speed of the character.
+    Abstract??
      */
-    public void setPosX(int x){
-        posX = x;
+    public void attack(){
+
     }
 
-    public void setPosY(int y){
-        posY = y;
+    /*
+    Abstract??
+     */
+    public void takeDamage(){
+
     }
 
-    public void setSpeedX(int dx){
-        speedX = dx;
-    }
+    /*
+    Getters and Setters for the speed of the character.
+     */
+    public void setSpeedX(int dx){ speedX = dx; }
 
     public void setSpeedY(int dy){
         speedY = dy;
     }
+
+    public int getSpeedX(){ return speedX; }
+
+    public int getSpeedY(){ return speedY; }
+
+
 
 }

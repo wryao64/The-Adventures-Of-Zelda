@@ -1,8 +1,11 @@
 package Object;
 
-import java.lang.Object;
+import Object.Object;
 
-public class Platform{
+public class Platform extends Object {
 
+    public Platform(int w, int h, int x, int y){
+        super(w,h,x,y);
+    }
 
 }
