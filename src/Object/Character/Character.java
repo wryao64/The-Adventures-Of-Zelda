@@ -1,6 +1,5 @@
-package Character;
+package Object.Character;
 
-import java.awt.*;
 import java.awt.image.BufferedImage;
 
 public class Character {

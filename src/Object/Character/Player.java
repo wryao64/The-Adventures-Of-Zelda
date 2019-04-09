@@ -1,5 +1,5 @@
 
-package Character;
+package Object.Character;
 
 
 public class Player extends Character {

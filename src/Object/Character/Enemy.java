@@ -1,4 +1,4 @@
-package Character;
+package Object.Character;
 
 public class Enemy extends Character {
 

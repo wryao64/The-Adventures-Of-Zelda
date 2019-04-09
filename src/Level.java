@@ -1,6 +1,6 @@
 
-import Character.Enemy;
-import Character.Player;
+import Object.Character.Enemy;
+import Object.Character.Player;
 import Item.Puzzle;
 
 
@@ -19,7 +19,7 @@ public class Level {
 
     private Player player;
     private ArrayList<Enemy> enemies;
-    private ArrayList<Characters.Platform> platforms;
+    private ArrayList<Platform> platforms;
     private Puzzle puzzle;
 
     /*
