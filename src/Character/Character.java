@@ -1,4 +1,4 @@
-package Characters;
+package Character;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;

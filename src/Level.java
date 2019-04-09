@@ -1,5 +1,5 @@
-import Characters.Enemy;
-import Characters.Player;
+import Character.Enemy;
+import Character.Player;
 
 
 import java.util.ArrayList;

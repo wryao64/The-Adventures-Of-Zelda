@@ -1,4 +1,4 @@
-package Items;
+package Item;
 
 public class Orb extends Item{
 

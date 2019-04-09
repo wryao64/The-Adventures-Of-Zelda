@@ -1,4 +1,4 @@
-package Views;
+package View;
 
 public class PauseScreen {
 }
