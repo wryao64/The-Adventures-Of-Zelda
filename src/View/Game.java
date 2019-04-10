@@ -16,9 +16,10 @@ public class Game implements Runnable {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 //        frame.pack();
         frame.setResizable(false);
-        frame.setVisible(true);
 
         WelcomeScreen welcomePanel = new WelcomeScreen();
-        frame.getContentPane().add(welcomePanel);
+        frame.setContentPane(welcomePanel);
+//        frame.getContentPane().add(welcomePanel);
+        frame.setVisible(true);
     }
 }
