@@ -1,4 +1,5 @@
 
+import Object.Platform;
 import Object.Character.Enemy;
 import Object.Character.Player;
 import Item.Puzzle;
