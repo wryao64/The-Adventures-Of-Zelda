@@ -1,7 +1,6 @@
 package View;
 
 import javax.swing.*;
-import java.awt.*;
 
 public class Game implements Runnable {
     public final int WIDTH = 1200;
@@ -9,7 +8,8 @@ public class Game implements Runnable {
 
     JFrame frame;
 
-    public Game() {
+    @Override
+    public void run() {
         frame = new JFrame("The Legend of Zelda");
         frame.setSize(WIDTH, HEIGHT);
         frame.setLocationRelativeTo(null); // centers window
@@ -20,10 +20,5 @@ public class Game implements Runnable {
 
         WelcomeScreen welcomePanel = new WelcomeScreen();
         frame.getContentPane().add(welcomePanel);
-    }
-
-    @Override
-    public void run() {
-
     }
 }
