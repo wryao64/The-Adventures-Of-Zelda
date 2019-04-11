@@ -2,7 +2,7 @@ package View;
 
 import javax.swing.*;
 
-public class Game implements Runnable {
+public class GameController implements Runnable {
     public final int WIDTH = 1200;
     public final int HEIGHT = 800;
 

@@ -1,8 +1,6 @@
-import View.Game;
-
-public class GameController {
+public class Game {
     public static void main(String[] args) {
-        Game game = new Game();
-        new Thread(game).start();
+        View.GameController gameController = new View.GameController();
+        new Thread(gameController).start();
     }
 }
