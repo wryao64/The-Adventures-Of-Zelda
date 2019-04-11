@@ -9,7 +9,6 @@ public class Character extends Object {
     }
 
     protected int speedX, speedY;
-    protected int attackDamage;
 
     /*
     Horizontal movement of the character.
@@ -44,7 +43,5 @@ public class Character extends Object {
     public int getSpeedX(){ return speedX; }
 
     public int getSpeedY(){ return speedY; }
-
-
 
 }

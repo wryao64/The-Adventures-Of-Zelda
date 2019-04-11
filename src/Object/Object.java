@@ -17,7 +17,7 @@ public class Object {
     }
 
     /*
-    Collision areas for the platform. Spans around the perimeter of the object.
+    Collision areas for the object. Spans around the perimeter of the object.
      */
 
     public Rectangle getTop(){
@@ -46,7 +46,7 @@ public class Object {
     /*
     Abstract??
      */
-    public void paintObject(){ }
+    public void paintObject(Graphics2D g){ }
 
     /*
    Getters and Setters.

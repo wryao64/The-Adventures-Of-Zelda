@@ -22,56 +22,92 @@ public class Level{
     private ArrayList<Platform> platforms;
     private Puzzle puzzle;
 
+    private static final int gravity = 1;
+    private static final int maxSpeedY = 5;
 
-    private int gravity = 1;
-    private int maxSpeedY = 5;
+    public void Level(Player player, ArrayList<Enemy> enemies, ArrayList<Platform> platforms,
+                      Puzzle puzzle){
+        this.player = player;
+        this.enemies = enemies;
+        this.platforms = platforms;
+        this.puzzle = puzzle;
+    }
 
-    public boolean verticalPlatformCollision(){
+    /*
+    Collisions between different types of objects.
+     */
+
+    public void checkVertPlatformCollision(){
         for(Platform p : platforms){
             if(player.getBounds().intersects(p.getBottom()) && player.getSpeedY()<0){
                 player.setSpeedY(0);
-                return true;
             }
             if(player.getBounds().intersects(p.getTop()) && player.getSpeedY()>0){
                 player.setSpeedY(0);
-                return true;
             }
-        }return false;
+        }
     }
 
-    public boolean horizontalPlatformCollision(){
+    public void checkHorizPlatformCollision(){
         for(Platform p : platforms){
             if(player.getBounds().intersects(p.getRight()) && player.getSpeedX() < 0){
                 player.setSpeedX(0);
-                return true;
             }
             if(player.getBounds().intersects(p.getLeft()) && player.getSpeedX() > 0){
                 player.setSpeedX(0);
-                return true;
             }
-        }return false;
+        }
     }
 
+    public void checkEnemyCollision() {
+        for (Enemy e : enemies) {
+            if (player.getBounds().intersects(e.getBounds())) {
+                player.loseLife();
+                if(player.getLives() > 0){
+                    //Reset the player to the start position
+                    player.initPosition();
+                }else {
+                    //Game over
+                }
+            }
+        }
+    }
+
+    /*
+    Manipulating the player. Used by the keylisteners
+     */
     public void setPlayerSpeedX(int dx){
         player.setSpeedX(dx);
     }
 
-    public void playerJump(){
-        player.jump();
-    }
+    public void setPlayerSpeedY(int dy){
+        player.setSpeedY(dy);
+        }
 
-    public void playerFall(){
-        player.fall(gravity, maxSpeedY);
+    /*
+    Updating all the logic in the level/updates the values of the variables.
+     */
+
+    public void updateLevel(){
+        checkHorizPlatformCollision();
+        checkVertPlatformCollision();
+        checkEnemyCollision();
+        player.move();
+        player.fall(gravity,maxSpeedY);
     }
 
     /*
     Method for painting the current level i.e backgrounds,players, enemies and platforms.
      */
     public void paintLevel(){
-        /*
-        Iterate through ArrayLists and paint objects in the ArrayList one by one.
-         */
+        //player.paint()
 
+        for (Platform p : platforms){
+            //p.paint
+        }
+        for (Enemy e : enemies){
+            //e.paint
+        }
     }
 
 }
