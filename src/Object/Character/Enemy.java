@@ -2,6 +2,10 @@ package Object.Character;
 
 public class Enemy extends Character {
 
+    public Enemy(int w, int h, int x, int y){
+        super(w,h,x,y);
+    }
+
     private int health;
     public void attack(){
 
