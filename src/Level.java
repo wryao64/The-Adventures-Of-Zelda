@@ -34,10 +34,9 @@ public class Level{
         this.puzzle = puzzle;
     }
 
-    /*
-    Collisions between different types of objects.
+    /**
+     * Collisions between different types of objects.
      */
-
     public void checkVertPlatformCollision(){
         for(Platform p : platforms){
             if(player.getBounds().intersects(p.getBottom()) && player.getSpeedY()<0){

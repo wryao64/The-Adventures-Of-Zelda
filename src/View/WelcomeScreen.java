@@ -2,6 +2,8 @@ package View;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class WelcomeScreen extends JPanel {
 //    private final int BORDER_SIZE = 30;
@@ -10,7 +12,7 @@ public class WelcomeScreen extends JPanel {
         this.setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
         this.setPreferredSize(new Dimension(WIDTH, HEIGHT));
         this.setBackground(new Color(255, 234, 206));
-        this.setBorder(BorderFactory.createEmptyBorder(20,20,20,20));
+        this.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
 
         // Welcome text
         JLabel welcomeLabel = new JLabel("The Legend of Zelda");
@@ -21,6 +23,12 @@ public class WelcomeScreen extends JPanel {
         // Play button
         JButton playButton = new JButton("PLAY");
         playButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+        playButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+               nextScreen();
+            }
+        } );
 
         // High score button
         JButton highScoreButton = new JButton("HIGH SCORES");
@@ -34,4 +42,12 @@ public class WelcomeScreen extends JPanel {
         this.add(Box.createRigidArea(new Dimension(0, 10)));
         this.add(highScoreButton);
     }
+
+    public void nextScreen() {
+        JFrame parent = (JFrame) SwingUtilities.getWindowAncestor(this);
+        GameScreen gameScreen = new GameScreen();
+        parent.setContentPane(gameScreen);
+        parent.setVisible(true);
+    }
+
 }
