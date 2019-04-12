@@ -5,8 +5,13 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import Controller.GameController;
+import Controller.GameState;
+
 public class WelcomeScreen extends JPanel {
 //    private final int BORDER_SIZE = 30;
+
+    private GameController gameController;
 
     public WelcomeScreen() {
         this.setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
@@ -26,7 +31,7 @@ public class WelcomeScreen extends JPanel {
 
         playButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-               nextScreen();
+                gameController.gameStateUpdate(GameState.TUTORIAL);
             }
         } );
 
@@ -43,11 +48,8 @@ public class WelcomeScreen extends JPanel {
         this.add(highScoreButton);
     }
 
-    public void nextScreen() {
-        JFrame parent = (JFrame) SwingUtilities.getWindowAncestor(this);
-        GameScreen gameScreen = new GameScreen();
-        parent.setContentPane(gameScreen);
-        parent.setVisible(true);
+    public void setGameController(GameController controller){
+        gameController = controller;
     }
 
 }

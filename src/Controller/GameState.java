@@ -1,3 +1,5 @@
+package Controller;
+
 public enum GameState {
     WELCOME,
     TUTORIAL,

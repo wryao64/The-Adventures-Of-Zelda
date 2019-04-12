@@ -1,3 +1,4 @@
+package Controller;
 
 import Object.Platform;
 import Object.Character.Enemy;
@@ -19,17 +20,17 @@ public class Level{
 
     // Objects
     private Player player;
-    private ArrayList<Enemy> enemies;
+   // private ArrayList<Enemy> enemies;
     private ArrayList<Platform> platforms;
     private Puzzle puzzle;
 
     private static final int gravity = 1;
     private static final int maxSpeedY = 5;
 
-    public void Level(Player player, ArrayList<Enemy> enemies, ArrayList<Platform> platforms,
+    public void Level(Player player, ArrayList<Platform> platforms,
                       Puzzle puzzle){
         this.player = player;
-        this.enemies = enemies;
+       // this.enemies = enemies;
         this.platforms = platforms;
         this.puzzle = puzzle;
     }
@@ -59,6 +60,7 @@ public class Level{
         }
     }
 
+    /*
     public void checkEnemyCollision() {
         for (Enemy e : enemies) {
             if (player.getBounds().intersects(e.getBounds())) {
@@ -67,14 +69,15 @@ public class Level{
                     //Reset the player to the start position
                     player.initPosition();
                 }else {
-                    //Game over
+                    //Controller.Game over
                 }
             }
         }
     }
+    */
 
-    /*
-    Manipulating the player. Used by the keylisteners
+    /**
+     * Manipulating the player. Used by the keylisteners
      */
     public void setPlayerSpeedX(int dx){
         player.setSpeedX(dx);
@@ -91,7 +94,7 @@ public class Level{
     public void updateLevel(){
         checkHorizPlatformCollision();
         checkVertPlatformCollision();
-        checkEnemyCollision();
+        //checkEnemyCollision();
         player.move();
         player.fall(gravity,maxSpeedY);
     }
@@ -105,9 +108,7 @@ public class Level{
         for (Platform p : platforms){
             //p.paint
         }
-        for (Enemy e : enemies){
-            //e.paint
-        }
+
     }
 
 }

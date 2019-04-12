@@ -1,4 +1,9 @@
-package View;
+package Controller;
+
+import View.EndScreen;
+import View.GameScreen;
+import View.PauseScreen;
+import View.WelcomeScreen;
 
 import javax.swing.*;
 
@@ -48,6 +53,37 @@ public class GameController implements Runnable {
         }
     }
 
+    public void gameStateUpdate(GameState nextState) {
+        // handle switching of screens
+        switch(nextState) {
+            case WELCOME:
+                frame.setContentPane(new WelcomeScreen());
+                break;
+            case TUTORIAL:
+                frame.setContentPane(new GameScreen());
+                break;
+            case LEVEL_1:
+                //set inner panel
+                break;
+            case LEVEL_2:
+                //set inner panel
+                break;
+            case LEVEL_BOSS:
+                //set inner panel
+                break;
+            case PAUSE:
+                frame.setContentPane(new PauseScreen());
+                break;
+            case END:
+                frame.setContentPane(new EndScreen());
+                break;
+            case PUZZLE:
+                //pop-up window?
+                break;
+        }
+        frame.setVisible(true);
+    }
+
     public void runGame() {
         frame = new JFrame("The Legend of Zelda");
         frame.setSize(WIDTH, HEIGHT);
@@ -57,8 +93,10 @@ public class GameController implements Runnable {
         frame.setResizable(false);
 
         WelcomeScreen welcomePanel = new WelcomeScreen();
+        welcomePanel.setGameController(this);
         frame.setContentPane(welcomePanel);
 //        frame.getContentPane().add(welcomePanel);
         frame.setVisible(true);
     }
+
 }
