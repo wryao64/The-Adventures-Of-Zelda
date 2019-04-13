@@ -1,9 +1,7 @@
 package Controller;
 
-import View.EndScreen;
-import View.GameScreen;
-import View.PauseScreen;
-import View.WelcomeScreen;
+import Item.Puzzle;
+import View.*;
 
 import javax.swing.*;
 
@@ -14,6 +12,15 @@ public class GameController implements Runnable {
     private int fps = 60;
     private boolean running;
 
+    private WelcomeScreen welcomeScreen;
+    private GameScreen gameScreen;
+    private PauseScreen pauseScreen;
+    private PuzzleScreen puzzleScreen;
+    private EndScreen endScreen;
+
+    GameState currentState;
+
+    //Main frame for the game.
     JFrame frame;
 
     @Override
@@ -32,12 +39,10 @@ public class GameController implements Runnable {
             //Current time when loop is entered.
             startTime = System.nanoTime();
 
-            /*
-            ------------------------------------
-            Update all the game stuffs here
-            -------------------------------------
-             */
-
+            if(currentState == GameState.TUTORIAL){
+                update();
+                render();
+            }
             //The time taken to do all the updates (in millis).
             timeTakenMillis = (System.nanoTime()-startTime)/1000000;
 
@@ -53,14 +58,42 @@ public class GameController implements Runnable {
         }
     }
 
+    public void runGame() {
+        frame = new JFrame("The Legend of Zelda");
+        frame.setSize(WIDTH, HEIGHT);
+        frame.setLocationRelativeTo(null); // centers window
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+//        frame.pack();
+        frame.setResizable(false);
+
+        WelcomeScreen welcomePanel = new WelcomeScreen();
+        welcomePanel.setGameController(this);
+        frame.setContentPane(welcomePanel);
+//        frame.getContentPane().add(welcomePanel);
+        frame.setVisible(true);
+    }
+
+    /**
+     * Render + update only when in the game screen? Because all the other screens are event driven?
+     */
+    public void render(){
+        gameScreen.render();
+    }
+
+    public void update(){
+        gameScreen.update();
+    }
+
     public void gameStateUpdate(GameState nextState) {
         // handle switching of screens
         switch(nextState) {
             case WELCOME:
-                frame.setContentPane(new WelcomeScreen());
+                welcomeScreen = new WelcomeScreen();
+                frame.setContentPane(welcomeScreen);
                 break;
             case TUTORIAL:
-                frame.setContentPane(new GameScreen());
+                gameScreen = new GameScreen();
+                frame.setContentPane(gameScreen);
                 break;
             case LEVEL_1:
                 //set inner panel
@@ -82,21 +115,8 @@ public class GameController implements Runnable {
                 break;
         }
         frame.setVisible(true);
+        currentState = nextState;
     }
 
-    public void runGame() {
-        frame = new JFrame("The Legend of Zelda");
-        frame.setSize(WIDTH, HEIGHT);
-        frame.setLocationRelativeTo(null); // centers window
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-//        frame.pack();
-        frame.setResizable(false);
-
-        WelcomeScreen welcomePanel = new WelcomeScreen();
-        welcomePanel.setGameController(this);
-        frame.setContentPane(welcomePanel);
-//        frame.getContentPane().add(welcomePanel);
-        frame.setVisible(true);
-    }
 
 }

@@ -51,5 +51,4 @@ public class WelcomeScreen extends JPanel {
     public void setGameController(GameController controller){
         gameController = controller;
     }
-
 }

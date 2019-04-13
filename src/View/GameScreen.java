@@ -4,11 +4,12 @@ import Controller.Level;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.KeyListener;
 
 
-public class GameScreen extends JPanel{
+public class GameScreen extends JPanel {
 
-    Level level;
+    Level currentLevel;
 
     public GameScreen() {
         setPreferredSize(new Dimension(WIDTH,HEIGHT));
@@ -16,15 +17,14 @@ public class GameScreen extends JPanel{
         requestFocus();
     }
 
-    public void setLevel() {
-
+    public void setLevel(Level level) {
+        currentLevel = level;
     }
 
-    @Override
-    protected void paintComponent(Graphics g) {
-        super.paintComponent(g);
-
+    public void update(){
+        currentLevel.updateLevel();
     }
 
-
+    public void render(){
+    }
 }
