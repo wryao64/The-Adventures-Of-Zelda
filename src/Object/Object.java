@@ -1,15 +1,16 @@
 package Object;
 
 import java.awt.*;
+import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 
-public class Object {
+public abstract class Object {
 
-    protected int posX, posY;
-    protected int width, height;
+    protected double posX, posY;
+    protected double width, height;
     protected BufferedImage image;
 
-    public Object (int w, int h, int x, int y){
+    public Object (double w, double h, double x, double y){
         width = w;
         height = h;
         posX = x;
@@ -20,36 +21,37 @@ public class Object {
     Collision areas for the object. Spans around the perimeter of the object.
      */
 
-    public Rectangle getTop(){
-        return new Rectangle((int) posX +4, (int) posY-1, width-8, 4);
+    public Rectangle2D getTop(){
+        return new Rectangle2D.Double( posX+4, posY-1, width-8, 4);
     }
 
-    public Rectangle getBottom(){
-        return new Rectangle((int) posX +4, (int) posY + height-3, width-8, 4);
+    public Rectangle2D getBottom(){
+        return new Rectangle2D.Double(posX+4, posY + height-3, width-8, 4);
     }
 
-    public Rectangle getLeft(){
-        return new Rectangle((int) posX +1, (int) posY +4, 4, height-8);
+    public Rectangle2D getLeft(){
+        return new Rectangle2D.Double(posX+1, posY+4, 4, height-8);
     }
 
-    public Rectangle getRight(){
-        return new Rectangle((int) posX +width -4, (int) posY+4, 4, height-8);
+    public Rectangle2D getRight(){
+        return new Rectangle2D.Double(posX +width -4, posY +4, 4, height-8);
     }
 
-    /*
-    Returns shape that spans the whole bounding box of the object.
+    /**
+     *Returns shape that spans the whole bounding box of the object.
+    */
+    public Rectangle2D getBounds(){
+        return new Rectangle2D.Double(posX,posY,width,height);
+    }
+
+
+    /**
+     * Abstract paint class all objects must implement.
      */
-    public Rectangle getBounds(){
-        return new Rectangle(posX,posY,width,height);
-    }
+    public abstract void paint(Graphics2D g);
 
-    /*
-    Abstract??
-     */
-    public void paintObject(Graphics2D g){ }
-
-    /*
-   Getters and Setters.
+    /**
+     * Getters and Setters.
     */
     public void setPosX(int x){
         posX = x;
@@ -59,10 +61,9 @@ public class Object {
         posY = y;
     }
 
-    public int getPosX(){ return posX; }
+    public double getPosX(){ return posX; }
 
-    public int getPosY(){ return posY; }
-
+    public double getPosY(){ return posY; }
 
     public BufferedImage getImage(){ return image; }
 }
