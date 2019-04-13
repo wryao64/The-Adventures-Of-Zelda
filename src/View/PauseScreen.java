@@ -1,4 +1,6 @@
 package View;
 
-public class PauseScreen {
+import javax.swing.*;
+
+public class PauseScreen extends JFrame {
 }
