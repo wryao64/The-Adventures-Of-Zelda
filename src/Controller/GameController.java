@@ -85,7 +85,7 @@ public class GameController implements Runnable {
     }
 
     public void runGame() {
-        frame = new JFrame("The Legend of Zelda");
+        frame = new JFrame("The Adventures of Zelda");
         frame.setSize(WIDTH, HEIGHT);
         frame.setLocationRelativeTo(null); // centers window
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
