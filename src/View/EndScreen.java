@@ -1,4 +1,6 @@
 package View;
 
-public class EndScreen {
+import javax.swing.*;
+
+public class EndScreen extends JFrame {
 }
