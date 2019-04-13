@@ -1,9 +1,7 @@
 package Controller;
 
-import View.EndScreen;
-import View.GameScreen;
-import View.PauseScreen;
-import View.WelcomeScreen;
+import Item.Puzzle;
+import View.*;
 
 import javax.swing.*;
 import java.awt.image.BufferStrategy;
@@ -21,7 +19,6 @@ public class GameController implements Runnable {
     private GameState currentState;
 
     private BufferStrategy bs;
-
     JFrame frame;
 
     @Override
@@ -41,6 +38,7 @@ public class GameController implements Runnable {
             startTime = System.nanoTime();
 
             if(currentState == GameState.TUTORIAL) {
+
                 update();
                 render();
             }
@@ -84,9 +82,11 @@ public class GameController implements Runnable {
                 break;
             case TUTORIAL:
                 gameScreen = new GameScreen();
+
                 gameScreen.setLevel(new Level_Tutorial());
                 frame.setContentPane(gameScreen);
                 gameScreen.requestFocusInWindow();
+
                 break;
             case LEVEL_1:
                 gameScreen.setLevel(new Level_1());
@@ -111,6 +111,7 @@ public class GameController implements Runnable {
         currentState = nextState;
     }
 
+
     public void runGame() {
         frame = new JFrame("The Adventures of Zelda");
         frame.setSize(WIDTH, HEIGHT);
@@ -125,5 +126,4 @@ public class GameController implements Runnable {
 //        frame.getContentPane().add(welcomePanel);
         frame.setVisible(true);
     }
-
 }

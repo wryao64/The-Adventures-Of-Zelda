@@ -9,7 +9,6 @@ import java.awt.event.KeyListener;
 
 
 public class GameScreen extends JPanel implements KeyListener {
-
     Level level;
 
     public GameScreen() {
