@@ -13,7 +13,7 @@ public class WelcomeScreen extends JPanel {
         this.setBorder(BorderFactory.createEmptyBorder(20,20,20,20));
 
         // Welcome text
-        JLabel welcomeLabel = new JLabel("The Legend of Zelda");
+        JLabel welcomeLabel = new JLabel("The Adventures of Zelda");
         welcomeLabel.setFont(new Font(welcomeLabel.getFont().getName(), welcomeLabel.getFont().getStyle(), 50));
         welcomeLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
 //        welcomeLabel.setOpaque(true); //shows bg color
