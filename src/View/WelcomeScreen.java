@@ -31,7 +31,7 @@ public class WelcomeScreen extends JPanel {
 
         playButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                gameController.gameStateUpdate(GameState.TUTORIAL);
+                gameController.updateGameState(GameState.TUTORIAL);
             }
         } );
 
@@ -51,5 +51,4 @@ public class WelcomeScreen extends JPanel {
     public void setGameController(GameController controller){
         gameController = controller;
     }
-
 }

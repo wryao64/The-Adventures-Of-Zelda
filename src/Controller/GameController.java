@@ -1,11 +1,10 @@
 package Controller;
 
-import View.EndScreen;
-import View.GameScreen;
-import View.PauseScreen;
-import View.WelcomeScreen;
+import Item.Puzzle;
+import View.*;
 
 import javax.swing.*;
+import java.awt.image.BufferStrategy;
 
 public class GameController implements Runnable {
     public final int WIDTH = 1200;
@@ -14,6 +13,12 @@ public class GameController implements Runnable {
     private int fps = 60;
     private boolean running;
 
+    private WelcomeScreen welcomeScreen;
+    private GameScreen gameScreen;
+
+    private GameState currentState;
+
+    private BufferStrategy bs;
     JFrame frame;
 
     @Override
@@ -32,19 +37,20 @@ public class GameController implements Runnable {
             //Current time when loop is entered.
             startTime = System.nanoTime();
 
-            /*
-            ------------------------------------
-            Update all the game stuffs here
-            -------------------------------------
-             */
+            if(currentState == GameState.TUTORIAL) {
 
+                update();
+                render();
+            }
             //The time taken to do all the updates (in millis).
             timeTakenMillis = (System.nanoTime()-startTime)/1000000;
 
             //Extra time left over that loop needs to wait to get desired fps.
             waitTime = targetTime - timeTakenMillis;
 
-            //Sleep the thread for the extra time.
+            System.out.println(waitTime);
+
+            //Sleep the thread for the extra time. Sometimes takes too long and goes negative??
             try {
                 Thread.sleep(waitTime);
             } catch (InterruptedException e) {
@@ -53,23 +59,43 @@ public class GameController implements Runnable {
         }
     }
 
-    public void gameStateUpdate(GameState nextState) {
+    /**
+     * Handles all the drawing of objects onto the screen
+     */
+    public void render(){
+        gameScreen.repaint();
+    }
+
+    /**
+     * Updates all the logic of the game.
+     */
+    public void update(){
+        gameScreen.update();
+    }
+
+    public void updateGameState(GameState nextState) {
         // handle switching of screens
         switch(nextState) {
             case WELCOME:
-                frame.setContentPane(new WelcomeScreen());
+                welcomeScreen =  new WelcomeScreen();
+                frame.setContentPane(welcomeScreen);
                 break;
             case TUTORIAL:
-                frame.setContentPane(new GameScreen());
+                gameScreen = new GameScreen();
+
+                gameScreen.setLevel(new Level_Tutorial());
+                frame.setContentPane(gameScreen);
+                gameScreen.requestFocusInWindow();
+
                 break;
             case LEVEL_1:
-                //set inner panel
+                gameScreen.setLevel(new Level_1());
                 break;
             case LEVEL_2:
-                //set inner panel
+                gameScreen.setLevel(new Level_2());
                 break;
             case LEVEL_BOSS:
-                //set inner panel
+                gameScreen.setLevel(new Level_Boss());
                 break;
             case PAUSE:
                 frame.setContentPane(new PauseScreen());
@@ -82,7 +108,9 @@ public class GameController implements Runnable {
                 break;
         }
         frame.setVisible(true);
+        currentState = nextState;
     }
+
 
     public void runGame() {
         frame = new JFrame("The Adventures of Zelda");
@@ -98,5 +126,4 @@ public class GameController implements Runnable {
 //        frame.getContentPane().add(welcomePanel);
         frame.setVisible(true);
     }
-
 }

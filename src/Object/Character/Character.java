@@ -2,46 +2,35 @@ package Object.Character;
 
 import Object.Object;
 
-public class Character extends Object {
+public abstract class Character extends Object {
 
-    public Character(int w, int h, int x, int y){
+    public Character(double w, double h, double x, double y){
         super(w,h,x,y);
     }
 
-    protected int speedX, speedY;
+    protected double speedX, speedY;
 
     /*
     Horizontal movement of the character.
      */
     public void move(){
         posX = posX + speedX;
+        posY = posY + speedY;
     }
 
-    /*
-    Abstract??
-     */
-    public void attack(){
+    public void attack(){ }
 
-    }
-
-    /*
-    Abstract??
-     */
-    public void takeDamage(){
-
-    }
+    public void takeDamage(){ }
 
     /*
     Getters and Setters for the speed of the character.
      */
-    public void setSpeedX(int dx){ speedX = dx; }
+    public void setSpeedX(double dx){ speedX = dx; }
 
-    public void setSpeedY(int dy){
-        speedY = dy;
-    }
+    public void setSpeedY(double dy){ speedY = dy; }
 
-    public int getSpeedX(){ return speedX; }
+    public double getSpeedX(){ return speedX; }
 
-    public int getSpeedY(){ return speedY; }
+    public double getSpeedY(){ return speedY; }
 
 }

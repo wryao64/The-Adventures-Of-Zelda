@@ -5,36 +5,38 @@ package Object.Character;
 import Item.Weapon;
 
 import java.awt.*;
+import java.awt.geom.Rectangle2D;
 
 public class Player extends Character {
 
-    private int lives;
-    private final int jumpHeight = 7;
+    private final int jumpHeight = 12;
+    private final double movementSpeed = 3.5;
 
-    private int startPosX;
-    private int startPosY;
+    private double startPosX;
+    private double startPosY;
 
     private Weapon weapon;
+    private int lives;
+    boolean canJump;
 
-    public Player(int w, int h, int x, int y){
+    public Player(double w, double h, double x, double y){
         super(w,h,x,y);
+        startPosY = x;
+        startPosX = y;
     }
 
-    public Player(int w, int h, int x, int y, int startX, int startY){
-        super(w,h,x,y);
-        startPosX = startX;
-        startPosY = startY;
+    public void jump() {
+        if(canJump) {
+            speedY = - jumpHeight;
+        }else{
+            speedY = 0;
+        }
     }
 
-    /*
-    Basic actions for the player.
+    /**
+     * Simulates effect of gravity by accelerating player speed in y direction.
      */
-    public void jump(){
-        posY = posY + jumpHeight;
-    }
-
     public void fall(int gravity, int maxSpeedY){
-
         if(speedY <  maxSpeedY) {
             speedY += gravity;
         }else{
@@ -55,12 +57,6 @@ public class Player extends Character {
         posY = startPosY;
     }
 
-    @Override
-    public void paintObject(Graphics2D g) {
-        g.setColor(Color.RED);
-        g.fillRect(posX,posY,width,height);
-    }
-
     public int getLives(){
         return lives;
     }
@@ -69,6 +65,18 @@ public class Player extends Character {
         lives--;
     }
 
+    public double getMovementSpeed() { return movementSpeed; }
 
+    public void setCanJump(boolean jump) {canJump = jump;}
+
+    /**
+     * Painting the player. Called by the level class
+     */
+    public void paint(Graphics2D g) {
+        g.setColor(Color.RED);
+        g.fill(new Rectangle2D.Double(posX, posY,width, height));
+        g.setColor(Color.CYAN);
+        g.draw(getBounds());
+    }
 
 }
