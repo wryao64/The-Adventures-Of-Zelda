@@ -83,19 +83,19 @@ public class GameController implements Runnable {
             case TUTORIAL:
                 gameScreen = new GameScreen();
 
-                gameScreen.setLevel(new Level_Tutorial());
+                gameScreen.setLevel(new Level_Tutorial(), "Tutorial");
                 frame.setContentPane(gameScreen);
                 gameScreen.requestFocusInWindow();
 
                 break;
             case LEVEL_1:
-                gameScreen.setLevel(new Level_1());
+                gameScreen.setLevel(new Level_1(), "Level 1");
                 break;
             case LEVEL_2:
-                gameScreen.setLevel(new Level_2());
+                gameScreen.setLevel(new Level_2(), "Level 2");
                 break;
             case LEVEL_BOSS:
-                gameScreen.setLevel(new Level_Boss());
+                gameScreen.setLevel(new Level_Boss(), "Boss");
                 break;
             case PAUSE:
                 frame.setContentPane(new PauseScreen());
