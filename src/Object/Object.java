@@ -48,22 +48,26 @@ public abstract class Object {
     /**
      * Abstract paint class all objects must implement.
      */
-    public abstract void paint(Graphics2D g);
+    public abstract void paintObject(Graphics2D g);
 
     /**
      * Getters and Setters.
     */
-    public void setPosX(int x){
+    public void setPosX(double x){
         posX = x;
     }
 
-    public void setPosY(int y){
+    public void setPosY(double y){
         posY = y;
     }
 
     public double getPosX(){ return posX; }
 
     public double getPosY(){ return posY; }
+
+    public double getWidth() { return width; }
+
+    public double getHeight() { return height; }
 
     public BufferedImage getImage(){ return image; }
 }
