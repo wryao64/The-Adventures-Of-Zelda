@@ -1,5 +1,6 @@
 package Controller;
 
+import Object.Character.Enemy;
 import Object.Character.Player;
 import Object.Platform;
 
@@ -21,5 +22,7 @@ public class Level_Tutorial extends Level{
 
         //Create the puzzle chest
         //Create the enemies
+        //enemies = new ArrayList<Enemy>();
+        //enemies.add(new Enemy(30,30,380,410));
     }
 }
