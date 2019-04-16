@@ -3,12 +3,10 @@ package Controller;
 import Object.Platform;
 import Object.Character.Enemy;
 import Object.Character.Player;
-import Object.Platform;
 import Item.Puzzle;
 
 
 import java.awt.*;
-import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 

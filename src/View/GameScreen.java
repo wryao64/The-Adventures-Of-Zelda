@@ -72,30 +72,37 @@ public class GameScreen extends JPanel implements KeyListener {
     @Override
     public void keyPressed(KeyEvent e) {
         int c = e.getKeyCode();
-        if(c == KeyEvent.VK_LEFT) {
-            if(!pause) {
-                level.setPlayerSpeedX(-level.getMovementSpeed());
-            }
-        }if(c == KeyEvent.VK_RIGHT) {
-            if(!pause) {
-                level.setPlayerSpeedX(level.getMovementSpeed());
-            }
-        }if (c == KeyEvent.VK_UP) {
-            if(!pause) {
-                level.setPlayerJump();
-                level.playercanJump(false);
-            }
-        }if (c == KeyEvent.VK_P) {
-            if(pause) {
-                //set the enemies to stop moving
-                //set gravity to zero
-            }else {
-                //tell the enemies to start moving again
-                //
+
+        if (c == KeyEvent.VK_P) {
+            if (pause) {
+                // set the enemies to stop moving
+                // set gravity to zero
+            } else {
+                // tell the enemies to start moving again
+                // reset gravity
             }
             pause = !pause;
+            return; // prevents player movement from registering
         }
 
+        // PLAYER MOVEMENT
+        if (c == KeyEvent.VK_LEFT) {
+            level.setPlayerSpeedX(-level.getMovementSpeed());
+        }
+        if (c == KeyEvent.VK_RIGHT) {
+            level.setPlayerSpeedX(level.getMovementSpeed());
+        }
+        if (c == KeyEvent.VK_UP) {
+            level.setPlayerJump();
+            level.playercanJump(false);
+        }
+
+        // SCREEN CHANGE
+        // Shortcut: skips to boss level
+        if (c == KeyEvent.VK_B) {
+            gameController.updateGameState(GameState.LEVEL_BOSS);
+        }
+        // FOR TESTING PURPOSES: skips to end screen
         if (c == KeyEvent.VK_E) {
             gameController.updateGameState(GameState.END);
         }

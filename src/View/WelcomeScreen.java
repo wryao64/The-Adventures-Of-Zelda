@@ -2,8 +2,6 @@ package View;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 import Controller.GameController;
 import Controller.GameState;
@@ -29,11 +27,9 @@ public class WelcomeScreen extends JPanel {
         JButton playButton = new JButton("PLAY");
         playButton.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-        playButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                gameController.updateGameState(GameState.TUTORIAL);
-            }
-        } );
+        playButton.addActionListener(e ->
+            gameController.updateGameState(GameState.TUTORIAL)
+        );
 
         // High score button
         JButton highScoreButton = new JButton("HIGH SCORES");
