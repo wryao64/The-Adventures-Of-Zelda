@@ -72,11 +72,9 @@ public class Player extends Character {
     /**
      * Painting the player. Called by the level class
      */
-    public void paint(Graphics2D g) {
+    public void paintObject(Graphics2D g) {
         g.setColor(Color.RED);
         g.fill(new Rectangle2D.Double(posX, posY,width, height));
-        g.setColor(Color.CYAN);
-        g.draw(getBounds());
     }
 
 }

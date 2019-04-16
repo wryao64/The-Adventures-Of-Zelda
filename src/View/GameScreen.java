@@ -14,6 +14,7 @@ public class GameScreen extends JPanel implements KeyListener {
     GameController gameController;
 
     Level level;
+    Boolean pause = false;
 
     JLabel levelLabel;
 
@@ -38,14 +39,12 @@ public class GameScreen extends JPanel implements KeyListener {
         topBar.add(levelLabel);
         topBar.add(Box.createRigidArea(new Dimension(700, 0)));
         // TODO: ADD LIVES HERE
-
     }
 
     public void setLevel(Level level, String levelName) {
         this.level = level;
         levelLabel.setText("Level: " + levelName);
     }
-
 
     /**
      * Paint method called by repaint to render the level. Called from within the game loop.
@@ -73,13 +72,28 @@ public class GameScreen extends JPanel implements KeyListener {
     @Override
     public void keyPressed(KeyEvent e) {
         int c = e.getKeyCode();
-        if(c == KeyEvent.VK_LEFT){
-            level.setPlayerSpeedX(-level.getMovementSpeed());
-        }if(c == KeyEvent.VK_RIGHT){
-            level.setPlayerSpeedX(level.getMovementSpeed());
-        }if (c == KeyEvent.VK_UP){
-            level.setPlayerJump();
-            level.playercanJump(false);
+        if(c == KeyEvent.VK_LEFT) {
+            if(!pause) {
+                level.setPlayerSpeedX(-level.getMovementSpeed());
+            }
+        }if(c == KeyEvent.VK_RIGHT) {
+            if(!pause) {
+                level.setPlayerSpeedX(level.getMovementSpeed());
+            }
+        }if (c == KeyEvent.VK_UP) {
+            if(!pause) {
+                level.setPlayerJump();
+                level.playercanJump(false);
+            }
+        }if (c == KeyEvent.VK_P) {
+            if(pause) {
+                //set the enemies to stop moving
+                //set gravity to zero
+            }else {
+                //tell the enemies to start moving again
+                //
+            }
+            pause = !pause;
         }
 
         if (c == KeyEvent.VK_E) {
@@ -90,7 +104,6 @@ public class GameScreen extends JPanel implements KeyListener {
     @Override
     public void keyReleased(KeyEvent e) {
         level.setPlayerSpeedX(0);
-        level.playercanJump(true);
     }
 
     public void setGameController(GameController controller){

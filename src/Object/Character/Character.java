@@ -18,10 +18,6 @@ public abstract class Character extends Object {
         posY = posY + speedY;
     }
 
-    public void attack(){ }
-
-    public void takeDamage(){ }
-
     /*
     Getters and Setters for the speed of the character.
      */

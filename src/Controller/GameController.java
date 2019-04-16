@@ -38,7 +38,6 @@ public class GameController implements Runnable {
             startTime = System.nanoTime();
 
             if(currentState == GameState.TUTORIAL) {
-
                 update();
                 render();
             }
@@ -48,13 +47,13 @@ public class GameController implements Runnable {
             //Extra time left over that loop needs to wait to get desired fps.
             waitTime = targetTime - timeTakenMillis;
 
-            System.out.println(waitTime);
-
-            //Sleep the thread for the extra time. Sometimes takes too long and goes negative??
-            try {
-                Thread.sleep(waitTime);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
+            //Sleep the thread for the extra time if there is extra time
+            if(waitTime > 4) {
+                try {
+                    Thread.sleep(waitTime);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
             }
         }
     }
@@ -88,7 +87,6 @@ public class GameController implements Runnable {
                 gameScreen.requestFocusInWindow();
 
                 gameScreen.setGameController(this);
-
                 break;
             case LEVEL_1:
                 gameScreen.setLevel(new Level_1(), "Level 1");

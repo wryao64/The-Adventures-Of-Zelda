@@ -1,6 +1,7 @@
 package Object.Character;
 
 import java.awt.*;
+import java.awt.geom.Rectangle2D;
 
 public class Enemy extends Character {
 
@@ -9,11 +10,13 @@ public class Enemy extends Character {
     }
 
     @Override
-    public void paint(Graphics2D g) {
-
+    public void paintObject(Graphics2D g) {
+        g.setColor(Color.BLUE);
+        g.fill(new Rectangle2D.Double(posX, posY,width, height));
     }
 
     private int health;
+
     public void attack(){
 
     }
