@@ -1,5 +1,7 @@
 package View;
 
+import Controller.GameController;
+import Controller.GameState;
 import Controller.Level;
 
 import javax.swing.*;
@@ -9,17 +11,39 @@ import java.awt.event.KeyListener;
 
 
 public class GameScreen extends JPanel implements KeyListener {
+    GameController gameController;
+
     Level level;
     Boolean pause = false;
 
+    JLabel levelLabel;
+
     public GameScreen() {
-        setPreferredSize(new Dimension(WIDTH,HEIGHT));
-        setFocusable(true);
-        addKeyListener(this);
+        this.setLayout(new BorderLayout());
+        this.setPreferredSize(new Dimension(WIDTH,HEIGHT));
+        this.setFocusable(true);
+        this.addKeyListener(this);
+
+        JPanel topBar = new JPanel();
+        topBar.setPreferredSize(new Dimension(WIDTH, 50));
+        topBar.setBackground(new Color(186, 122, 50));
+        topBar.setLayout(new BoxLayout(topBar, BoxLayout.LINE_AXIS));
+        topBar.setBorder(BorderFactory.createEmptyBorder(0, 20, 0, 20));
+
+        // Level label
+        levelLabel = new JLabel("");
+        levelLabel.setFont(new Font(levelLabel.getFont().getName(), levelLabel.getFont().getStyle(), 20));
+
+        this.add(topBar, BorderLayout.NORTH);
+
+        topBar.add(levelLabel);
+        topBar.add(Box.createRigidArea(new Dimension(700, 0)));
+        // TODO: ADD LIVES HERE
     }
 
-    public void setLevel(Level level) {
+    public void setLevel(Level level, String levelName) {
         this.level = level;
+        levelLabel.setText("Level: " + levelName);
     }
 
     /**
@@ -71,10 +95,18 @@ public class GameScreen extends JPanel implements KeyListener {
             }
             pause = !pause;
         }
+
+        if (c == KeyEvent.VK_E) {
+            gameController.updateGameState(GameState.END);
+        }
     }
 
     @Override
     public void keyReleased(KeyEvent e) {
         level.setPlayerSpeedX(0);
+    }
+
+    public void setGameController(GameController controller){
+        gameController = controller;
     }
 }
