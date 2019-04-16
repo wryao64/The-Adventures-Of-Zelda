@@ -1,6 +1,5 @@
 package Controller;
 
-import Item.Puzzle;
 import View.*;
 
 import javax.swing.*;

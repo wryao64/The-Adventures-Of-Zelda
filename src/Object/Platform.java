@@ -1,7 +1,5 @@
 package Object;
 
-import Object.Object;
-
 import java.awt.*;
 import java.awt.geom.Rectangle2D;
 
