@@ -87,6 +87,8 @@ public class GameController implements Runnable {
                 frame.setContentPane(gameScreen);
                 gameScreen.requestFocusInWindow();
 
+                gameScreen.setGameController(this);
+
                 break;
             case LEVEL_1:
                 gameScreen.setLevel(new Level_1(), "Level 1");
@@ -101,7 +103,7 @@ public class GameController implements Runnable {
                 frame.setContentPane(new PauseScreen());
                 break;
             case END:
-                frame.setContentPane(new EndScreen());
+                frame.setContentPane(new EndScreen(true));
                 break;
             case PUZZLE:
                 //pop-up window?

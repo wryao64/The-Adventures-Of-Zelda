@@ -1,5 +1,7 @@
 package View;
 
+import Controller.GameController;
+import Controller.GameState;
 import Controller.Level;
 
 import javax.swing.*;
@@ -9,6 +11,8 @@ import java.awt.event.KeyListener;
 
 
 public class GameScreen extends JPanel implements KeyListener {
+    GameController gameController;
+
     Level level;
 
     JLabel levelLabel;
@@ -77,11 +81,19 @@ public class GameScreen extends JPanel implements KeyListener {
             level.setPlayerJump();
             level.playercanJump(false);
         }
+
+        if (c == KeyEvent.VK_E) {
+            gameController.updateGameState(GameState.END);
+        }
     }
 
     @Override
     public void keyReleased(KeyEvent e) {
         level.setPlayerSpeedX(0);
         level.playercanJump(true);
+    }
+
+    public void setGameController(GameController controller){
+        gameController = controller;
     }
 }
