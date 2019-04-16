@@ -86,7 +86,7 @@ public class GameScreen extends JPanel implements KeyListener {
         }
 
         // PLAYER MOVEMENT
-        if(c == KeyEvent.VK_LEFT) {
+        if (c == KeyEvent.VK_LEFT) {
             level.setPlayerSpeedX(-level.getMovementSpeed());
         }
         if (c == KeyEvent.VK_RIGHT) {
@@ -98,6 +98,11 @@ public class GameScreen extends JPanel implements KeyListener {
         }
 
         // SCREEN CHANGE
+        // Shortcut: skips to boss level
+        if (c == KeyEvent.VK_B) {
+            gameController.updateGameState(GameState.LEVEL_BOSS);
+        }
+        // FOR TESTING PURPOSES: skips to end screen
         if (c == KeyEvent.VK_E) {
             gameController.updateGameState(GameState.END);
         }
