@@ -14,6 +14,7 @@ public class GameController implements Runnable {
 
     private WelcomeScreen welcomeScreen;
     private GameScreen gameScreen;
+    private EndScreen endScreen;
 
     private GameState currentState;
 
@@ -76,6 +77,7 @@ public class GameController implements Runnable {
         switch(nextState) {
             case WELCOME:
                 welcomeScreen =  new WelcomeScreen();
+                welcomeScreen.setGameController(this);
                 frame.setContentPane(welcomeScreen);
                 break;
             case TUTORIAL:
@@ -100,7 +102,9 @@ public class GameController implements Runnable {
 //                frame.setContentPane(new PauseScreen());
 //                break;
             case END:
-                frame.setContentPane(new EndScreen(true));
+                endScreen = new EndScreen(true);
+                frame.setContentPane(endScreen);
+                endScreen.setGameController(this);
                 break;
             case PUZZLE:
                 //pop-up window?

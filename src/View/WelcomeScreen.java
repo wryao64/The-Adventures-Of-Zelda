@@ -34,6 +34,9 @@ public class WelcomeScreen extends JPanel {
         // High score button
         JButton highScoreButton = new JButton("HIGH SCORES");
         highScoreButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+        highScoreButton.addActionListener(e -> {
+            // high score window
+        });
 
         // Add components to panel
         this.add(Box.createRigidArea(new Dimension(0, 200)));
