@@ -11,8 +11,8 @@ import java.awt.event.KeyListener;
 
 
 public class GameScreen extends JPanel implements KeyListener {
-    GameController gameController;
-    PauseScreen pauseScreen = new PauseScreen();
+    private GameController gameController;
+    private PauseScreen pauseScreen;
 
     Color glassPaneColor = new Color(0, 0, 0, 175);
 
@@ -42,6 +42,10 @@ public class GameScreen extends JPanel implements KeyListener {
         topBar.add(levelLabel);
         topBar.add(Box.createRigidArea(new Dimension(700, 0)));
         // TODO: ADD LIVES HERE
+    }
+
+    public void setGameController(GameController controller){
+        gameController = controller;
     }
 
     public void setLevel(Level level, String levelName) {
@@ -76,19 +80,10 @@ public class GameScreen extends JPanel implements KeyListener {
     public void keyPressed(KeyEvent e) {
         int c = e.getKeyCode();
 
+        // pause game
         if (c == KeyEvent.VK_P) {
-//            pause = !pause;
-//
-//            if (pause) {
-//                // set the enemies to stop moving
-//                // set gravity to zero
-//                this.pausePressed();
-//            } else {
-//                // tell the enemies to start moving again
-//                // reset gravity
-//            }
+            pause = true;
             this.pausePressed();
-
             return; // prevents player movement from registering
         }
 
@@ -120,10 +115,6 @@ public class GameScreen extends JPanel implements KeyListener {
         level.setPlayerSpeedX(0);
     }
 
-    public void setGameController(GameController controller){
-        gameController = controller;
-    }
-
     /**
      * Creates pause dialog
      */
@@ -145,13 +136,20 @@ public class GameScreen extends JPanel implements KeyListener {
         glassPane.setVisible(true);
 
         // create modal JDialog for pause screen
-        JDialog dialog = new JDialog((Window) window, "", Dialog.ModalityType.APPLICATION_MODAL);
-        dialog.getContentPane().add(pauseScreen);
-        dialog.setUndecorated(true);
-        dialog.pack();
-        dialog.setLocationRelativeTo((Window) window);
-        dialog.setVisible(true);
+        pauseScreen = new PauseScreen((Window) window);
+
+        // TODO: set the enemies to stop moving
+        // TODO: set gravity to zero
 
         glassPane.setVisible(false);
+        pause = false;
+    }
+
+    /**
+     *
+     */
+    public void resumeGame() {
+        // TODO: tell the enemies to start moving again
+        // TODO: reset gravity
     }
 }
