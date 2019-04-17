@@ -36,28 +36,33 @@ public class GameController implements Runnable {
         runGame();
 
         while (running) {
-                //Current time when loop is entered.
-                startTime = System.nanoTime();
 
                 if(!paused) {
-                    update();
-                    render();
-                }
+                    //Current time when loop is entered.
+                    startTime = System.nanoTime();
 
-                //The time taken to do all the updates (in millis).
-                timeTakenMillis = (System.nanoTime() - startTime) / 1000000;
+                    //Bad temporary fix to the synch/level null pointer problem.
+                    if(currentState == GameState.TUTORIAL) {
+                        update();
+                        render();
+                    }
 
-                //Extra time left over that loop needs to wait to get desired fps.
-                waitTime = targetTime - timeTakenMillis;
+                    //The time taken to do all the updates (in millis).
+                    timeTakenMillis = (System.nanoTime() - startTime) / 1000000;
 
-                //Sleep the thread for the extra time if there is extra time
-                if (waitTime > 4) {
-                    try {
-                        Thread.sleep(waitTime);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
+                    //Extra time left over that loop needs to wait to get desired fps.
+                    waitTime = targetTime - timeTakenMillis;
+
+                    //Sleep the thread for the extra time if there is extra time
+                    if (waitTime > 4) {
+                        try {
+                            Thread.sleep(waitTime);
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
                     }
                 }
+
             }
     }
 

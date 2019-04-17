@@ -17,6 +17,11 @@ public abstract class Object {
         posY = y;
     }
 
+    public Object (double x, double y){
+        posX = x;
+        posY = y;
+    }
+
     /*
     Collision areas for the object. Spans around the perimeter of the object.
      */

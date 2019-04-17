@@ -27,6 +27,7 @@ public abstract class Level{
     protected int gravity = 1;
     protected int maxSpeedY = 15;
 
+
     /**
      * Collisions between different types of objects.
      */
@@ -36,12 +37,14 @@ public abstract class Level{
             if(player.getBounds().intersects(p.getBottom()) && player.getSpeedY()<0){
                 player.setSpeedY(0);
                 player.setPosY(p.getPosY()+ p.getHeight());
+                //System.out.println("Collision bottom");
             }
             //Player collides with the top of the platform i.e walking on it
             if(player.getBounds().intersects(p.getTop()) && player.getSpeedY()>0){
                 player.setSpeedY(0);
                 player.setPosY(p.getPosY()-player.getHeight());
                 playercanJump(true);
+                //System.out.println("Collision top");
             }
         }
     }
@@ -51,10 +54,12 @@ public abstract class Level{
             //Player collides with the right edge of the platform
             if(player.getBounds().intersects(p.getRight()) && player.getSpeedX() < 0){
                 player.setSpeedX(0);
+                //System.out.println("Collision horiz right");
             }
             //Player collides with the left edge of the platform
             if(player.getBounds().intersects(p.getLeft()) && player.getSpeedX() > 0){
                 player.setSpeedX(0);
+                //System.out.println("Collision horiz left");
             }
         }
     }
