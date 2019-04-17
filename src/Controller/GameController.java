@@ -17,6 +17,8 @@ public class GameController implements Runnable {
 
     private GameState currentState;
 
+    private boolean paused = false;
+
     private BufferStrategy bs;
     JFrame frame;
 
@@ -32,43 +34,54 @@ public class GameController implements Runnable {
 
         runGame();
 
-        while (running){
-            //Current time when loop is entered.
-            startTime = System.nanoTime();
+        while (running) {
+                //Current time when loop is entered.
+                startTime = System.nanoTime();
 
-            if(currentState == GameState.TUTORIAL) {
-                update();
-                render();
-            }
-            //The time taken to do all the updates (in millis).
-            timeTakenMillis = (System.nanoTime()-startTime)/1000000;
+                if(!paused) {
+                    update();
+                    render();
+                }
 
-            //Extra time left over that loop needs to wait to get desired fps.
-            waitTime = targetTime - timeTakenMillis;
+                //The time taken to do all the updates (in millis).
+                timeTakenMillis = (System.nanoTime() - startTime) / 1000000;
 
-            //Sleep the thread for the extra time if there is extra time
-            if(waitTime > 4) {
-                try {
-                    Thread.sleep(waitTime);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
+                //Extra time left over that loop needs to wait to get desired fps.
+                waitTime = targetTime - timeTakenMillis;
+
+                //Sleep the thread for the extra time if there is extra time
+                if (waitTime > 4) {
+                    try {
+                        Thread.sleep(waitTime);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
                 }
             }
-        }
     }
 
     /**
      * Handles all the drawing of objects onto the screen
      */
     public void render(){
-        gameScreen.repaint();
+
+        if(gameScreen != null) {
+            gameScreen.repaint();
+        }
     }
 
     /**
      * Updates all the logic of the game.
      */
     public void update(){
-        gameScreen.update();
+
+        if(gameScreen != null) {
+            gameScreen.update();
+        }
+    }
+
+    public void pauseGame(boolean paused){
+        this.paused = paused;
     }
 
     public void updateGameState(GameState nextState) {

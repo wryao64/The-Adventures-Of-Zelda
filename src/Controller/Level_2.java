@@ -4,7 +4,8 @@ import Object.Platform;
 
 public class Level_2 extends Level {
 
-    public Level_2(){
+    public Level_2() {
+
         //Set the player
         this.player = player;
 

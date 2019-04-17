@@ -5,6 +5,7 @@ import Object.Platform;
 public class Level_Boss extends Level {
 
     public Level_Boss(){
+
         //Set the player
         this.player = player;
 
