@@ -96,9 +96,9 @@ public class GameController implements Runnable {
             case LEVEL_BOSS:
                 gameScreen.setLevel(new Level_Boss(), "Boss");
                 break;
-            case PAUSE:
-                frame.setContentPane(new PauseScreen());
-                break;
+//            case PAUSE:
+//                frame.setContentPane(new PauseScreen());
+//                break;
             case END:
                 frame.setContentPane(new EndScreen(true));
                 break;

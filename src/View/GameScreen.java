@@ -11,7 +11,10 @@ import java.awt.event.KeyListener;
 
 
 public class GameScreen extends JPanel implements KeyListener {
-    GameController gameController;
+    private GameController gameController;
+    private PauseScreen pauseScreen;
+
+    Color glassPaneColor = new Color(0, 0, 0, 175);
 
     Level level;
     Boolean pause = false;
@@ -39,6 +42,10 @@ public class GameScreen extends JPanel implements KeyListener {
         topBar.add(levelLabel);
         topBar.add(Box.createRigidArea(new Dimension(700, 0)));
         // TODO: ADD LIVES HERE
+    }
+
+    public void setGameController(GameController controller){
+        gameController = controller;
     }
 
     public void setLevel(Level level, String levelName) {
@@ -73,15 +80,10 @@ public class GameScreen extends JPanel implements KeyListener {
     public void keyPressed(KeyEvent e) {
         int c = e.getKeyCode();
 
+        // pause game
         if (c == KeyEvent.VK_P) {
-            if (pause) {
-                // set the enemies to stop moving
-                // set gravity to zero
-            } else {
-                // tell the enemies to start moving again
-                // reset gravity
-            }
-            pause = !pause;
+            pause = true;
+            this.pausePressed();
             return; // prevents player movement from registering
         }
 
@@ -113,7 +115,41 @@ public class GameScreen extends JPanel implements KeyListener {
         level.setPlayerSpeedX(0);
     }
 
-    public void setGameController(GameController controller){
-        gameController = controller;
+    /**
+     * Creates pause dialog
+     */
+    public void pausePressed() {
+        JPanel glassPane = new JPanel() {
+            @Override
+            protected void paintComponent(Graphics g) {
+                g.setColor(getBackground());
+                g.fillRect(0, 0, getWidth(), getHeight());
+                super.paintComponent(g);
+            }
+        };
+        glassPane.setOpaque(false);
+        glassPane.setBackground(glassPaneColor);
+
+        // sets glass pane to give dimmed effect
+        RootPaneContainer window = (RootPaneContainer) SwingUtilities.getWindowAncestor(this);
+        window.setGlassPane(glassPane);
+        glassPane.setVisible(true);
+
+        // create modal JDialog for pause screen
+        pauseScreen = new PauseScreen((Window) window);
+
+        // TODO: set the enemies to stop moving
+        // TODO: set gravity to zero
+
+        glassPane.setVisible(false);
+        pause = false;
+    }
+
+    /**
+     *
+     */
+    public void resumeGame() {
+        // TODO: tell the enemies to start moving again
+        // TODO: reset gravity
     }
 }
