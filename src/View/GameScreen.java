@@ -82,7 +82,7 @@ public class GameScreen extends JPanel implements KeyListener {
 
         // pause game
         if (c == KeyEvent.VK_P) {
-            pause = true;
+            gameController.pauseGame(true);
             this.pausePressed();
             return; // prevents player movement from registering
         }
@@ -142,7 +142,7 @@ public class GameScreen extends JPanel implements KeyListener {
         // TODO: set gravity to zero
 
         glassPane.setVisible(false);
-        pause = false;
+        gameController.pauseGame(false);
     }
 
     /**
