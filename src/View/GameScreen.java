@@ -138,18 +138,8 @@ public class GameScreen extends JPanel implements KeyListener {
         // create modal JDialog for pause screen
         pauseScreen = new PauseScreen((Window) window);
 
-        // TODO: set the enemies to stop moving
-        // TODO: set gravity to zero
-
+        //
         glassPane.setVisible(false);
         gameController.pauseGame(false);
-    }
-
-    /**
-     *
-     */
-    public void resumeGame() {
-        // TODO: tell the enemies to start moving again
-        // TODO: reset gravity
     }
 }

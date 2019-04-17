@@ -99,7 +99,7 @@ public abstract class Level{
 
         //checkEnemyCollision();
         player.move();
-        System.out.println("Speed X " + player.getSpeedX());
+//        System.out.println("Speed X " + player.getSpeedX());
     }
 
     /*

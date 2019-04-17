@@ -1,9 +1,14 @@
 package View;
 
+import Controller.GameController;
+import Controller.GameState;
+
 import javax.swing.*;
 import java.awt.*;
 
 public class EndScreen extends JPanel {
+    private GameController gameController;
+
     private boolean hasWon;
 
     JLabel mainLabel;
@@ -17,7 +22,7 @@ public class EndScreen extends JPanel {
         this.setBackground(new Color(255, 234, 206));
         this.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
 
-        // Main heading
+        // Main headingk
         mainLabel = new JLabel("");
         mainLabel.setFont(new Font(mainLabel.getFont().getName(), mainLabel.getFont().getStyle(), 50));
         mainLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -32,10 +37,19 @@ public class EndScreen extends JPanel {
         buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.LINE_AXIS));
         buttonPanel.setBackground(new Color(255, 255, 255));
 
-        JButton welcomeButton = new JButton("HOME");
-        JButton highScoreButton = new JButton("HIGH SCORES");
+        // Home button
+        JButton homeButton = new JButton("HOME");
+        homeButton.addActionListener(e ->
+                gameController.updateGameState(GameState.WELCOME)
+        );
 
-        buttonPanel.add(welcomeButton);
+        // High score button
+        JButton highScoreButton = new JButton("HIGH SCORES");
+        highScoreButton.addActionListener(e -> {}
+                // high score window
+        );
+
+        buttonPanel.add(homeButton);
         buttonPanel.add(Box.createRigidArea(new Dimension(20, 0)));
         buttonPanel.add(highScoreButton);
 
@@ -59,6 +73,10 @@ public class EndScreen extends JPanel {
         // TODO: add buttons
         this.add(buttonPanel);
 
+    }
+
+    public void setGameController(GameController controller){
+        gameController = controller;
     }
 
     private void wonGameMessage() {
