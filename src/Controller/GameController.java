@@ -37,7 +37,7 @@ public class GameController implements Runnable {
 
         while (running) {
                 //Current time when loop is entered.
-                startTime = System.nanoTime();
+                startTime = System.currentTimeMillis();
 
                 if(!paused) {
                     update();
@@ -45,19 +45,25 @@ public class GameController implements Runnable {
                 }
 
                 //The time taken to do all the updates (in millis).
-                timeTakenMillis = (System.nanoTime() - startTime) / 1000000;
+                timeTakenMillis = (System.currentTimeMillis() - startTime);
 
                 //Extra time left over that loop needs to wait to get desired fps.
                 waitTime = targetTime - timeTakenMillis;
 
                 //Sleep the thread for the extra time if there is extra time
-                if (waitTime > 4) {
-                    try {
-                        Thread.sleep(waitTime);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
+                if (waitTime < 0) {
+                    waitTime = 2;
                 }
+
+                try {
+                    Thread.sleep(waitTime);
+                } catch (InterruptedException e) {
+//                    e.printStackTrace();
+
+                    String msg = String.format("Thread interrupted: %s", e.getMessage());
+                    System.out.println(msg);
+                }
+
             }
     }
 
@@ -66,7 +72,7 @@ public class GameController implements Runnable {
      */
     public void render(){
 
-        if(gameScreen != null) {
+        if(gameScreen != null && gameScreen.getLevel() != null) {
             gameScreen.repaint();
         }
     }
@@ -76,7 +82,7 @@ public class GameController implements Runnable {
      */
     public void update(){
 
-        if(gameScreen != null) {
+        if(gameScreen != null && gameScreen.getLevel() != null) {
             gameScreen.update();
         }
     }

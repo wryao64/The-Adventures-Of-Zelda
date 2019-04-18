@@ -8,6 +8,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.util.concurrent.CompletableFuture;
 
 
 public class GameScreen extends JPanel implements KeyListener {
@@ -48,9 +49,18 @@ public class GameScreen extends JPanel implements KeyListener {
         gameController = controller;
     }
 
+    public Level getLevel() {
+        return level;
+    }
     public void setLevel(Level level, String levelName) {
-        this.level = level;
-        levelLabel.setText("Level: " + levelName);
+        CompletableFuture<Void> future = CompletableFuture.runAsync(() -> {
+            try {
+                this.level = level;
+                levelLabel.setText("Level: " + levelName);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        });
     }
 
     /**
