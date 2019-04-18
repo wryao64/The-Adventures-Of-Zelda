@@ -13,6 +13,9 @@ public class Player extends Character {
     private double startPosX;
     private double startPosY;
 
+    //The direction the player is facing. Initialized as 1 (facing to the right).
+    private double playerDir = 1;
+
     private Weapon weapon;
     private int lives;
     boolean canJump;
@@ -21,6 +24,7 @@ public class Player extends Character {
         super(w,h,x,y);
         startPosY = x;
         startPosX = y;
+        weapon = new Weapon(10,250,7);
     }
 
     public void jump() {
@@ -42,11 +46,17 @@ public class Player extends Character {
         }
     }
 
-    /*
-    public void shootWeapon(int speedDir){
-        weapon.shoot(speedDir);
-    }*/
 
+    /**
+     * Player shoots the weapon it holds.
+     */
+    public void shootWeapon(){
+        weapon.shoot(playerDir,posX,posY);
+    }
+
+    public int giveDamage(){
+        return weapon.getAttackDamage();
+    }
     /*
     Resets the player back to the starting position in the level ie when they die
      */
@@ -65,7 +75,21 @@ public class Player extends Character {
 
     public double getMovementSpeed() { return movementSpeed; }
 
-    public void setCanJump(boolean jump) {canJump = jump;}
+    public void setCanJump(boolean jump) { canJump = jump; }
+
+    public void setPlayerDir(int direction) { playerDir = direction; }
+
+    /**
+     * Moves the player as well as any bullets the player has fired in play.
+     */
+    public void move(){
+        super.move();
+        weapon.moveShot();
+    }
+
+   public Weapon getWeapon() {
+         return weapon;
+   }
 
     /**
      * Painting the player. Called by the level class
@@ -73,6 +97,7 @@ public class Player extends Character {
     public void paintObject(Graphics2D g) {
         g.setColor(Color.RED);
         g.fill(new Rectangle2D.Double(posX, posY,width, height));
+        weapon.paint(g);
     }
 
 }
