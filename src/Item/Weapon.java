@@ -3,20 +3,24 @@ package Item;
 import Object.Character.Enemy;
 
 import java.awt.*;
+import java.awt.geom.Rectangle2D;
 
 public class Weapon extends Item {
 
     private int attackDamage;
-    private int shotSpeed = 1;
-    private int range = 15;
+    private int shotSpeed;
+    private int range;
 
-    private int playerPosX;
-    private int playerPosY;
-    private int speedDir;
+    private double shotPosX;
+    private double shotPosY;
 
-    private int shotPosX;
+    private double startPosX;
+    private double startPosY;
 
-    private int bulletSize = 5;
+    private double shotDir;
+    private int bulletSize = 12;
+
+    private boolean weaponShot = false;
 
     public Weapon(int damage, int range, int shotSpeed){
         this.attackDamage = damage;
@@ -24,26 +28,67 @@ public class Weapon extends Item {
         this.shotSpeed = shotSpeed;
     }
 
-    public void shoot(int speedDir, int posX, int posY){
-        this.playerPosX = posX;
-        this.playerPosY = posY;
-        this.speedDir = speedDir;
-    }
+    public void shoot(double shotDir, double posX, double posY) {
 
-    public void moveShot(){
-        //If the player is moving to the right and the range has not been reached.
-        if(shotPosX < playerPosX + range && speedDir > 0){
-            shotPosX =+ shotSpeed;
-        }else if (shotPosX < playerPosX - range && speedDir < 0){
-            shotPosX += shotSpeed;
+        if(!weaponShot) {
+            //Sets the direction to shoot as either to the right or to the left depending on which direction the player is
+            //facing.
+            this.shotDir = shotDir;
+
+            //Set the x start position of the weapon's shots depending on which direction the player is facing.
+            if (shotDir > 0) {
+                this.startPosX = posX + 50;
+            } else {
+                this.startPosX = posX;
+            }
+
+            //Initialise the current x position of the weapon's shots as the start position of the weapon.
+            this.shotPosX = startPosX;
+
+            //Initialise the current and start y position of the player, these will not change.
+            this.startPosY = posY + 20;
+            this.shotPosY = startPosY;
+
+            weaponShot = true;
         }
     }
 
-    public void dealDamage(Enemy enemy){
-        enemy.takeDamage(attackDamage);
+    /**
+     * Moving the bullet fired from the weapon. Increments in the direction where it was shot while the bullet is still
+     * in the range of the weapon.
+     */
+    public void moveShot() {
+        if(weaponShot == true) {
+            if((shotPosX > (startPosX - range))&& shotDir < 0 || (shotPosX < (startPosX + range)) && shotDir >0) {
+                shotPosX = shotPosX + shotSpeed * shotDir;
+            }else{
+                //Once the bullet leaves the maximum range, stop it's movement.
+                weaponShot = false;
+            }
+        }
     }
-    public void paint(Graphics2D g){
-        g.setColor(Color.YELLOW);
-        g.fillRect(shotPosX,playerPosY,bulletSize,bulletSize);
+
+    /**
+     *Returns shape that spans the whole bounding box of the object.
+     */
+    public Rectangle2D getBounds(){
+        return new Rectangle2D.Double(shotPosX,shotPosY,bulletSize,bulletSize);
+    }
+
+    public void setWeaponShot(boolean shot){ weaponShot = shot; }
+
+    public int getAttackDamage(){
+        return attackDamage;
+    }
+
+    /**
+     * Paint the bullet fired by the gun.
+     */
+    public void paint(Graphics2D g) {
+        //Only paint the bullets if they are within the range of the player and if the weapon is shot.
+        if(weaponShot) {
+            g.setColor(Color.GRAY);
+            g.fill(new Rectangle2D.Double(shotPosX, shotPosY, bulletSize, bulletSize));
+        }
     }
 }

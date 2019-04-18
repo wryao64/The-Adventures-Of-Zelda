@@ -96,13 +96,18 @@ public class GameScreen extends JPanel implements KeyListener {
         // PLAYER MOVEMENT
         if (c == KeyEvent.VK_LEFT) {
             level.setPlayerSpeedX(-level.getMovementSpeed());
+            level.setPlayerDirection(-1);
         }
         if (c == KeyEvent.VK_RIGHT) {
             level.setPlayerSpeedX(level.getMovementSpeed());
+            level.setPlayerDirection(1);
         }
         if (c == KeyEvent.VK_UP) {
             level.setPlayerJump();
             level.playercanJump(false);
+        }
+        if (c == KeyEvent.VK_SPACE) {
+            level.setPlayerShoot();
         }
 
         // SCREEN CHANGE

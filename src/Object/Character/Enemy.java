@@ -19,6 +19,8 @@ public class Enemy extends Character {
 
     public void attack() { }
 
+    public int getHealth() { return health; }
+
     public void takeDamage(int damage){
         health = health-damage;
         if(health <= 0){
