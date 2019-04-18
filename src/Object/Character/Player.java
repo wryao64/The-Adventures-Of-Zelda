@@ -7,7 +7,7 @@ import java.awt.geom.Rectangle2D;
 
 public class Player extends Character {
 
-    private final int jumpHeight = 12;
+    private final int jumpHeight = 17;
     private final double movementSpeed = 3.5;
 
     private double startPosX;

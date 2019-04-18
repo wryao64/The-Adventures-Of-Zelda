@@ -3,26 +3,51 @@ package Controller;
 import Object.Character.Enemy;
 import Object.Character.Player;
 import Object.Platform;
-
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class Level_Tutorial extends Level{
 
+    int [][] tileMap = {
+            {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
+            {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+            {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+            {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+            {1,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,1},
+            {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+            {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,0,1},
+            {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+            {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,0,0,0,0,1},
+            {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+            {1,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,0,0,0,0,0,0,0,1},
+            {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+            {1,0,0,0,0,0,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+            {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+            {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1}
+    };
+
     public Level_Tutorial(){
-
         //Set the player
-        player = new Player(30,30,400,50);
-
-        //Create the platforms
-        platforms = new ArrayList<Platform>();
-        platforms.add(new Platform(100,30,350,410));
-        platforms.add(new Platform(120,30,200,360));
-        platforms.add(new Platform(100,30,120,300));
-        platforms.add(new Platform(100,30,260,250));
-
+        player = new Player(50,50,70,600);
+        //platforms = createPlatforms();
+        platforms = createPlatforms();
         //Create the puzzle chest
         //Create the enemies
-        //enemies = new ArrayList<Enemy>();
-        //enemies.add(new Enemy(30,30,380,410));
     }
+
+
+    public ArrayList<Platform> createPlatforms(){
+        ArrayList<Platform> platforms = new ArrayList<Platform>();
+
+        for (int i  = 0; i<24; i++){
+            for (int j = 0; j<15; j++){
+                if(tileMap[j][i] == 1){
+                    Platform newPlatform = new Platform(i *50, j*50 + 50);
+                    platforms.add(newPlatform);
+                }
+            }
+        }
+        return platforms;
+    }
+
 }
