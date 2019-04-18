@@ -20,7 +20,6 @@ public class GameController implements Runnable {
 
     private boolean paused = false;
 
-    private BufferStrategy bs;
     JFrame frame;
 
     @Override
@@ -36,7 +35,6 @@ public class GameController implements Runnable {
         runGame();
 
         while (running) {
-
                 if(!paused) {
                     //Current time when loop is entered.
                     startTime = System.nanoTime();
@@ -46,7 +44,7 @@ public class GameController implements Runnable {
                         update();
                         render();
                     }
-
+                  
                     //The time taken to do all the updates (in millis).
                     timeTakenMillis = (System.nanoTime() - startTime) / 1000000;
 
@@ -62,8 +60,7 @@ public class GameController implements Runnable {
                         }
                     }
                 }
-
-            }
+          }
     }
 
     /**
@@ -71,7 +68,7 @@ public class GameController implements Runnable {
      */
     public void render(){
 
-        if(gameScreen != null) {
+        if(gameScreen != null && gameScreen.getLevel() != null) {
             gameScreen.repaint();
         }
     }
@@ -81,7 +78,7 @@ public class GameController implements Runnable {
      */
     public void update(){
 
-        if(gameScreen != null) {
+        if(gameScreen != null && gameScreen.getLevel() != null) {
             gameScreen.update();
         }
     }
