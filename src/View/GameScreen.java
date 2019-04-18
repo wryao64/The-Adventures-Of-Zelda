@@ -43,6 +43,8 @@ public class GameScreen extends JPanel implements KeyListener {
         topBar.add(levelLabel);
         topBar.add(Box.createRigidArea(new Dimension(700, 0)));
         // TODO: ADD LIVES HERE
+
+            System.out.println("Width: " + WIDTH + " Height: " + HEIGHT);
     }
 
     public void setGameController(GameController controller){
@@ -61,6 +63,10 @@ public class GameScreen extends JPanel implements KeyListener {
                 e.printStackTrace();
             }
         });
+    }
+
+    public Level getLevel(){
+        return level;
     }
 
     /**
@@ -100,13 +106,18 @@ public class GameScreen extends JPanel implements KeyListener {
         // PLAYER MOVEMENT
         if (c == KeyEvent.VK_LEFT) {
             level.setPlayerSpeedX(-level.getMovementSpeed());
+            level.setPlayerDirection(-1);
         }
         if (c == KeyEvent.VK_RIGHT) {
             level.setPlayerSpeedX(level.getMovementSpeed());
+            level.setPlayerDirection(1);
         }
         if (c == KeyEvent.VK_UP) {
             level.setPlayerJump();
             level.playercanJump(false);
+        }
+        if (c == KeyEvent.VK_SPACE) {
+            level.setPlayerShoot();
         }
 
         // SCREEN CHANGE

@@ -10,9 +10,9 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
-/*
-Class that handles the co-ordination between the player, the enemies on the screen and the platforms on the screen. Handles
-the logistics of the level like the current score, which enemies are killed and the number of lives of the player.
+/**
+ * Class that handles the co-ordination between the player, the enemies on the screen and the platforms on the screen. Handles
+ * the logistics of the level like the current score, which enemies are killed and the number of lives of the player.
  */
 public abstract class Level{
 
@@ -26,6 +26,7 @@ public abstract class Level{
 
     protected int gravity = 1;
     protected int maxSpeedY = 15;
+
 
     /**
      * Collisions between different types of objects.
@@ -53,13 +54,16 @@ public abstract class Level{
                 player.setSpeedX(0);
             }
             //Player collides with the left edge of the platform
-            if(player.getBounds().intersects(p.getLeft()) && player.getSpeedX() > 0){
+            if(player.getBounds().intersects(p.getLeft()) && player.getSpeedX() > 0) {
                 player.setSpeedX(0);
             }
         }
     }
 
-    public void checkEnemyCollision() {
+    /**
+     * Checks if the enemies shots hit the player.
+     */
+    public void checkEnemyShotCollision() {
         for (Enemy e : enemies) {
             if (player.getBounds().intersects(e.getBounds())) {
                 player.loseLife();
@@ -74,6 +78,27 @@ public abstract class Level{
     }
 
     /**
+     * Checks if the players shots hit the enemies.
+     */
+    public void checkPlayerShotCollision(){
+        /*for (Enemy e : enemies) {
+            if (player.getWeapon().getBounds().intersects(e.getBounds())) {
+                e.takeDamage(player.giveDamage());
+                //remove enemy from the arraylist?
+                if(e.getHealth() <0) {
+                    enemies.remove(e);
+                }
+            }
+        }*/
+
+        for (Platform p : platforms) {
+            if (player.getWeapon().getBounds().intersects(p.getBounds())) {
+                player.getWeapon().setWeaponShot(false);
+            }
+        }
+    }
+
+    /**
      * Manipulating the player. Used by the keylisteners in the gamescreen class.
      */
     public void setPlayerSpeedX(double dx){
@@ -82,9 +107,13 @@ public abstract class Level{
 
     public void setPlayerJump(){ player.jump(); }
 
+    public void setPlayerShoot() { player.shootWeapon();}
+
     public double getMovementSpeed(){ return player.getMovementSpeed();}
 
     public void playercanJump(boolean jump) {player.setCanJump(jump);}
+
+    public void setPlayerDirection( int direction) { player.setPlayerDir(direction); }
 
 
     /*
@@ -94,12 +123,13 @@ public abstract class Level{
 
         //First check collisions with blocks and then move the player using updated x and y values.
         player.fall(gravity,maxSpeedY);
+
         checkHorizPlatformCollision();
         checkVertPlatformCollision();
-
+        checkPlayerShotCollision();
         //checkEnemyCollision();
+
         player.move();
-//        System.out.println("Speed X " + player.getSpeedX());
     }
 
     /*
@@ -110,6 +140,7 @@ public abstract class Level{
         for (Platform p : platforms){
             p.paintObject(g);
         }
+
     }
 
 }
