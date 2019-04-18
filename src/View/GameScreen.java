@@ -51,9 +51,6 @@ public class GameScreen extends JPanel implements KeyListener {
         gameController = controller;
     }
 
-    public Level getLevel() {
-        return level;
-    }
     public void setLevel(Level level, String levelName) {
         CompletableFuture<Void> future = CompletableFuture.runAsync(() -> {
             try {
