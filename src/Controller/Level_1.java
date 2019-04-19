@@ -1,8 +1,10 @@
 package Controller;
 
+import Object.Character.Enemy;
 import Object.Character.Player;
 
 public class Level_1 extends Level {
+    private final int ENEMY_SPEED = 8;
 
     private int[][] tileMap = {
             {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
@@ -34,5 +36,8 @@ public class Level_1 extends Level {
         // TODO: Create the puzzle chest
 
         enemies = createEnemies(tileMap);
+        for (Enemy e : enemies) {
+            e.setSpeedX(ENEMY_SPEED);
+        }
     }
 }

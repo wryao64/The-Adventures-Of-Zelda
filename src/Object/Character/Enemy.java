@@ -4,10 +4,13 @@ import java.awt.*;
 import java.awt.geom.Rectangle2D;
 
 public class Enemy extends Character {
+    private final int SPEED_Y = 0;
+
     private int health;
 
     public Enemy(int w, int h, int x, int y){
         super(w,h,x,y);
+        this.setSpeedY(SPEED_Y);
     }
 
     /**
