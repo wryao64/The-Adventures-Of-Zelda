@@ -12,13 +12,13 @@ public class Level_Tutorial extends Level{
             {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
             {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
             {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-            {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+            {1,0,0,0,0,0,0,0,0,0,0,0,0,2,0,0,0,0,0,0,0,0,0,1},
             {1,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,0,0,1},
             {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
             {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,0,1},
             {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
             {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,0,0,0,0,1},
-            {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+            {1,0,0,0,0,0,0,0,0,0,0,0,0,2,0,0,0,0,0,0,0,0,0,1},
             {1,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,0,0,0,0,0,0,0,1},
             {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
             {1,0,0,0,0,0,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
@@ -32,7 +32,9 @@ public class Level_Tutorial extends Level{
         //platforms = createPlatforms();
         platforms = createPlatforms();
         //Create the puzzle chest
+
         //Create the enemies
+        enemies = createEnemies();
     }
 
 
@@ -42,12 +44,26 @@ public class Level_Tutorial extends Level{
         for (int i  = 0; i<24; i++){
             for (int j = 0; j<15; j++){
                 if(tileMap[j][i] == 1){
-                    Platform newPlatform = new Platform(i *50, j*50 + 50);
+                    Platform newPlatform = new Platform(i *50, (j + 1) * 50);
                     platforms.add(newPlatform);
                 }
             }
         }
         return platforms;
+    }
+
+    public ArrayList<Enemy> createEnemies() {
+        ArrayList<Enemy> enemies = new ArrayList<>();
+
+        for (int i  = 0; i<24; i++){
+            for (int j = 0; j<15; j++){
+                if(tileMap[j][i] == 2){
+                    Enemy newEnemy = new Enemy(50, 50, i * 50, (j + 1) * 50);
+                    enemies.add(newEnemy);
+                }
+            }
+        }
+        return enemies;
     }
 
 }
