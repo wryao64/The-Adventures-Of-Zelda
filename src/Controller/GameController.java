@@ -15,9 +15,7 @@ public class GameController implements Runnable {
     private WelcomeScreen welcomeScreen;
     private GameScreen gameScreen;
     private EndScreen endScreen;
-
     private GameState currentState;
-
     private boolean paused = false;
 
     JFrame frame;

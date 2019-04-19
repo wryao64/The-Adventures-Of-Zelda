@@ -1,7 +1,5 @@
 package Item;
 
-import Object.Character.Enemy;
-
 import java.awt.*;
 import java.awt.geom.Rectangle2D;
 
@@ -10,16 +8,12 @@ public class Weapon extends Item {
     private int attackDamage;
     private int shotSpeed;
     private int range;
-
     private double shotPosX;
     private double shotPosY;
-
     private double startPosX;
     private double startPosY;
-
     private double shotDir;
     private int bulletSize = 12;
-
     private boolean weaponShot = false;
 
     public Weapon(int damage, int range, int shotSpeed){

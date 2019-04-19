@@ -6,7 +6,9 @@ public class Boss extends Enemy {
         super(w,h,x,y);
     }
 
-    public void specialAttack(){
+    public void attack(){
 
     }
+
+
 }
