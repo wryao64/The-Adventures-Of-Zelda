@@ -145,4 +145,31 @@ public abstract class Level {
         }
     }
 
+    public ArrayList<Platform> createPlatforms(int[][] tileMap){
+        ArrayList<Platform> platforms = new ArrayList<Platform>();
+
+        for (int i  = 0; i<24; i++){
+            for (int j = 0; j<15; j++){
+                if(tileMap[j][i] == 1){
+                    Platform newPlatform = new Platform(i *50, (j + 1) * 50);
+                    platforms.add(newPlatform);
+                }
+            }
+        }
+        return platforms;
+    }
+
+    public ArrayList<Enemy> createEnemies(int[][] tileMap) {
+        ArrayList<Enemy> enemies = new ArrayList<>();
+
+        for (int i  = 0; i<24; i++){
+            for (int j = 0; j<15; j++){
+                if(tileMap[j][i] == 2){
+                    Enemy newEnemy = new Enemy(50, 50, i * 50, (j + 1) * 50);
+                    enemies.add(newEnemy);
+                }
+            }
+        }
+        return enemies;
+    }
 }
