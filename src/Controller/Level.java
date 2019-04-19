@@ -140,8 +140,10 @@ public abstract class Level {
             p.paintObject(g);
         }
 
-        for (Enemy e : enemies) {
-            e.paintObject(g);
+        if (enemies != null) {
+            for (Enemy e : enemies) {
+                e.paintObject(g);
+            }
         }
     }
 
@@ -160,6 +162,7 @@ public abstract class Level {
     }
 
     public ArrayList<Enemy> createEnemies(int[][] tileMap) {
+
         ArrayList<Enemy> enemies = new ArrayList<>();
 
         for (int i  = 0; i<24; i++){

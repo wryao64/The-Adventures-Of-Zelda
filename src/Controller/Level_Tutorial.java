@@ -1,9 +1,6 @@
 package Controller;
 
-import Object.Character.Enemy;
 import Object.Character.Player;
-import Object.Platform;
-import java.util.ArrayList;
 
 public class Level_Tutorial extends Level {
 
@@ -28,12 +25,11 @@ public class Level_Tutorial extends Level {
     public Level_Tutorial(){
         //Set the player
         player = new Player(50,50,70,600);
-        //platforms = createPlatforms();
-        platforms = createPlatforms(tileMap);
-        //Create the puzzle chest
 
-        //Create the enemies
+        platforms = createPlatforms(tileMap);
+
+        // TODO: Create the puzzle chest
+
         enemies = createEnemies(tileMap);
     }
-
 }
