@@ -3,6 +3,7 @@ package View;
 import Controller.GameController;
 import Controller.GameState;
 import Controller.Level;
+import jdk.nashorn.internal.scripts.JD;
 
 import javax.swing.*;
 import java.awt.*;
@@ -125,6 +126,10 @@ public class GameScreen extends JPanel implements KeyListener {
         if (c == KeyEvent.VK_E) {
             gameController.updateGameState(GameState.END);
         }
+        // Shortcut: Exit game
+        if (c == KeyEvent.VK_ESCAPE) {
+            this.exitPressed();
+        }
     }
 
     @Override
@@ -160,5 +165,24 @@ public class GameScreen extends JPanel implements KeyListener {
         // create modal JDialog for pause screen
         pauseScreen = new PauseScreen((Window) window, gameController);
         glassPane.setVisible(false);
+    }
+
+    /**
+     * Creates exit dialog
+     */
+    private void exitPressed() {
+        Object[] options = {"Yes", "No"};
+        int response = JOptionPane.showOptionDialog(this,
+                "Are you sure you would like to exit the game?",
+                "Exit Game",
+                JOptionPane.YES_NO_OPTION,
+                JOptionPane.QUESTION_MESSAGE,
+                null,
+                options,
+                options[0]);
+        if (response == JOptionPane.YES_OPTION) {
+            System.exit(0);
+        }
+
     }
 }
