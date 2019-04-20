@@ -15,6 +15,8 @@ import java.util.ArrayList;
  * Handles the logistics of the level like the current score, which enemies are killed and the number of lives of the player.
  */
 public abstract class Level {
+    private final int PLATFORM_SIZE = 50;
+    private final int DIFF = 5;
 
     BufferedImage background;
 
@@ -129,6 +131,7 @@ public abstract class Level {
         //checkEnemyCollision();
 
         player.move();
+        enemyMove();
     }
 
     /**
@@ -174,5 +177,44 @@ public abstract class Level {
             }
         }
         return enemies;
+    }
+
+    /**
+     * Enemy movement
+     */
+    private void enemyMove() {
+        for (Enemy e : enemies) {
+            // finds next platform the enemy will move to
+            Platform p = findPlatform(e);
+
+            if (p == null) { // no further platform
+                int dir = e.getDirection();
+                e.setDirection(1 - dir); // reverse direction
+                e.setSpeedX(-e.getSpeedX());
+            }
+
+            e.move();
+        }
+    }
+
+    /**
+     * Finds the next platform the enemy will move to
+     * @param e Enemy object
+     * @return Next platform the enemy will move to. Null if no platform.
+     */
+    private Platform findPlatform(Enemy e) {
+        for (Platform p : platforms) {
+            // moving right
+            if (e.getDirection() == 1) {
+                if (p.getBounds().intersects(e.getRightEdge())) {
+                    return p;
+                }
+            } else { // moving left
+                if (p.getBounds().intersects(e.getBottomLeftEdge())) {
+                    return p;
+                }
+            }
+        }
+        return null;
     }
 }
