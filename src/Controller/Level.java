@@ -104,9 +104,11 @@ public abstract class Level {
     /**
      * Manipulating the player. Used by the keyListeners in the GameScreen class.
      */
-    public void setPlayerSpeedX(double dx) {
-        player.setSpeedX(dx);
-    }
+
+    public void setPlayerSpeedX(double dx){ player.setSpeedX(dx); }
+
+    public void setPayerSpeedY(double dy) { player.setSpeedY(dy); }
+
 
     public void setPlayerJump() { player.jump(); }
 

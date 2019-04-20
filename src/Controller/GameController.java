@@ -16,7 +16,7 @@ public class GameController implements Runnable {
     private GameScreen gameScreen;
     private EndScreen endScreen;
     private GameState currentState;
-    private boolean paused = false;
+    private volatile boolean paused = false;
 
     JFrame frame;
 
@@ -33,6 +33,7 @@ public class GameController implements Runnable {
         runGame();
 
         while (running) {
+
                 if(!paused) {
                     //Current time when loop is entered.
                     startTime = System.nanoTime();
@@ -111,9 +112,9 @@ public class GameController implements Runnable {
             case LEVEL_BOSS:
                 gameScreen.setLevel(new Level_Boss(), "Boss");
                 break;
-//            case PAUSE:
-//                frame.setContentPane(new PauseScreen());
-//                break;
+         //   case PAUSE:
+  //             frame.setContentPane(new PauseScreen());
+    //           break;
             case END:
                 endScreen = new EndScreen(true);
                 frame.setContentPane(endScreen);
@@ -141,5 +142,9 @@ public class GameController implements Runnable {
         frame.setContentPane(welcomePanel);
 //        frame.getContentPane().add(welcomePanel);
         frame.setVisible(true);
+    }
+
+    public void setPaused(boolean paused) {
+        this.paused = paused;
     }
 }
