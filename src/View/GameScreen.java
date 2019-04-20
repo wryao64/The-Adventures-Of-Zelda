@@ -14,7 +14,8 @@ import java.util.concurrent.CompletableFuture;
 
 public class GameScreen extends JPanel implements KeyListener {
     private GameController gameController;
-    private PauseScreen pauseScreen;
+    private JPanel glassPane;
+    private RootPaneContainer window;
 
     Color glassPaneColor = new Color(0, 0, 0, 175);
 
@@ -128,6 +129,7 @@ public class GameScreen extends JPanel implements KeyListener {
         }
         // Shortcut: Exit game
         if (c == KeyEvent.VK_ESCAPE) {
+            gameController.pauseGame(true);
             this.exitPressed();
         }
     }
@@ -138,15 +140,14 @@ public class GameScreen extends JPanel implements KeyListener {
     }
 
     /**
-     * Creates pause dialog
+     * Pause game
      */
-    public void pausePressed() {
-
+    private void pauseGame() {
         //Set the players movement to zero (prevents residual movement once resumed)
         level.setPlayerSpeedX(0);
         level.setPayerSpeedY(0);
 
-        JPanel glassPane = new JPanel() {
+        glassPane = new JPanel() {
             @Override
             protected void paintComponent(Graphics g) {
                 g.setColor(getBackground());
@@ -158,12 +159,19 @@ public class GameScreen extends JPanel implements KeyListener {
         glassPane.setBackground(glassPaneColor);
 
         // sets glass pane to give dimmed effect
-        RootPaneContainer window = (RootPaneContainer) SwingUtilities.getWindowAncestor(this);
+
         window.setGlassPane(glassPane);
         glassPane.setVisible(true);
+    }
 
+    /**
+     * Creates pause dialog
+     */
+    private void pausePressed() {
         // create modal JDialog for pause screen
-        pauseScreen = new PauseScreen((Window) window, gameController);
+        window = (RootPaneContainer) SwingUtilities.getWindowAncestor(this);
+        this.pauseGame();
+        new PauseScreen((Window) window, gameController);
         glassPane.setVisible(false);
     }
 
@@ -171,18 +179,9 @@ public class GameScreen extends JPanel implements KeyListener {
      * Creates exit dialog
      */
     private void exitPressed() {
-        Object[] options = {"Yes", "No"};
-        int response = JOptionPane.showOptionDialog(this,
-                "Are you sure you would like to exit the game?",
-                "Exit Game",
-                JOptionPane.YES_NO_OPTION,
-                JOptionPane.QUESTION_MESSAGE,
-                null,
-                options,
-                options[0]);
-        if (response == JOptionPane.YES_OPTION) {
-            System.exit(0);
-        }
-
+        window = (RootPaneContainer) SwingUtilities.getWindowAncestor(this);
+        this.pauseGame();
+        new ExitDialog((Window) window, gameController);
+        glassPane.setVisible(false);
     }
 }
