@@ -206,10 +206,16 @@ public abstract class Level {
         for (Platform p : platforms) {
             // moving right
             if (e.getDirection() == 1) {
+                if (p.getBounds().intersects(e.getRight())) {
+                    return null;
+                }
                 if (p.getBounds().intersects(e.getRightEdge())) {
                     return p;
                 }
             } else { // moving left
+                if (p.getBounds().intersects(e.getLeft())) {
+                    return null;
+                }
                 if (p.getBounds().intersects(e.getBottomLeftEdge())) {
                     return p;
                 }
