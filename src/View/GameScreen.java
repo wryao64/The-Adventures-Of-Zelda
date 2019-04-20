@@ -44,7 +44,7 @@ public class GameScreen extends JPanel implements KeyListener {
         topBar.add(Box.createRigidArea(new Dimension(700, 0)));
         // TODO: ADD LIVES HERE
 
-            System.out.println("Width: " + WIDTH + " Height: " + HEIGHT);
+//            System.out.println("Width: " + WIDTH + " Height: " + HEIGHT);
     }
 
     public void setGameController(GameController controller){
@@ -111,7 +111,7 @@ public class GameScreen extends JPanel implements KeyListener {
         }
         if (c == KeyEvent.VK_UP) {
             level.setPlayerJump();
-            level.playercanJump(false);
+            level.playerCanJump(false);
         }
         if (c == KeyEvent.VK_SPACE) {
             level.setPlayerShoot();

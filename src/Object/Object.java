@@ -5,6 +5,7 @@ import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 
 public abstract class Object {
+    private final int PADDING_WIDTH = 1;
 
     protected double posX, posY;
     protected double width, height;
@@ -40,6 +41,14 @@ public abstract class Object {
 
     public Rectangle2D getRight(){
         return new Rectangle2D.Double(posX +width -4, posY +4, 4, height-8);
+    }
+
+    public Rectangle2D getBottomLeftEdge() {
+        return new Rectangle2D.Double(posX - PADDING_WIDTH, posY + height, PADDING_WIDTH, PADDING_WIDTH);
+    }
+
+    public Rectangle2D getRightEdge() {
+        return new Rectangle2D.Double(posX + width, posY + height, PADDING_WIDTH, PADDING_WIDTH);
     }
 
     /**
