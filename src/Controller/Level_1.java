@@ -4,7 +4,7 @@ import Object.Character.Enemy;
 import Object.Character.Player;
 
 public class Level_1 extends Level {
-    private final int ENEMY_SPEED = 8;
+    private final int ENEMY_SPEED = 3;
 
     private int[][] tileMap = {
             {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
