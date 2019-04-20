@@ -4,8 +4,6 @@ import Object.Platform;
 import Object.Character.Enemy;
 import Object.Character.Player;
 import Item.Puzzle;
-
-
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
@@ -26,9 +24,10 @@ public abstract class Level {
     protected ArrayList<Platform> platforms;
     protected Puzzle puzzle;
 
+    //Gravity
     protected int gravity = 1;
     protected int maxSpeedY = 15;
-
+    protected int[][] tileMap;
 
     /**
      * Collisions between different types of objects.
@@ -63,7 +62,7 @@ public abstract class Level {
     }
 
     /**
-     * Checks if the enemies shots hit the player.
+     * Checks if the enemy's shots hit the player.
      */
     public void checkEnemyShotCollision() {
         for (Enemy e : enemies) {
@@ -87,8 +86,10 @@ public abstract class Level {
             if (player.getWeapon().getBounds().intersects(e.getBounds())) {
                 e.takeDamage(player.giveDamage());
                 //remove enemy from the arraylist?
-                if(e.getHealth() <0) {
+                if(e.getHealth() < 0) {
                     enemies.remove(e);
+                    //Add the points the enemy is worth to the players score.
+                    player.addToScore(e.getPoints());
                 }
             }
         }*/
@@ -99,7 +100,7 @@ public abstract class Level {
             }
         }
     }
-
+  
     /**
      * Manipulating the player. Used by the keyListeners in the GameScreen class.
      */
@@ -117,19 +118,16 @@ public abstract class Level {
 
     public void setPlayerDirection( int direction) { player.setPlayerDir(direction); }
 
-
     /**
      * Updating all the logic in the level/updates the values of the variables.
      */
     public void updateLevel() {
         //First check collisions with blocks and then move the player using updated x and y values.
         player.fall(gravity,maxSpeedY);
-
         checkHorizPlatformCollision();
         checkVertPlatformCollision();
         checkPlayerShotCollision();
         //checkEnemyCollision();
-
         player.move();
         enemyMove();
     }
@@ -150,7 +148,10 @@ public abstract class Level {
         }
     }
 
-    public ArrayList<Platform> createPlatforms(int[][] tileMap){
+    /**
+     * Used to draw the platforms from the particular tilemap of the level.
+     */
+    public ArrayList<Platform> createPlatforms(){
         ArrayList<Platform> platforms = new ArrayList<Platform>();
 
         for (int i  = 0; i<24; i++){
@@ -164,7 +165,7 @@ public abstract class Level {
         return platforms;
     }
 
-    public ArrayList<Enemy> createEnemies(int[][] tileMap) {
+    public ArrayList<Enemy> createEnemies() {
 
         ArrayList<Enemy> enemies = new ArrayList<>();
 

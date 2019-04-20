@@ -1,5 +1,7 @@
 package Object.Character;
 
+import Item.Weapon;
+
 import java.awt.*;
 import java.awt.geom.Rectangle2D;
 
@@ -9,6 +11,13 @@ public class Enemy extends Character {
     private int direction = 1; // facing right
     private int health;
 
+    protected int health;
+    protected int damage;
+    protected Weapon weapon;
+
+    //Amount of score points the enemy is worth.
+    protected int points;
+
     public Enemy(int w, int h, int x, int y){
         super(w,h,x,y);
         this.setSpeedY(SPEED_Y);
@@ -17,7 +26,7 @@ public class Enemy extends Character {
     public int getDirection() {
         return direction;
     }
-
+  
     public void setDirection(int dir) {
         direction = dir;
     }
@@ -31,15 +40,14 @@ public class Enemy extends Character {
         g.setColor(Color.BLUE);
         g.fill(new Rectangle2D.Double(posX, posY,width, height));
     }
+  
+    public int getPoints() { return points; }
 
     public void attack() { }
 
     public int getHealth() { return health; }
 
-    public void takeDamage(int damage) {
-        health = health-damage;
-        if(health <= 0){
-            //die
-        }
+    public void takeDamage(int damage){
+        health = health - damage;
     }
 }

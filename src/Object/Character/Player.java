@@ -4,6 +4,7 @@ import Item.Weapon;
 
 import java.awt.*;
 import java.awt.geom.Rectangle2D;
+import java.util.HashMap;
 
 public class Player extends Character {
 
@@ -19,6 +20,10 @@ public class Player extends Character {
     private Weapon weapon;
     private int lives;
     boolean canJump;
+
+    private int enemiesKilled = 0;
+    private int bossesKilled = 0;
+    private int orbsCollected = 0;
 
     public Player(double w, double h, double x, double y){
         super(w,h,x,y);
@@ -46,7 +51,6 @@ public class Player extends Character {
         }
     }
 
-
     /**
      * Player shoots the weapon it holds.
      */
@@ -65,19 +69,33 @@ public class Player extends Character {
         posY = startPosY;
     }
 
-    public int getLives(){
-        return lives;
-    }
+    /**
+     * Getters and Setters.
+     */
+    public int getLives(){ return lives; }
 
-    public void loseLife(){
-        lives--;
-    }
+    public void loseLife(){ lives--; }
+
+    public void addToScore(int points) { enemiesKilled ++; }
 
     public double getMovementSpeed() { return movementSpeed; }
 
     public void setCanJump(boolean jump) { canJump = jump; }
 
     public void setPlayerDir(int direction) { playerDir = direction; }
+
+    /**
+     * Returns all the stats necessary to calculated the final score.
+     */
+    public HashMap<String,Integer> getFinalStats() {
+
+        HashMap<String,Integer> scoreMap = new HashMap<>();
+        scoreMap.put("Enemies Slain: ", enemiesKilled);
+        scoreMap.put("Bosses Slain: ", bossesKilled);
+        scoreMap.put("Orbs Collected: ", orbsCollected);
+        scoreMap.put("Lives left: ", lives);
+        return scoreMap;
+    }
 
     /**
      * Moves the player as well as any bullets the player has fired in play.
