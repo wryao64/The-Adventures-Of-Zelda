@@ -109,7 +109,7 @@ public class GameScreen extends JPanel implements KeyListener {
         }
         if (c == KeyEvent.VK_UP) {
             level.setPlayerJump();
-            level.playercanJump(false);
+            level.playerCanJump(false);
         }
         if (c == KeyEvent.VK_SPACE) {
             level.setPlayerShoot();
