@@ -84,6 +84,7 @@ public class Player extends Character {
 
     public void setPlayerDir(int direction) { playerDir = direction; }
 
+
     /**
      * Returns all the stats necessary to calculated the final score.
      */
@@ -116,6 +117,9 @@ public class Player extends Character {
         g.setColor(Color.RED);
         g.fill(new Rectangle2D.Double(posX, posY,width, height));
         weapon.paint(g);
-    }
+
+        /*g.setColor(Color.BLUE);
+        g.draw(getBounds());*/
+}
 
 }

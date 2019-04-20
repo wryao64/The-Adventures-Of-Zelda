@@ -43,8 +43,6 @@ public class GameScreen extends JPanel implements KeyListener {
         topBar.add(levelLabel);
         topBar.add(Box.createRigidArea(new Dimension(700, 0)));
         // TODO: ADD LIVES HERE
-
-            System.out.println("Width: " + WIDTH + " Height: " + HEIGHT);
     }
 
     public void setGameController(GameController controller){
@@ -137,6 +135,11 @@ public class GameScreen extends JPanel implements KeyListener {
      * Creates pause dialog
      */
     public void pausePressed() {
+
+        //Set the players movement to zero (prevents residual movement once resumed)
+        level.setPlayerSpeedX(0);
+        level.setPayerSpeedY(0);
+
         JPanel glassPane = new JPanel() {
             @Override
             protected void paintComponent(Graphics g) {
@@ -154,10 +157,7 @@ public class GameScreen extends JPanel implements KeyListener {
         glassPane.setVisible(true);
 
         // create modal JDialog for pause screen
-        pauseScreen = new PauseScreen((Window) window);
-
-        //
+        pauseScreen = new PauseScreen((Window) window, gameController);
         glassPane.setVisible(false);
-        gameController.pauseGame(false);
     }
 }
