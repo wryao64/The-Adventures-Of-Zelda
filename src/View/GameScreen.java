@@ -3,6 +3,7 @@ package View;
 import Controller.GameController;
 import Controller.GameState;
 import Controller.Level;
+import jdk.nashorn.internal.scripts.JD;
 
 import javax.swing.*;
 import java.awt.*;
@@ -13,7 +14,8 @@ import java.util.concurrent.CompletableFuture;
 
 public class GameScreen extends JPanel implements KeyListener {
     private GameController gameController;
-    private PauseScreen pauseScreen;
+    private JPanel glassPane;
+    private RootPaneContainer window;
 
     Color glassPaneColor = new Color(0, 0, 0, 175);
 
@@ -117,12 +119,18 @@ public class GameScreen extends JPanel implements KeyListener {
 
         // SCREEN CHANGE
         // Shortcut: skips to boss level
-        if (c == KeyEvent.VK_B) {
+        if (c == KeyEvent.VK_PAGE_DOWN) {
+            // TODO: equip all orbs
             gameController.updateGameState(GameState.LEVEL_BOSS);
         }
         // FOR TESTING PURPOSES: skips to end screen
         if (c == KeyEvent.VK_E) {
             gameController.updateGameState(GameState.END);
+        }
+        // Shortcut: Exit game
+        if (c == KeyEvent.VK_ESCAPE) {
+            gameController.pauseGame(true);
+            this.exitPressed();
         }
     }
 
@@ -132,15 +140,14 @@ public class GameScreen extends JPanel implements KeyListener {
     }
 
     /**
-     * Creates pause dialog
+     * Pause game
      */
-    public void pausePressed() {
-
+    private void pauseGame() {
         //Set the players movement to zero (prevents residual movement once resumed)
         level.setPlayerSpeedX(0);
         level.setPayerSpeedY(0);
 
-        JPanel glassPane = new JPanel() {
+        glassPane = new JPanel() {
             @Override
             protected void paintComponent(Graphics g) {
                 g.setColor(getBackground());
@@ -152,12 +159,29 @@ public class GameScreen extends JPanel implements KeyListener {
         glassPane.setBackground(glassPaneColor);
 
         // sets glass pane to give dimmed effect
-        RootPaneContainer window = (RootPaneContainer) SwingUtilities.getWindowAncestor(this);
+
         window.setGlassPane(glassPane);
         glassPane.setVisible(true);
+    }
 
+    /**
+     * Creates pause dialog
+     */
+    private void pausePressed() {
         // create modal JDialog for pause screen
-        pauseScreen = new PauseScreen((Window) window, gameController);
+        window = (RootPaneContainer) SwingUtilities.getWindowAncestor(this);
+        this.pauseGame();
+        new PauseScreen((Window) window, gameController);
+        glassPane.setVisible(false);
+    }
+
+    /**
+     * Creates exit dialog
+     */
+    private void exitPressed() {
+        window = (RootPaneContainer) SwingUtilities.getWindowAncestor(this);
+        this.pauseGame();
+        new ExitDialog((Window) window, gameController);
         glassPane.setVisible(false);
     }
 }

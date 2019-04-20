@@ -90,6 +90,7 @@ public class GameController implements Runnable {
         // handle switching of screens
         switch(nextState) {
             case WELCOME:
+                paused = false;
                 welcomeScreen =  new WelcomeScreen();
                 welcomeScreen.setGameController(this);
                 frame.setContentPane(welcomeScreen);
