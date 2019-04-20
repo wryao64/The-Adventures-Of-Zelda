@@ -5,6 +5,8 @@ import Controller.GameController;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 
 public class ExitDialog extends JDialog {
     private Window window;
@@ -32,12 +34,17 @@ public class ExitDialog extends JDialog {
     /**
      * Pane contains contents of Exit Dialog
      */
-    private class ExitPane extends JPanel {
+    private class ExitPane extends JPanel implements KeyListener {
+        private JButton yesButton, noButton;
+
         public ExitPane() {
             this.createGui();
         }
 
         private void createGui() {
+            this.setFocusable(true);
+            this.addKeyListener(this);
+
             int borderSize = 15;
             this.setBorder(BorderFactory.createEmptyBorder(borderSize, borderSize, borderSize, borderSize));
             this.setBackground(backgroundColor);
@@ -47,12 +54,33 @@ public class ExitDialog extends JDialog {
             this.setLayout(new GridLayout(0, 1, 10, 10));
 
             // Confirmation buttons
-            JButton yesButton = new JButton(new exitAction("Yes"));
-            JButton noButton = new JButton(new exitAction("No"));
+            yesButton = new JButton(new exitAction("Yes"));
+            noButton = new JButton(new exitAction("No"));
 
             this.add(confirmMessage);
             this.add(yesButton);
             this.add(noButton);
+        }
+
+        @Override
+        public void keyTyped(KeyEvent e) {
+
+        }
+
+        @Override
+        public void keyPressed(KeyEvent e) {
+            int c = e.getKeyCode();
+
+            if (c == KeyEvent.VK_ESCAPE) {
+                gameController.setPaused(false);
+                Window win = SwingUtilities.getWindowAncestor(noButton);
+                win.dispose();
+            }
+        }
+
+        @Override
+        public void keyReleased(KeyEvent e) {
+
         }
 
         private class exitAction extends AbstractAction {
