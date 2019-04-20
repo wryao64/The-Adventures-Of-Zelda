@@ -1,5 +1,6 @@
 package Controller;
 
+import Item.Weapon;
 import Object.Platform;
 import Object.Character.Enemy;
 import Object.Character.Player;
@@ -64,40 +65,29 @@ public abstract class Level {
     /**
      * Checks if the enemy's shots hit the player.
      */
-    public void checkEnemyShotCollision() {
+    public void checkEnemyPlayerCollision() {
+        Enemy enemyToRemove = null;
         for (Enemy e : enemies) {
-            if (player.getBounds().intersects(e.getBounds())) {
+            if (player.getBounds().intersects(e.getWeapon().getBounds())) {
                 player.loseLife();
-                if(player.getLives() > 0){
+                if (player.getLives() > 0) {
                     //Reset the player to the start position
                     player.initPosition();
-                }else {
+                } else {
                     //Controller.Game over
                 }
-            }
-        }
-    }
-
-    /**
-     * Checks if the players shots hit the enemies.
-     */
-    public void checkPlayerShotCollision() {
-        /*for (Enemy e : enemies) {
-            if (player.getWeapon().getBounds().intersects(e.getBounds())) {
+            }else if (player.getWeapon().getBounds().intersects(e.getBounds())) {
                 e.takeDamage(player.giveDamage());
-                //remove enemy from the arraylist?
                 if(e.getHealth() < 0) {
-                    enemies.remove(e);
+                    enemyToRemove = e;
                     //Add the points the enemy is worth to the players score.
                     player.addToScore(e.getPoints());
                 }
             }
-        }*/
-
-        for (Platform p : platforms) {
-            if (player.getWeapon().getBounds().intersects(p.getBounds())) {
-                player.getWeapon().setWeaponShot(false);
-            }
+        }
+        //remove enemy from the arraylist
+        if(enemyToRemove != null) {
+            enemies.remove(enemyToRemove);
         }
     }
   
@@ -108,7 +98,6 @@ public abstract class Level {
     public void setPlayerSpeedX(double dx){ player.setSpeedX(dx); }
 
     public void setPayerSpeedY(double dy) { player.setSpeedY(dy); }
-
 
     public void setPlayerJump() { player.jump(); }
 
@@ -128,8 +117,7 @@ public abstract class Level {
         player.fall(gravity,maxSpeedY);
         checkHorizPlatformCollision();
         checkVertPlatformCollision();
-        checkPlayerShotCollision();
-        //checkEnemyCollision();
+        checkEnemyPlayerCollision();
         player.move();
         enemyMove();
     }
@@ -142,7 +130,6 @@ public abstract class Level {
         for (Platform p : platforms){
             p.paintObject(g);
         }
-
         if (enemies != null) {
             for (Enemy e : enemies) {
                 e.paintObject(g);
@@ -174,7 +161,8 @@ public abstract class Level {
         for (int i  = 0; i<24; i++){
             for (int j = 0; j<15; j++){
                 if(tileMap[j][i] == 2){
-                    Enemy newEnemy = new Enemy(50, 50, i * 50, (j + 1) * 50);
+                    Enemy newEnemy = new Enemy(50, 50, i * 50, (j + 1) * 50,
+                            new Weapon(10,250,3),2,50);
                     enemies.add(newEnemy);
                 }
             }
@@ -189,13 +177,11 @@ public abstract class Level {
         for (Enemy e : enemies) {
             // finds next platform the enemy will move to
             Platform p = findPlatform(e);
-
             if (p == null) { // no further platform
                 int dir = e.getDirection();
-                e.setDirection(1 - dir); // reverse direction
+                e.setDirection(-dir); // reverse direction
                 e.setSpeedX(-e.getSpeedX());
             }
-
             e.move();
         }
     }

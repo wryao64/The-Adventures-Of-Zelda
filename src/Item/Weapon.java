@@ -8,11 +8,13 @@ public class Weapon extends Item {
     private int attackDamage;
     private int shotSpeed;
     private int range;
+
     private double shotPosX;
     private double shotPosY;
     private double startPosX;
     private double startPosY;
     private double shotDir;
+
     private int bulletSize = 12;
     private boolean weaponShot = false;
 
@@ -33,7 +35,7 @@ public class Weapon extends Item {
             if (shotDir > 0) {
                 this.startPosX = posX + 50;
             } else {
-                this.startPosX = posX;
+                this.startPosX = posX - bulletSize;
             }
 
             //Initialise the current x position of the weapon's shots as the start position of the weapon.
@@ -42,7 +44,6 @@ public class Weapon extends Item {
             //Initialise the current and start y position of the player, these will not change.
             this.startPosY = posY + 20;
             this.shotPosY = startPosY;
-
             weaponShot = true;
         }
     }
