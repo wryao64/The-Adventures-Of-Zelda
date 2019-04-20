@@ -9,7 +9,6 @@ public class Enemy extends Character {
     private final int SPEED_Y = 0;
 
     private int direction = 1; // facing right
-    private int health;
 
     protected int health;
     protected int damage;

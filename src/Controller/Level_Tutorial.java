@@ -1,5 +1,6 @@
 package Controller;
 
+import Object.Character.Enemy;
 import Object.Character.Player;
 
 public class Level_Tutorial extends Level {
