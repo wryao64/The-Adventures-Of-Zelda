@@ -1,6 +1,6 @@
 package Object.Character;
 
-import Item.Weapon;
+import Object.Item.Weapon;
 
 public class Boss extends Enemy {
 

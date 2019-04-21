@@ -1,6 +1,6 @@
 package Object.Character;
 
-import Item.Weapon;
+import Object.Item.Weapon;
 
 import java.awt.*;
 import java.awt.geom.Rectangle2D;
@@ -55,7 +55,8 @@ public class Player extends Character {
      * Player shoots the weapon it holds.
      */
     public void shootWeapon(){
-        weapon.shoot(playerDir,posX,posY);
+        //System.out.println("playerPosX" + posX + " playerPosY " + posY);
+        weapon.shoot(posX,posY,playerDir);
     }
 
     public int giveDamage(){
@@ -74,15 +75,19 @@ public class Player extends Character {
      */
     public int getLives(){ return lives; }
 
+    public int getEnemiesKilled(){ return enemiesKilled; }
+
     public void loseLife(){ lives--; }
 
-    public void addToScore(int points) { enemiesKilled ++; }
+    public void addToEnemiesKilled(int points) { enemiesKilled ++; }
 
     public double getMovementSpeed() { return movementSpeed; }
 
     public void setCanJump(boolean jump) { canJump = jump; }
 
     public void setPlayerDir(int direction) { playerDir = direction; }
+
+    public Weapon getWeapon() { return weapon; }
 
 
     /**
@@ -106,17 +111,13 @@ public class Player extends Character {
         weapon.moveShot();
     }
 
-   public Weapon getWeapon() {
-         return weapon;
-   }
-
     /**
      * Painting the player. Called by the level class
      */
     public void paintObject(Graphics2D g) {
         g.setColor(Color.RED);
         g.fill(new Rectangle2D.Double(posX, posY,width, height));
-        weapon.paint(g);
+        weapon.paintObject(g);
 }
 
 }
