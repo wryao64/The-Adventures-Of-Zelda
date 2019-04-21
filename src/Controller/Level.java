@@ -13,6 +13,8 @@ import java.util.ArrayList;
  * Handles the logistics of the level like the current score, which enemies are killed and the number of lives of the player.
  */
 public abstract class Level {
+    private final int IMAGE_HEIGHT = 800;
+    private final int IMAGE_WIDTH = 1200;
     private final int PLATFORM_SIZE = 50;
     private final int DIFF = 5;
 
@@ -138,7 +140,7 @@ public abstract class Level {
      * Method for painting the current level i.e backgrounds,players, enemies and platforms.
      */
     public void paintLevel(Graphics2D g) {
-        g.drawImage(backgroundImage, 0, 0, 1200, 800, null);
+        g.drawImage(backgroundImage, 0, 0, IMAGE_WIDTH, IMAGE_HEIGHT, null);
 
         player.paintObject(g);
         for (Platform p : platforms){
