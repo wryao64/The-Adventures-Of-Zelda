@@ -14,6 +14,7 @@ public class Enemy extends Character {
     private int direction = 1; // facing right
 
     protected int health;
+
     protected Weapon weapon;
 
     //Amount of score points the enemy is worth.
@@ -22,6 +23,7 @@ public class Enemy extends Character {
     public Enemy(int w, int h, int x, int y, Weapon weapon,int shootFreq, int health){
         super(w,h,x,y);
         this.setSpeedY(SPEED_Y);
+
         this.weapon = weapon;
         this.shootFreq = shootFreq;
         this.health = health;
@@ -31,17 +33,18 @@ public class Enemy extends Character {
     }
 
     public void move() {
-        //Counter to keep track of when the enemy has to shoot again.
-        moveCount++;
         super.move();
-        weapon.moveShot();
-
-        //Once the counter reaches the desired period, shoot the weapon again.
-        if(moveCount > randFreq) {
-            shoot();
-            //Randomly generate the count for when next time the enemy will shoot.
-            randFreq = (Math.random() * (31)) + (shootFreq-0.5);
-            moveCount = 0;
+        if(weapon != null) {
+            //Counter to keep track of when the enemy has to shoot again.
+            moveCount++;
+            weapon.moveShot();
+            //Once the counter reaches the desired period, shoot the weapon again.
+            if (moveCount > randFreq) {
+                shoot();
+                //Randomly generate the count for when next time the enemy will shoot.
+                randFreq = (Math.random() * (31)) + (shootFreq - 0.5);
+                moveCount = 0;
+            }
         }
     }
 
@@ -70,6 +73,8 @@ public class Enemy extends Character {
 
         g.setColor(Color.BLUE);
         g.fill(new Rectangle2D.Double(posX, posY,width, height));
-        weapon.paint(g);
+        if(weapon != null) {
+            weapon.paint(g);
+        }
     }
 }
