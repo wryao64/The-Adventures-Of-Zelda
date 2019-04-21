@@ -16,7 +16,7 @@ public abstract class Level {
     private final int PLATFORM_SIZE = 50;
     private final int DIFF = 5;
 
-    BufferedImage background;
+    Image backgroundImage;
 
     // Objects
     protected Player player;
@@ -138,6 +138,8 @@ public abstract class Level {
      * Method for painting the current level i.e backgrounds,players, enemies and platforms.
      */
     public void paintLevel(Graphics2D g) {
+        g.drawImage(backgroundImage, 0, 0, 1200, 800, null);
+
         player.paintObject(g);
         for (Platform p : platforms){
             p.paintObject(g);
@@ -186,17 +188,19 @@ public abstract class Level {
      * Enemy movement
      */
     private void enemyMove() {
-        for (Enemy e : enemies) {
-            // finds next platform the enemy will move to
-            Platform p = findPlatform(e);
+        if (enemies != null) {
+            for (Enemy e : enemies) {
+                // finds next platform the enemy will move to
+                Platform p = findPlatform(e);
 
-            if (p == null) { // no further platform
-                int dir = e.getDirection();
-                e.setDirection(1 - dir); // reverse direction
-                e.setSpeedX(-e.getSpeedX());
+                if (p == null) { // no further platform
+                    int dir = e.getDirection();
+                    e.setDirection(1 - dir); // reverse direction
+                    e.setSpeedX(-e.getSpeedX());
+                }
+
+                e.move();
             }
-
-            e.move();
         }
     }
 

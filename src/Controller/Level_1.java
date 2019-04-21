@@ -3,10 +3,14 @@ package Controller;
 import Object.Character.Enemy;
 import Object.Character.Player;
 
+import javax.swing.*;
+
 public class Level_1 extends Level {
     private final int ENEMY_SPEED = 3;
 
     public Level_1() {
+        backgroundImage = new ImageIcon("Assets/volcanic_mountains.png").getImage();
+
         tileMap = new int[][]{
                 {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
                 {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},

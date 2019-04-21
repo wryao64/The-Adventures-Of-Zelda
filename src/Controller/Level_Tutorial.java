@@ -3,10 +3,14 @@ package Controller;
 import Object.Character.Enemy;
 import Object.Character.Player;
 
+import javax.swing.*;
+
 public class Level_Tutorial extends Level {
     private final int ENEMY_SPEED = 1;
 
-    public Level_Tutorial(){
+    public Level_Tutorial() {
+        backgroundImage = new ImageIcon("Assets/icy_mountains.png").getImage();
+
         tileMap = new int [][]{
                 {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
                 {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
@@ -36,4 +40,6 @@ public class Level_Tutorial extends Level {
             e.setSpeedX(ENEMY_SPEED);
         }
     }
+
+
 }
