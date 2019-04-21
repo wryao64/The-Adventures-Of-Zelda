@@ -18,7 +18,7 @@ public class Player extends Character {
     private double playerDir = 1;
 
     private Weapon weapon;
-    private int lives;
+    private int lives = 5;
     boolean canJump;
 
     private int enemiesKilled = 0;
@@ -27,9 +27,9 @@ public class Player extends Character {
 
     public Player(double w, double h, double x, double y){
         super(w,h,x,y);
-        startPosY = x;
-        startPosX = y;
-        weapon = new Weapon(10,250,7);
+        startPosY = y;
+        startPosX = x;
+        weapon = new Weapon(25,250,7);
     }
 
     public void jump() {
@@ -117,9 +117,6 @@ public class Player extends Character {
         g.setColor(Color.RED);
         g.fill(new Rectangle2D.Double(posX, posY,width, height));
         weapon.paint(g);
-
-        /*g.setColor(Color.BLUE);
-        g.draw(getBounds());*/
 }
 
 }
