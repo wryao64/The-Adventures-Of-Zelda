@@ -1,10 +1,10 @@
 package Controller;
 
-import Item.Weapon;
+import Object.Item.Bullet;
 import Object.Platform;
 import Object.Character.Enemy;
 import Object.Character.Player;
-import Item.Puzzle;
+import Object.Item.Puzzle;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
@@ -31,9 +31,9 @@ public abstract class Level {
     protected int[][] tileMap;
 
     /**
-     * Collisions between different types of objects.
+     * Collisions between platforms and the player.
      */
-    public void checkVertPlatformCollision() {
+    public void checkPlatformCollisions() {
         for(Platform p : platforms){
             //Player collides with bottom of the platform i.e when jumping
             if(player.getBounds().intersects(p.getBottom()) && player.getSpeedY()<0){
@@ -46,11 +46,6 @@ public abstract class Level {
                 player.setPosY(p.getPosY()-player.getHeight());
                 playerCanJump(true);
             }
-        }
-    }
-
-    public void checkHorizPlatformCollision() {
-        for(Platform p : platforms){
             //Player collides with the right edge of the platform
             if(player.getBounds().intersects(p.getRight()) && player.getSpeedX() < 0){
                 player.setSpeedX(0);
@@ -59,38 +54,99 @@ public abstract class Level {
             if(player.getBounds().intersects(p.getLeft()) && player.getSpeedX() > 0) {
                 player.setSpeedX(0);
             }
+            bulletPlatformCollision(p);
         }
     }
+
 
     /**
      * Checks if the enemy's shots hit the player.
      */
-    public void checkEnemyPlayerCollision() {
+    public void checkPlayerEnemyCollisions() {
         Enemy enemyToRemove = null;
+
         for (Enemy e : enemies) {
-            if (player.getBounds().intersects(e.getWeapon().getBounds())) {
-                player.loseLife();
-                if (player.getLives() > 0) {
-                    //Reset the player to the start position
-                    player.initPosition();
-                } else {
-                    //Controller.Game over
-                }
-            }else if (player.getWeapon().getBounds().intersects(e.getBounds())) {
-                e.takeDamage(player.giveDamage());
-                if(e.getHealth() < 0) {
-                    enemyToRemove = e;
-                    //Add the points the enemy is worth to the players score.
-                    player.addToScore(e.getPoints());
-                }
-            }
+          enemyToRemove = handlePlayerHitEnemy(e);
+          handleEnemyHitPlayer(e);
         }
-        //remove enemy from the arraylist
-        if(enemyToRemove != null) {
+
+        if(enemyToRemove != null){
             enemies.remove(enemyToRemove);
         }
     }
-  
+
+    /**
+     * Checks and handles when the bullets of the player hits an enemy.
+     */
+    private Enemy handlePlayerHitEnemy(Enemy e) {
+        ArrayList<Bullet> bullets = player.getWeapon().getBullets();
+        Bullet bulletToRemove = null;
+        Enemy enemyToRemove = null;
+
+        for (Bullet b: bullets) {
+            if(b.getBounds().intersects(e.getBounds())){
+                bulletToRemove = b;
+                e.takeDamage(player.getWeapon().getAttackDamage());
+                if(e.getHealth() <= 0){
+                    enemyToRemove = e;
+                    player.addToEnemiesKilled(e.getPoints());
+                }
+            }
+        }
+        if(bulletToRemove != null){
+            player.getWeapon().removeBullet(bulletToRemove);
+        }
+       return enemyToRemove;
+    }
+
+    /**
+     * Checks and handles when the bullets an enemy hits a player.
+     */
+    private void handleEnemyHitPlayer(Enemy e) {
+        ArrayList<Bullet> bullets = e.getWeapon().getBullets();
+        Bullet bulletToRemove = null;
+        for (Bullet b: bullets) {
+            if(b.getBounds().intersects(player.getBounds())){
+                bulletToRemove = b;
+                player.loseLife();
+                player.initPosition();
+            }
+        }
+        if(bulletToRemove != null) {
+            e.getWeapon().removeBullet(bulletToRemove);
+        }
+    }
+
+    /**
+     * Checks and handles when a bullet hits a platform or wall
+     */
+    private void bulletPlatformCollision(Platform p) {
+        ArrayList<Bullet> bulletsPlayer = player.getWeapon().getBullets();
+        Bullet bulletToRemovePlayer = null;
+
+        for (Bullet b: bulletsPlayer) {
+            if(b.getBounds().intersects(p.getBounds())){
+                bulletToRemovePlayer = b;
+            }
+        }
+        if(bulletToRemovePlayer != null) {
+            player.getWeapon().removeBullet(bulletToRemovePlayer);
+        }
+
+        for (Enemy e : enemies) {
+            Bullet bulletToRemoveEnemy = null;
+            ArrayList<Bullet> bulletsEnemy = e.getWeapon().getBullets();
+            for (Bullet b : bulletsEnemy) {
+                if (b.getBounds().intersects(p.getBounds())) {
+                    bulletToRemoveEnemy = b;
+                }
+            }
+            if (bulletToRemoveEnemy != null) {
+                 e.getWeapon().removeBullet(bulletToRemoveEnemy);
+            }
+        }
+    }
+
     /**
      * Manipulating the player. Used by the keyListeners in the GameScreen class.
      */
@@ -115,9 +171,8 @@ public abstract class Level {
     public void updateLevel() {
         //First check collisions with blocks and then move the player using updated x and y values.
         player.fall(gravity,maxSpeedY);
-        checkHorizPlatformCollision();
-        checkVertPlatformCollision();
-        checkEnemyPlayerCollision();
+        checkPlatformCollisions();
+        checkPlayerEnemyCollisions();
         player.move();
         enemyMove();
     }
