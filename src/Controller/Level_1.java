@@ -37,7 +37,7 @@ public class Level_1 extends Level {
 
         // TODO: Create the puzzle chest
 
-        enemies = createEnemies();
+        enemies = createEnemies(GameState.LEVEL_1);
         for (Enemy e : enemies) {
             e.setSpeedX(ENEMY_SPEED);
         }

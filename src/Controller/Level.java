@@ -171,14 +171,14 @@ public abstract class Level {
         return platforms;
     }
 
-    public ArrayList<Enemy> createEnemies() {
+    public ArrayList<Enemy> createEnemies(GameState level) {
 
         ArrayList<Enemy> enemies = new ArrayList<>();
 
         for (int i  = 0; i<24; i++){
             for (int j = 0; j<15; j++){
                 if(tileMap[j][i] == 2){
-                    Enemy newEnemy = new Enemy(50, 50, i * 50, (j + 1) * 50);
+                    Enemy newEnemy = new Enemy(50, 50, i * 50, (j + 1) * 50, level);
                     enemies.add(newEnemy);
                 }
             }

@@ -1,11 +1,18 @@
 package Object.Character;
 
+import Controller.GameState;
 import Item.Weapon;
 
 import java.awt.*;
-import java.awt.geom.Rectangle2D;
 
 public class Enemy extends Character {
+    private final int START_X = 9;
+    private final int START_Y = 39;
+    private final int IMAGE_WIDTH = 14;
+    private final int IMAGE_HEIGHT = 14;
+    private final int IMG_RESIZED_W = 50;
+    private final int IMG_RESIZED_H = 50;
+
     private final int SPEED_Y = 0;
 
     private int direction = 1; // facing right
@@ -17,9 +24,27 @@ public class Enemy extends Character {
     //Amount of score points the enemy is worth.
     protected int points;
 
-    public Enemy(int w, int h, int x, int y){
+    public Enemy(int w, int h, int x, int y, GameState level) {
         super(w,h,x,y);
+
+        this.setImage(level);
+        this.loadImage(START_X, START_Y, IMAGE_WIDTH, IMAGE_HEIGHT);
+
         this.setSpeedY(SPEED_Y);
+    }
+
+    private void setImage(GameState level) {
+        switch(level) {
+            case TUTORIAL:
+                imageLocation = "Assets/enemy_blue.png";
+                break;
+            case LEVEL_1:
+                imageLocation = "Assets/enemy_red.png";
+                break;
+            case LEVEL_2:
+                imageLocation = "Assets/enemy_green.png";
+                break;
+        }
     }
 
     public int getDirection() {
@@ -36,8 +61,11 @@ public class Enemy extends Character {
      */
     @Override
     public void paintObject(Graphics2D g) {
-        g.setColor(Color.BLUE);
-        g.fill(new Rectangle2D.Double(posX, posY,width, height));
+        if (direction == 1) {
+            g.drawImage(charImageRight, (int) posX, (int) posY, IMG_RESIZED_W, IMG_RESIZED_H, null);
+        } else {
+            g.drawImage(charImageLeft, (int) posX, (int) posY, IMG_RESIZED_W, IMG_RESIZED_H, null);
+        }
     }
   
     public int getPoints() { return points; }

@@ -39,7 +39,7 @@ public abstract class Character extends Object {
 
     public double getSpeedY(){ return speedY; }
 
-    public void loadImage(int w, int h, int resized_w, int resized_h) {
+    public void loadImage(int x, int y, int w, int h) {
         BufferedImage charSetImage = null;
         try {
             charSetImage = ImageIO.read(new File(imageLocation));
@@ -48,25 +48,16 @@ public abstract class Character extends Object {
         }
 
         if (charSetImage != null) {
-            BufferedImage smallImg = charSetImage.getSubimage(4, 4, w, h);
-
-            // resize image
-            Image tmp = smallImg.getScaledInstance(resized_w, resized_h, Image.SCALE_SMOOTH);
-            BufferedImage scaledImg = new BufferedImage(resized_w, resized_h, smallImg.getType());
-
-            Graphics2D g2d = scaledImg.createGraphics();
-            g2d.drawImage(tmp, 0, 0, resized_w, resized_h, null);
-            g2d.dispose();
+            BufferedImage smallImg = charSetImage.getSubimage(x, y, w, h);
 
             // image for player facing right
-            charImageRight = scaledImg;
+            charImageRight = smallImg;
 
             // flips image to face left
-            BufferedImage leftImage = new BufferedImage(resized_w, resized_h, BufferedImage.TYPE_INT_ARGB);
+            BufferedImage leftImage = new BufferedImage(w, h, BufferedImage.TYPE_INT_ARGB);
 
             Graphics2D g = leftImage.createGraphics();
-            g.drawImage(scaledImg, 0, 0, resized_w, resized_h,
-                    resized_w, 0, 0, resized_h, null);
+            g.drawImage(smallImg, 0, 0, w, h, w, 0, 0, h, null);
             g.dispose();
 
             charImageLeft = leftImage;

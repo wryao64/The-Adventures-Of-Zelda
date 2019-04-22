@@ -2,16 +2,12 @@ package Object.Character;
 
 import Item.Weapon;
 
-import javax.imageio.ImageIO;
 import java.awt.*;
-import java.awt.geom.AffineTransform;
-import java.awt.image.AffineTransformOp;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
 import java.util.HashMap;
 
 public class Player extends Character {
+    private final int START_X = 4;
+    private final int START_Y = 4;
     private final int IMAGE_WIDTH = 20;
     private final int IMAGE_HEIGHT = 28;
     private final int IMG_RESIZED_W = 38;
@@ -38,7 +34,7 @@ public class Player extends Character {
         super(w,h,x,y);
 
         imageLocation = "Assets/player.png";
-        this.loadImage(IMAGE_WIDTH, IMAGE_HEIGHT, IMG_RESIZED_W, IMG_RESIZED_H);
+        this.loadImage(START_X, START_Y, IMAGE_WIDTH, IMAGE_HEIGHT);
 
         startPosY = x;
         startPosX = y;
@@ -127,19 +123,12 @@ public class Player extends Character {
      * Painting the player. Called by the level class
      */
     public void paintObject(Graphics2D g) {
-//        g.setColor(Color.RED);
-//        g.fill(new Rectangle2D.Double(posX, posY,width, height));
         if (playerDir == 1) {
             g.drawImage(charImageRight, (int) posX, (int) posY, IMG_RESIZED_W, IMG_RESIZED_H, null);
         } else {
             g.drawImage(charImageLeft, (int) posX, (int) posY, IMG_RESIZED_W, IMG_RESIZED_H, null);
         }
-//        g.drawRect((int) posX, (int) posY, IMG_RESIZED_W, IMG_RESIZED_H);
-//        g.drawRect((int) posX, (int) posY, 50, 50);
 
         weapon.paint(g);
-
-        /*g.setColor(Color.BLUE);
-        g.draw(getBounds());*/
     }
 }
