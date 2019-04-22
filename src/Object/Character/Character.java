@@ -2,7 +2,10 @@ package Object.Character;
 
 import Object.Object;
 
+import java.awt.image.BufferedImage;
+
 public abstract class Character extends Object {
+    BufferedImage charImage;
 
     public Character(double w, double h, double x, double y){
         super(w,h,x,y);
