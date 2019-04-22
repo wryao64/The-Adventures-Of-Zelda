@@ -44,8 +44,11 @@ public class Player extends Character {
 
     public void jump() {
         if(canJump) {
+            System.out.println("Jumped");
             speedY = - jumpHeight;
+            canJump = false;
         }else{
+            System.out.println("Couldn't Jump");
             speedY = 0;
         }
     }
@@ -65,7 +68,6 @@ public class Player extends Character {
      * Player shoots the weapon it holds.
      */
     public void shootWeapon(){
-        //System.out.println("playerPosX" + posX + " playerPosY " + posY);
         weapon.shoot(posX,posY,playerDir);
     }
 

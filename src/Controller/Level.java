@@ -1,5 +1,6 @@
 package Controller;
 
+
 import Object.Item.Bullet;
 import Object.Item.Weapon;
 import Object.Platform;
@@ -65,16 +66,22 @@ public abstract class Level {
      * Checks if the enemy's shots hit the player.
      */
     public void checkPlayerEnemyCollisions() {
-        Enemy enemyToRemove = null;
 
+        ArrayList<Enemy> enemiesToRemove = new ArrayList<>();
         for (Enemy e : enemies) {
+          Enemy enemyToRemove;
+
           enemyToRemove = handlePlayerHitEnemy(e);
           handleEnemyHitPlayer(e);
+
+            if(enemyToRemove != null){
+                enemiesToRemove.add(enemyToRemove);
+            }
+        }
+        for(Enemy e : enemiesToRemove) {
+            enemies.remove(e);
         }
 
-        if(enemyToRemove != null){
-            enemies.remove(enemyToRemove);
-        }
     }
 
     /**
