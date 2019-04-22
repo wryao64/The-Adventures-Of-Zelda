@@ -1,4 +1,4 @@
-package Item;
+package Object.Item;
 
 public class Puzzle {
 

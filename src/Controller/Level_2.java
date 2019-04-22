@@ -1,5 +1,6 @@
 package Controller;
 
+import Object.Item.Weapon;
 import Object.Character.Enemy;
 import Object.Character.Player;
 

@@ -1,6 +1,6 @@
 package Object.Character;
 
-import Item.Weapon;
+import Object.Item.Weapon;
 
 import java.awt.*;
 import java.util.HashMap;
@@ -23,7 +23,7 @@ public class Player extends Character {
     private double playerDir = 1;
 
     private Weapon weapon;
-    private int lives;
+    private int lives = 5;
     boolean canJump;
 
     private int enemiesKilled = 0;
@@ -36,9 +36,10 @@ public class Player extends Character {
         imageLocation = "Assets/player.png";
         this.loadImage(START_X, START_Y, IMAGE_WIDTH, IMAGE_HEIGHT);
 
-        startPosY = x;
-        startPosX = y;
-        weapon = new Weapon(10,250,7);
+        startPosY = y;
+        startPosX = x;
+        weapon = new Weapon(25,250,7);
+
     }
 
     public void jump() {
@@ -64,7 +65,8 @@ public class Player extends Character {
      * Player shoots the weapon it holds.
      */
     public void shootWeapon(){
-        weapon.shoot(playerDir,posX,posY);
+        //System.out.println("playerPosX" + posX + " playerPosY " + posY);
+        weapon.shoot(posX,posY,playerDir);
     }
 
     public int giveDamage(){
@@ -83,15 +85,19 @@ public class Player extends Character {
      */
     public int getLives(){ return lives; }
 
+    public int getEnemiesKilled(){ return enemiesKilled; }
+
     public void loseLife(){ lives--; }
 
-    public void addToScore(int points) { enemiesKilled ++; }
+    public void addToEnemiesKilled(int points) { enemiesKilled ++; }
 
     public double getMovementSpeed() { return movementSpeed; }
 
     public void setCanJump(boolean jump) { canJump = jump; }
 
     public void setPlayerDir(int direction) { playerDir = direction; }
+
+    public Weapon getWeapon() { return weapon; }
 
 
     /**
@@ -114,10 +120,6 @@ public class Player extends Character {
         super.move();
         weapon.moveShot();
     }
-
-   public Weapon getWeapon() {
-         return weapon;
-   }
 
     /**
      * Painting the player. Called by the level class

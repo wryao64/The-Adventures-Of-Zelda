@@ -1,6 +1,6 @@
-package Item;
+package Object.Item;
 
-public class Orb extends Item{
+public class Orb {
 
     /*
     Gives the player special powers depending on the type of orb.
