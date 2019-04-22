@@ -104,13 +104,16 @@ public class GameScreen extends JPanel implements KeyListener {
         if (c == KeyEvent.VK_LEFT) {
             level.setPlayerSpeedX(-level.getMovementSpeed());
             level.setPlayerDirection(-1);
+            level.setSideKeyPressed(true);
         }
         if (c == KeyEvent.VK_RIGHT) {
             level.setPlayerSpeedX(level.getMovementSpeed());
             level.setPlayerDirection(1);
+            level.setSideKeyPressed(true);
         }
         if (c == KeyEvent.VK_UP) {
             level.setPlayerJump();
+            level.setJumpKeyPressed(true);
             level.playerCanJump(false);
         }
         if (c == KeyEvent.VK_SPACE) {
@@ -136,6 +139,13 @@ public class GameScreen extends JPanel implements KeyListener {
 
     @Override
     public void keyReleased(KeyEvent e) {
+        int c = e.getKeyCode();
+
+        if (c == KeyEvent.VK_LEFT ||c == KeyEvent.VK_RIGHT) {
+            level.setSideKeyPressed(false);
+        }if (c == KeyEvent.VK_UP) {
+            level.setJumpKeyPressed(false);
+        }
         level.setPlayerSpeedX(0);
     }
 

@@ -31,7 +31,7 @@ public class Level_2 extends Level {
         };
 
         //Set the player
-        player = new Player(50,50,500,600);
+        player = new Player(40,50,500,600);
 
         platforms = createPlatforms();
 

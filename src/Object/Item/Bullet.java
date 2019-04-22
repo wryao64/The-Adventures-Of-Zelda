@@ -23,8 +23,6 @@ public class Bullet extends Object {
     public double getBulletPosX() { return posX; }
 
     public void moveShot() {
-
-        System.out.println(posX + " " + speedX);
         posX = posX + speedX;
     }
 

@@ -1,5 +1,6 @@
 package Object.Character;
 
+import Object.Item.Weapon;
 import Object.Object;
 
 import javax.imageio.ImageIO;
@@ -7,12 +8,19 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 
 public abstract class Character extends Object {
     public String imageLocation;
 
-    BufferedImage charImageRight;
-    BufferedImage charImageLeft;
+    protected ArrayList<BufferedImage> charImagesRight = new ArrayList<>();
+    protected ArrayList<BufferedImage> charImagesLeft = new ArrayList<>();
+    protected BufferedImage imageToPaint;
+
+    protected int charDirection = 1;
+    protected Weapon weapon;
+    protected int movementCount = 0;
+    protected int animSpeed = 1;
 
     public Character(double w, double h, double x, double y){
         super(w,h,x,y);
@@ -28,6 +36,27 @@ public abstract class Character extends Object {
         posY = posY + speedY;
     }
 
+    public void shootWeapon(){
+        weapon.shoot(posX,posY,charDirection);
+    }
+
+    /**
+     * Iterates through the movement images for the character to create walking animation effect.
+     */
+    public void switchImages() {
+        movementCount++;
+        if (charDirection == 1) {
+            if (movementCount >= charImagesRight.size() * animSpeed) {
+                movementCount = 0;
+            }
+            imageToPaint = charImagesRight.get(movementCount / animSpeed);
+        } else {
+            if (movementCount >= charImagesLeft.size() * animSpeed) {
+                movementCount = 0;
+            }
+            imageToPaint = charImagesLeft.get(movementCount / animSpeed);
+        }
+    }
     /*
     Getters and Setters for the speed of the character.
      */
@@ -39,29 +68,26 @@ public abstract class Character extends Object {
 
     public double getSpeedY(){ return speedY; }
 
-    public void loadImage(int x, int y, int w, int h) {
+    public void setDir(int direction) { charDirection = direction; }
+
+    public int getDir() { return charDirection;}
+
+    public void setWeapon(Weapon weapon) { this.weapon = weapon; }
+
+    public Weapon getWeapon() { return weapon; }
+
+
+    /**
+     * Loads the sprite sheet for the given character.
+     */
+    public BufferedImage loadImage() {
         BufferedImage charSetImage = null;
         try {
             charSetImage = ImageIO.read(new File(imageLocation));
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-        if (charSetImage != null) {
-            BufferedImage smallImg = charSetImage.getSubimage(x, y, w, h);
-
-            // image for player facing right
-            charImageRight = smallImg;
-
-            // flips image to face left
-            BufferedImage leftImage = new BufferedImage(w, h, BufferedImage.TYPE_INT_ARGB);
-
-            Graphics2D g = leftImage.createGraphics();
-            g.drawImage(smallImg, 0, 0, w, h, w, 0, 0, h, null);
-            g.dispose();
-
-            charImageLeft = leftImage;
-        }
+        return charSetImage;
     }
 
 }
