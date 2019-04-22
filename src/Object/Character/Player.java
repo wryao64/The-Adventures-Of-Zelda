@@ -131,6 +131,6 @@ public class Player extends Character {
             g.drawImage(charImageLeft, (int) posX, (int) posY, IMG_RESIZED_W, IMG_RESIZED_H, null);
         }
 
-        weapon.paint(g);
+        weapon.paintObject(g);
     }
 }

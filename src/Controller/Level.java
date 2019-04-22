@@ -1,12 +1,12 @@
 package Controller;
 
 import Object.Item.Bullet;
+import Object.Item.Weapon;
 import Object.Platform;
 import Object.Character.Enemy;
 import Object.Character.Player;
 import Object.Item.Puzzle;
 import java.awt.*;
-import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
 /**

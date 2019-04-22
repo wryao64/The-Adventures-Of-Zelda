@@ -56,14 +56,6 @@ public class Enemy extends Character {
         }
     }
 
-    public int getDirection() {
-        return direction;
-    }
-
-    public void setDirection(int dir) {
-        direction = dir;
-    }
-
     public void move() {
         super.move();
         //Counter to keep track of when the enemy has to shoot again.
