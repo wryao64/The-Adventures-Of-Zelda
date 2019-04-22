@@ -4,14 +4,16 @@ import Controller.GameState;
 import Object.Item.Weapon;
 
 import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.util.ArrayList;
 
 public class Enemy extends Character {
     private final int START_X = 9;
     private final int START_Y = 39;
-    private final int IMAGE_WIDTH = 14;
-    private final int IMAGE_HEIGHT = 14;
-    private final int IMG_RESIZED_W = 50;
-    private final int IMG_RESIZED_H = 50;
+    private final int IMAGE_WIDTH = 18;
+    private final int IMAGE_HEIGHT = 11;
+    private final int IMG_RESIZED_W = 55;
+    private final int IMG_RESIZED_H = 40;
 
     private final int SPEED_Y = 0;
     private int moveCount = 0;
@@ -19,12 +21,7 @@ public class Enemy extends Character {
 
     //The initial random frequency the enemy will shoot.
     private double randFreq = (Math.random() * (31)) + (shootFreq-0.5);
-
-    private int direction = 1; // facing right
-
     protected int health;
-
-    protected Weapon weapon;
 
     //Amount of score points the enemy is worth.
     protected int points;
@@ -33,14 +30,26 @@ public class Enemy extends Character {
         super(w,h,x,y);
 
         this.setImage(level);
-        this.loadImage(START_X, START_Y, IMAGE_WIDTH, IMAGE_HEIGHT);
+        BufferedImage enemySheet = loadImage();
+        SpriteSheet spriteSheet = new SpriteSheet(enemySheet,IMAGE_WIDTH,IMAGE_HEIGHT);
+
+        //Adding the cut out of the sprites to the character movement arrays.
+        charImagesRight.add(spriteSheet.getImage(7,41));
+        charImagesRight.add(spriteSheet.getImage(39,41));
+        charImagesRight.add(spriteSheet.getImage(71,41));
+        charImagesRight.add(spriteSheet.getImage(103,41));
+
+        charImagesLeft.add(spriteSheet.getFlippedImage(7,41));
+        charImagesLeft.add(spriteSheet.getFlippedImage(39,41));
+        charImagesLeft.add(spriteSheet.getFlippedImage(71,41));
+        charImagesLeft.add(spriteSheet.getFlippedImage(103,41));
 
         this.setSpeedY(SPEED_Y);
-        this.weapon = weapon;
+        super.weapon = weapon;
         this.shootFreq = shootFreq;
         this.health = health;
+        animSpeed = 10;
     }
-
 
     private void setImage(GameState level) {
         switch(level) {
@@ -63,24 +72,16 @@ public class Enemy extends Character {
         weapon.moveShot();
         //Once the counter reaches the desired period, shoot the weapon again.
         if (moveCount > randFreq) {
-            shoot();
+            shootWeapon();
             //Randomly generate the count for when next time the enemy will shoot.
             randFreq = (Math.random() * (31)) + (shootFreq - 0.5);
             moveCount = 0;
         }
     }
 
-    public void shoot() { weapon.shoot(posX,posY,direction);}
-
     public int getPoints() { return points; }
 
     public int getHealth() { return health; }
-
-    public Weapon getWeapon() { return weapon; }
-
-    public int getDirection() { return direction;}
-
-    public void setDirection(int dir) { direction = dir; }
 
     public void takeDamage(int damage){ health = health - damage; }
 
@@ -89,13 +90,11 @@ public class Enemy extends Character {
      */
     @Override
     public void paintObject(Graphics2D g) {
-        if (direction == 1) {
-            g.drawImage(charImageRight, (int) posX, (int) posY, IMG_RESIZED_W, IMG_RESIZED_H, null);
-        } else {
-            g.drawImage(charImageLeft, (int) posX, (int) posY, IMG_RESIZED_W, IMG_RESIZED_H, null);
-        }
-      
-        g.setColor(Color.GREEN);
+       switchImages();
+        g.drawImage(imageToPaint, (int) posX, (int) posY, IMG_RESIZED_W,
+                IMG_RESIZED_H, null);
+
+        g.setColor(Color.RED);
         g.drawString(health+"", (int)(posX +(width/2)), (int)(posY+(height/2)));
         weapon.paintObject(g);
     }

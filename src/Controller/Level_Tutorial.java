@@ -30,7 +30,7 @@ public class Level_Tutorial extends Level {
                 {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1}
         };
         //Set the player
-        player = new Player(50,50,70,600);
+        player = new Player(40,50,70,600);
 
         platforms = createPlatforms();
 

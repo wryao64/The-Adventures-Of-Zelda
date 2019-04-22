@@ -1,5 +1,6 @@
 package Controller;
 
+
 import Object.Item.Bullet;
 import Object.Item.Weapon;
 import Object.Platform;
@@ -46,7 +47,10 @@ public abstract class Level {
             if(player.getBounds().intersects(p.getTop()) && player.getSpeedY()>0){
                 player.setSpeedY(0);
                 player.setPosY(p.getPosY()-player.getHeight());
-                playerCanJump(true);
+                //Checks if the up key is continously pressed. Prevents double jumps
+                if(player.getJumpKeyPressed() == false) {
+                    playerCanJump(true);
+                }
             }
             //Player collides with the right edge of the platform
             if(player.getBounds().intersects(p.getRight()) && player.getSpeedX() < 0){
@@ -65,16 +69,22 @@ public abstract class Level {
      * Checks if the enemy's shots hit the player.
      */
     public void checkPlayerEnemyCollisions() {
-        Enemy enemyToRemove = null;
 
+        ArrayList<Enemy> enemiesToRemove = new ArrayList<>();
         for (Enemy e : enemies) {
+          Enemy enemyToRemove;
+
           enemyToRemove = handlePlayerHitEnemy(e);
           handleEnemyHitPlayer(e);
+
+            if(enemyToRemove != null){
+                enemiesToRemove.add(enemyToRemove);
+            }
+        }
+        for(Enemy e : enemiesToRemove) {
+            enemies.remove(e);
         }
 
-        if(enemyToRemove != null){
-            enemies.remove(enemyToRemove);
-        }
     }
 
     /**
@@ -91,7 +101,7 @@ public abstract class Level {
                 e.takeDamage(player.getWeapon().getAttackDamage());
                 if(e.getHealth() <= 0){
                     enemyToRemove = e;
-                    player.addToEnemiesKilled(e.getPoints());
+                    player.addToEnemiesKilled();
                 }
             }
         }
@@ -165,7 +175,11 @@ public abstract class Level {
 
     public void playerCanJump(boolean jump) { player.setCanJump(jump);}
 
-    public void setPlayerDirection( int direction) { player.setPlayerDir(direction); }
+    public void setPlayerDirection( int direction) { player.setDir(direction); }
+
+    public void setSideKeyPressed(boolean pressed) { player.setKeyPressed(pressed); }
+
+    public void setJumpKeyPressed(boolean pressed) { player.setJumpKeyPressed(pressed); }
 
     /**
      * Updating all the logic in the level/updates the values of the variables.
@@ -220,7 +234,8 @@ public abstract class Level {
         for (int i  = 0; i<24; i++){
             for (int j = 0; j<15; j++){
                 if(tileMap[j][i] == 2){
-                    Enemy newEnemy = new Enemy(50, 50, i * 50, (j + 1) * 50, level, new Weapon(10,300,5),2,70);
+                    Enemy newEnemy = new Enemy(55, 40, i * 50, (j + 1) * 50 + 10, level,
+                            new Weapon(10,300,5),2,70);
                     enemies.add(newEnemy);
                 }
             }
@@ -238,8 +253,8 @@ public abstract class Level {
                 Platform p = findPlatform(e);
 
                 if (p == null) { // no further platform
-                    int dir = e.getDirection();
-                    e.setDirection(1 - dir); // reverse direction
+                    int dir = e.getDir();
+                    e.setDir(- dir); // reverse direction
                     e.setSpeedX(-e.getSpeedX());
                 }
 
@@ -256,7 +271,7 @@ public abstract class Level {
     private Platform findPlatform(Enemy e) {
         for (Platform p : platforms) {
             // moving right
-            if (e.getDirection() == 1) {
+            if (e.getDir() == 1) {
                 if (p.getBounds().intersects(e.getRight())) {
                     return null;
                 }

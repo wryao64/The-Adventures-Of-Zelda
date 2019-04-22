@@ -55,6 +55,7 @@ public class Weapon extends Object {
         Bullet bulletToRemove = null;
       for(Bullet b : bullets) {
           //System.out.println("Range " + (weaponPosX-range) + "-" + (weaponPosX+range));
+         // System.out.println(b.getBulletPosX());
 
           if ((b.getBulletPosX() > (weaponPosX - range)) && (b.getBulletPosX() < (weaponPosX + range))) {
               //System.out.println("Shot in range");
