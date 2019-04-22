@@ -98,7 +98,7 @@ public class GameController implements Runnable {
             case TUTORIAL:
                 gameScreen = new GameScreen();
 
-                gameScreen.setLevel(new Level_Boss(), "Tutorial");
+                gameScreen.setLevel(new Level_Tutorial(), "Tutorial");
                 frame.setContentPane(gameScreen);
                 gameScreen.requestFocusInWindow();
 

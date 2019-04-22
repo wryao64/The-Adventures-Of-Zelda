@@ -2,7 +2,12 @@ package Object.Character;
 
 import Object.Item.Weapon;
 
+import javax.imageio.ImageIO;
 import java.awt.*;
+import java.awt.geom.Rectangle2D;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.HashMap;
 
 public class Player extends Character {
@@ -10,18 +15,15 @@ public class Player extends Character {
     private final int START_Y = 4;
     private final int IMAGE_WIDTH = 20;
     private final int IMAGE_HEIGHT = 28;
-    private final int IMG_RESIZED_W = 38;
+    private final int IMG_RESIZED_W = 40;
     private final int IMG_RESIZED_H = 50;
-
     private final int jumpHeight = 17;
-    private final double movementSpeed = 3.5;
 
+    private final double movementSpeed = 3.5;
     private double startPosX;
     private double startPosY;
-
     //The direction the player is facing. Initialized as 1 (facing to the right).
     private double playerDir = 1;
-
     private Weapon weapon;
     private int lives = 5;
     boolean canJump;
@@ -29,6 +31,11 @@ public class Player extends Character {
     private int enemiesKilled = 0;
     private int bossesKilled = 0;
     private int orbsCollected = 0;
+
+    BufferedImage charImageRight1;
+    BufferedImage charImageRight2;
+    BufferedImage charImageLeft1;
+    BufferedImage charImageLeft2;
 
     public Player(double w, double h, double x, double y){
         super(w,h,x,y);
@@ -123,6 +130,15 @@ public class Player extends Character {
         weapon.moveShot();
     }
 
+    public Rectangle2D getBounds() {
+        Rectangle2D rectangle;
+        if(playerDir == 1) {
+            rectangle = new Rectangle2D.Double(posX + 15,posY,width-10,height);
+        } else {
+            rectangle = new Rectangle2D.Double(posX,posY,width-15,height);
+        }
+        return rectangle;
+    }
     /**
      * Painting the player. Called by the level class
      */
@@ -132,7 +148,29 @@ public class Player extends Character {
         } else {
             g.drawImage(charImageLeft, (int) posX, (int) posY, IMG_RESIZED_W, IMG_RESIZED_H, null);
         }
-
         weapon.paintObject(g);
+    }
+
+    public void loadImage(int x, int y, int w, int h) {
+        BufferedImage charSetImage = null;
+        try {
+            charSetImage = ImageIO.read(new File(imageLocation));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        if (charSetImage != null) {
+            BufferedImage smallImg = charSetImage.getSubimage(x, y, w, h);
+
+            // image for player facing right
+            charImageRight = smallImg;
+            BufferedImage leftImage = new BufferedImage(w, h, BufferedImage.TYPE_INT_ARGB);
+
+            Graphics2D g = leftImage.createGraphics();
+            g.drawImage(smallImg, 0, 0, w, h, w, 0, 0, h, null);
+            g.dispose();
+
+            charImageLeft = leftImage;
+        }
     }
 }

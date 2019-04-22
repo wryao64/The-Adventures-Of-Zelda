@@ -247,7 +247,7 @@ public abstract class Level {
 
                 if (p == null) { // no further platform
                     int dir = e.getDirection();
-                    e.setDirection(1 - dir); // reverse direction
+                    e.setDirection(- dir); // reverse direction
                     e.setSpeedX(-e.getSpeedX());
                 }
 
