@@ -1,11 +1,18 @@
 package Object.Character;
 
+import Controller.GameState;
 import Object.Item.Weapon;
 
 import java.awt.*;
-import java.awt.geom.Rectangle2D;
 
 public class Enemy extends Character {
+    private final int START_X = 9;
+    private final int START_Y = 39;
+    private final int IMAGE_WIDTH = 14;
+    private final int IMAGE_HEIGHT = 14;
+    private final int IMG_RESIZED_W = 50;
+    private final int IMG_RESIZED_H = 50;
+
     private final int SPEED_Y = 0;
     private int moveCount = 0;
     private double shootFreq;
@@ -22,12 +29,39 @@ public class Enemy extends Character {
     //Amount of score points the enemy is worth.
     protected int points;
 
-    public Enemy(int w, int h, int x, int y, Weapon weapon, int shootFreq, int health){
+    public Enemy(int w, int h, int x, int y, GameState level, Weapon weapon, int shootFreq, int health) {
         super(w,h,x,y);
+
+        this.setImage(level);
+        this.loadImage(START_X, START_Y, IMAGE_WIDTH, IMAGE_HEIGHT);
+
         this.setSpeedY(SPEED_Y);
         this.weapon = weapon;
         this.shootFreq = shootFreq;
         this.health = health;
+    }
+
+
+    private void setImage(GameState level) {
+        switch(level) {
+            case TUTORIAL:
+                imageLocation = "Assets/enemy_blue.png";
+                break;
+            case LEVEL_1:
+                imageLocation = "Assets/enemy_red.png";
+                break;
+            case LEVEL_2:
+                imageLocation = "Assets/enemy_green.png";
+                break;
+        }
+    }
+
+    public int getDirection() {
+        return direction;
+    }
+
+    public void setDirection(int dir) {
+        direction = dir;
     }
 
     public void move() {
@@ -42,7 +76,7 @@ public class Enemy extends Character {
             randFreq = (Math.random() * (31)) + (shootFreq - 0.5);
             moveCount = 0;
         }
-}
+    }
 
     public void shoot() { weapon.shoot(posX,posY,direction);}
 
@@ -63,9 +97,12 @@ public class Enemy extends Character {
      */
     @Override
     public void paintObject(Graphics2D g) {
-        g.setColor(Color.BLUE);
-        Rectangle2D rec = new Rectangle2D.Double(posX, posY,width, height);
-        g.fill(rec);
+        if (direction == 1) {
+            g.drawImage(charImageRight, (int) posX, (int) posY, IMG_RESIZED_W, IMG_RESIZED_H, null);
+        } else {
+            g.drawImage(charImageLeft, (int) posX, (int) posY, IMG_RESIZED_W, IMG_RESIZED_H, null);
+        }
+      
         g.setColor(Color.GREEN);
         g.drawString(health+"", (int)(posX +(width/2)), (int)(posY+(height/2)));
         weapon.paintObject(g);

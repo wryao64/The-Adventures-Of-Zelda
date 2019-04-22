@@ -3,10 +3,15 @@ package Object.Character;
 import Object.Item.Weapon;
 
 import java.awt.*;
-import java.awt.geom.Rectangle2D;
 import java.util.HashMap;
 
 public class Player extends Character {
+    private final int START_X = 4;
+    private final int START_Y = 4;
+    private final int IMAGE_WIDTH = 20;
+    private final int IMAGE_HEIGHT = 28;
+    private final int IMG_RESIZED_W = 38;
+    private final int IMG_RESIZED_H = 50;
 
     private final int jumpHeight = 17;
     private final double movementSpeed = 3.5;
@@ -27,9 +32,14 @@ public class Player extends Character {
 
     public Player(double w, double h, double x, double y){
         super(w,h,x,y);
+
+        imageLocation = "Assets/player.png";
+        this.loadImage(START_X, START_Y, IMAGE_WIDTH, IMAGE_HEIGHT);
+
         startPosY = y;
         startPosX = x;
         weapon = new Weapon(25,250,7);
+
     }
 
     public void jump() {
@@ -115,9 +125,12 @@ public class Player extends Character {
      * Painting the player. Called by the level class
      */
     public void paintObject(Graphics2D g) {
-        g.setColor(Color.RED);
-        g.fill(new Rectangle2D.Double(posX, posY,width, height));
-        weapon.paintObject(g);
-}
+        if (playerDir == 1) {
+            g.drawImage(charImageRight, (int) posX, (int) posY, IMG_RESIZED_W, IMG_RESIZED_H, null);
+        } else {
+            g.drawImage(charImageLeft, (int) posX, (int) posY, IMG_RESIZED_W, IMG_RESIZED_H, null);
+        }
 
+        weapon.paint(g);
+    }
 }

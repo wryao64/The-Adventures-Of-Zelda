@@ -2,9 +2,12 @@ package Controller;
 
 import Object.Character.Player;
 
+import javax.swing.*;
+
 public class Level_Boss extends Level {
 
     public Level_Boss() {
+        backgroundImage = new ImageIcon("Assets/castle.png").getImage();
 
         tileMap = new int[][]{
                 {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},

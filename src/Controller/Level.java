@@ -14,10 +14,12 @@ import java.util.ArrayList;
  * Handles the logistics of the level like the current score, which enemies are killed and the number of lives of the player.
  */
 public abstract class Level {
+    private final int IMAGE_HEIGHT = 800;
+    private final int IMAGE_WIDTH = 1200;
     private final int PLATFORM_SIZE = 50;
     private final int DIFF = 5;
 
-    BufferedImage background;
+    Image backgroundImage;
 
     // Objects
     protected Player player;
@@ -181,6 +183,8 @@ public abstract class Level {
      * Method for painting the current level i.e backgrounds,players, enemies and platforms.
      */
     public void paintLevel(Graphics2D g) {
+        g.drawImage(backgroundImage, 0, 0, IMAGE_WIDTH, IMAGE_HEIGHT, null);
+
         player.paintObject(g);
         for (Platform p : platforms){
             p.paintObject(g);
@@ -209,19 +213,38 @@ public abstract class Level {
         return platforms;
     }
 
+    public ArrayList<Enemy> createEnemies(GameState level) {
+
+        ArrayList<Enemy> enemies = new ArrayList<>();
+
+        for (int i  = 0; i<24; i++){
+            for (int j = 0; j<15; j++){
+                if(tileMap[j][i] == 2){
+                    Enemy newEnemy = new Enemy(50, 50, i * 50, (j + 1) * 50, level, new Weapon(10,300,5),2,70);
+                    enemies.add(newEnemy);
+                }
+            }
+        }
+        return enemies;
+    }
+
     /**
      * Enemy movement
      */
     private void enemyMove() {
-        for (Enemy e : enemies) {
-            // finds next platform the enemy will move to
-            Platform p = findPlatform(e);
-            if (p == null) { // no further platform
-                int dir = e.getDirection();
-                e.setDirection(-dir); // reverse direction
-                e.setSpeedX(-e.getSpeedX());
+        if (enemies != null) {
+            for (Enemy e : enemies) {
+                // finds next platform the enemy will move to
+                Platform p = findPlatform(e);
+
+                if (p == null) { // no further platform
+                    int dir = e.getDirection();
+                    e.setDirection(1 - dir); // reverse direction
+                    e.setSpeedX(-e.getSpeedX());
+                }
+
+                e.move();
             }
-            e.move();
         }
     }
 
