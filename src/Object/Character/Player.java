@@ -5,11 +5,10 @@ import Item.Weapon;
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.geom.AffineTransform;
-import java.awt.geom.Rectangle2D;
+import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.nio.Buffer;
 import java.util.HashMap;
 
 public class Player extends Character {
@@ -38,14 +37,14 @@ public class Player extends Character {
     public Player(double w, double h, double x, double y){
         super(w,h,x,y);
 
-        charImage = this.loadImage();
+        this.loadImage();
 
         startPosY = x;
         startPosX = y;
         weapon = new Weapon(10,250,7);
     }
 
-    private BufferedImage loadImage() {
+    private void loadImage() {
         BufferedImage charSetImage = null;
         try {
             charSetImage = ImageIO.read(new File("Assets/player.png"));
@@ -56,6 +55,7 @@ public class Player extends Character {
         if (charSetImage != null) {
             BufferedImage smallImg = charSetImage.getSubimage(4, 4, IMAGE_WIDTH, IMAGE_HEIGHT);
 
+            // resize image
             Image tmp = smallImg.getScaledInstance(IMG_RESIZED_W, IMG_RESIZED_H, Image.SCALE_SMOOTH);
             BufferedImage scaledImg = new BufferedImage(IMG_RESIZED_W, IMG_RESIZED_H, smallImg.getType());
 
@@ -63,9 +63,18 @@ public class Player extends Character {
             g2d.drawImage(tmp, 0, 0, IMG_RESIZED_W, IMG_RESIZED_H, null);
             g2d.dispose();
 
-            return scaledImg;
+            // image for player facing right
+            charImageRight = scaledImg;
+
+            // flips image to face left
+            BufferedImage leftImage = new BufferedImage(IMG_RESIZED_W, IMG_RESIZED_H, BufferedImage.TYPE_INT_ARGB);
+
+            Graphics2D g = leftImage.createGraphics();
+            g.drawImage(scaledImg, 0, 0, IMG_RESIZED_W, IMG_RESIZED_H, IMG_RESIZED_W, 0, 0, IMG_RESIZED_H, null);
+            g.dispose();
+
+            charImageLeft = leftImage;
         }
-        return null;
     }
 
     public void jump() {
@@ -152,7 +161,11 @@ public class Player extends Character {
     public void paintObject(Graphics2D g) {
 //        g.setColor(Color.RED);
 //        g.fill(new Rectangle2D.Double(posX, posY,width, height));
-        g.drawImage(charImage, (int) posX, (int) posY, IMG_RESIZED_W, IMG_RESIZED_H, null);
+        if (playerDir == 1) {
+            g.drawImage(charImageRight, (int) posX, (int) posY, IMG_RESIZED_W, IMG_RESIZED_H, null);
+        } else {
+            g.drawImage(charImageLeft, (int) posX, (int) posY, IMG_RESIZED_W, IMG_RESIZED_H, null);
+        }
 //        g.drawRect((int) posX, (int) posY, IMG_RESIZED_W, IMG_RESIZED_H);
 //        g.drawRect((int) posX, (int) posY, 50, 50);
 
