@@ -37,44 +37,12 @@ public class Player extends Character {
     public Player(double w, double h, double x, double y){
         super(w,h,x,y);
 
-        this.loadImage();
+        imageLocation = "Assets/player.png";
+        this.loadImage(IMAGE_WIDTH, IMAGE_HEIGHT, IMG_RESIZED_W, IMG_RESIZED_H);
 
         startPosY = x;
         startPosX = y;
         weapon = new Weapon(10,250,7);
-    }
-
-    private void loadImage() {
-        BufferedImage charSetImage = null;
-        try {
-            charSetImage = ImageIO.read(new File("Assets/player.png"));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        if (charSetImage != null) {
-            BufferedImage smallImg = charSetImage.getSubimage(4, 4, IMAGE_WIDTH, IMAGE_HEIGHT);
-
-            // resize image
-            Image tmp = smallImg.getScaledInstance(IMG_RESIZED_W, IMG_RESIZED_H, Image.SCALE_SMOOTH);
-            BufferedImage scaledImg = new BufferedImage(IMG_RESIZED_W, IMG_RESIZED_H, smallImg.getType());
-
-            Graphics2D g2d = scaledImg.createGraphics();
-            g2d.drawImage(tmp, 0, 0, IMG_RESIZED_W, IMG_RESIZED_H, null);
-            g2d.dispose();
-
-            // image for player facing right
-            charImageRight = scaledImg;
-
-            // flips image to face left
-            BufferedImage leftImage = new BufferedImage(IMG_RESIZED_W, IMG_RESIZED_H, BufferedImage.TYPE_INT_ARGB);
-
-            Graphics2D g = leftImage.createGraphics();
-            g.drawImage(scaledImg, 0, 0, IMG_RESIZED_W, IMG_RESIZED_H, IMG_RESIZED_W, 0, 0, IMG_RESIZED_H, null);
-            g.dispose();
-
-            charImageLeft = leftImage;
-        }
     }
 
     public void jump() {
