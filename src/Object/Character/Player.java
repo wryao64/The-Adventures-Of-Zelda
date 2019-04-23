@@ -124,7 +124,7 @@ public class Player extends Character {
     public void move(){
         super.move();
         weapon.moveShot();
-        System.out.println(canJump);
+//        System.out.println(canJump);
     }
 
     /**
