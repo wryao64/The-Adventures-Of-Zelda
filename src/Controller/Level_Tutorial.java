@@ -11,8 +11,9 @@ public class Level_Tutorial extends Level {
 
     public Level_Tutorial() {
         backgroundImage = new ImageIcon("Assets/icy_mountains.png").getImage();
+        gameState = GameState.TUTORIAL;
 
-        tileMap = new int [][]{
+                tileMap = new int [][]{
                 {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
                 {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
                 {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},

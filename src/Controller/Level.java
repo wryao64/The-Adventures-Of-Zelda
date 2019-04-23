@@ -27,6 +27,7 @@ public abstract class Level {
     protected ArrayList<Enemy> enemies;
     protected ArrayList<Platform> platforms;
     protected Puzzle puzzle;
+    protected GameState gameState;
 
     //Gravity
     protected int gravity = 1;
@@ -181,6 +182,7 @@ public abstract class Level {
 
     public void setJumpKeyPressed(boolean pressed) { player.setJumpKeyPressed(pressed); }
 
+    public GameState getGameState() { return gameState; }
     /**
      * Updating all the logic in the level/updates the values of the variables.
      */

@@ -21,7 +21,6 @@ public class GameScreen extends JPanel implements KeyListener {
 
     Level level;
     Boolean pause = false;
-
     JLabel levelLabel;
 
     public GameScreen() {

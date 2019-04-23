@@ -8,6 +8,7 @@ public class Level_Boss extends Level {
 
     public Level_Boss() {
         backgroundImage = new ImageIcon("Assets/castle.png").getImage();
+        gameState = GameState.LEVEL_BOSS;
 
         tileMap = new int[][]{
                 {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},

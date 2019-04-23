@@ -15,7 +15,8 @@ public class GameController implements Runnable {
     private WelcomeScreen welcomeScreen;
     private GameScreen gameScreen;
     private EndScreen endScreen;
-    private GameState currentState;
+    private GameState currentState = GameState.WELCOME;
+    private HighScoreScreen highScoreScreen;
     private volatile boolean paused = false;
 
     JFrame frame;
@@ -97,7 +98,6 @@ public class GameController implements Runnable {
                 break;
             case TUTORIAL:
                 gameScreen = new GameScreen();
-
                 gameScreen.setLevel(new Level_Tutorial(), "Tutorial");
                 frame.setContentPane(gameScreen);
                 gameScreen.requestFocusInWindow();
@@ -123,6 +123,13 @@ public class GameController implements Runnable {
                 break;
             case PUZZLE:
                 //pop-up window?
+                break;
+            case HIGHSCORE:
+                highScoreScreen = new HighScoreScreen();
+                frame.setContentPane(highScoreScreen);
+                highScoreScreen.setGameController(this);
+                highScoreScreen.setPreviousState(currentState);
+
                 break;
         }
         frame.setVisible(true);
