@@ -8,5 +8,6 @@ public enum GameState {
     LEVEL_BOSS,
     PAUSE,
     END,
-    PUZZLE
+    PUZZLE,
+    HIGHSCORE
 }

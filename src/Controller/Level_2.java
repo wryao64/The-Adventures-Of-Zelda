@@ -11,6 +11,7 @@ public class Level_2 extends Level {
 
     public Level_2() {
         backgroundImage = new ImageIcon("Assets/floating.png").getImage();
+        gameState = GameState.LEVEL_2;
 
         tileMap = new int[][]{
                 {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},

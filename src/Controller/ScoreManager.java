@@ -30,9 +30,6 @@ public class ScoreManager {
      * Returns the top ten scores currently stored.
      */
     public ArrayList<String[]> getTopScores(){
-        for(String[] s : topScores){
-            System.out.println(s[0] + " " + s[1]);
-        }
         return topScores;
     }
 
@@ -45,7 +42,6 @@ public class ScoreManager {
             topScores.add(newScore);
         }else {
             if(Integer.parseInt(newScore[1]) > Integer.parseInt(topScores.get(topScores.size()-1)[1])){
-                System.out.println(topScores.get(topScores.size()-1));
                 topScores.remove(topScores.size()-1);
                 topScores.add(newScore);
             }else{

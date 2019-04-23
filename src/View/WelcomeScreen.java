@@ -10,6 +10,7 @@ public class WelcomeScreen extends JPanel {
 //    private final int BORDER_SIZE = 30;
 
     private GameController gameController;
+    private GameState gameState = GameState.WELCOME;
 
     public WelcomeScreen() {
         this.setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
@@ -34,9 +35,9 @@ public class WelcomeScreen extends JPanel {
         // High score button
         JButton highScoreButton = new JButton("HIGH SCORES");
         highScoreButton.setAlignmentX(Component.CENTER_ALIGNMENT);
-        highScoreButton.addActionListener(e -> {
-            // high score window
-        });
+        highScoreButton.addActionListener(e ->
+            gameController.updateGameState(GameState.HIGHSCORE)
+        );
 
         // Add components to panel
         this.add(Box.createRigidArea(new Dimension(0, 200)));

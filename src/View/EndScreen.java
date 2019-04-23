@@ -8,6 +8,7 @@ import java.awt.*;
 
 public class EndScreen extends JPanel {
     private GameController gameController;
+    private GameState gameState = GameState.END;
 
     private boolean hasWon;
 
@@ -45,8 +46,8 @@ public class EndScreen extends JPanel {
 
         // High score button
         JButton highScoreButton = new JButton("HIGH SCORES");
-        highScoreButton.addActionListener(e -> {}
-                // high score window
+        highScoreButton.addActionListener(e ->
+                gameController.updateGameState(GameState.HIGHSCORE)
         );
 
         buttonPanel.add(homeButton);
