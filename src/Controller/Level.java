@@ -1,6 +1,5 @@
 package Controller;
 
-
 import Object.Item.Bullet;
 import Object.Item.Weapon;
 import Object.Platform;
@@ -22,14 +21,12 @@ public abstract class Level {
 
     Image backgroundImage;
 
-    // Objects
     protected Player player;
-    protected ArrayList<Enemy> enemies;
-    protected ArrayList<Platform> platforms;
+    protected ArrayList<Enemy> enemies = new ArrayList<>();
+    protected ArrayList<Platform> platforms = new ArrayList<>();
     protected Puzzle puzzle;
     protected GameState gameState;
 
-    //Gravity
     protected int gravity = 1;
     protected int maxSpeedY = 15;
     protected int[][] tileMap;
@@ -64,7 +61,6 @@ public abstract class Level {
             bulletPlatformCollision(p);
         }
     }
-
 
     /**
      * Checks if the enemy's shots hit the player.
@@ -160,6 +156,12 @@ public abstract class Level {
         }
     }
 
+    public void checkPuzzleCollistion() {
+        if(player.getBounds().intersects(puzzle.getBounds())){
+            System.out.println("PUZZLE");
+        }
+    }
+
     /**
      * Manipulating the player. Used by the keyListeners in the GameScreen class.
      */
@@ -191,6 +193,7 @@ public abstract class Level {
         player.fall(gravity,maxSpeedY);
         checkPlatformCollisions();
         checkPlayerEnemyCollisions();
+        checkPuzzleCollistion();
         player.move();
         enemyMove();
     }
@@ -202,47 +205,36 @@ public abstract class Level {
         g.drawImage(backgroundImage, 0, 0, IMAGE_WIDTH, IMAGE_HEIGHT, null);
 
         player.paintObject(g);
+        puzzle.paintObject(g);
+
         for (Platform p : platforms){
             p.paintObject(g);
         }
-        if (enemies != null) {
-            for (Enemy e : enemies) {
-                e.paintObject(g);
-            }
+
+        for (Enemy e : enemies) {
+            e.paintObject(g);
         }
+
     }
 
     /**
      * Used to draw the platforms from the particular tilemap of the level.
      */
-    public ArrayList<Platform> createPlatforms(){
-        ArrayList<Platform> platforms = new ArrayList<Platform>();
-
+    public void createLevel(){
         for (int i  = 0; i<24; i++){
             for (int j = 0; j<15; j++){
                 if(tileMap[j][i] == 1){
                     Platform newPlatform = new Platform(i *50, (j + 1) * 50);
                     platforms.add(newPlatform);
-                }
-            }
-        }
-        return platforms;
-    }
-
-    public ArrayList<Enemy> createEnemies(GameState level) {
-
-        ArrayList<Enemy> enemies = new ArrayList<>();
-
-        for (int i  = 0; i<24; i++){
-            for (int j = 0; j<15; j++){
-                if(tileMap[j][i] == 2){
-                    Enemy newEnemy = new Enemy(55, 40, i * 50, (j + 1) * 50 + 10, level,
+                }else if(tileMap[j][i] == 2){
+                    Enemy newEnemy = new Enemy(55, 40, i * 50, (j + 1) * 50 + 10, gameState,
                             new Weapon(10,300,5),2,70);
                     enemies.add(newEnemy);
+                }else if(tileMap[j][i] == 3) {
+                    puzzle = new Puzzle(i*50, (j+1)*50+20,50,30);
                 }
             }
         }
-        return enemies;
     }
 
     /**
@@ -259,7 +251,6 @@ public abstract class Level {
                     e.setDir(- dir); // reverse direction
                     e.setSpeedX(-e.getSpeedX());
                 }
-
                 e.move();
             }
         }
