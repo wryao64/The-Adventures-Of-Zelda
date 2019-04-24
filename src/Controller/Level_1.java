@@ -17,7 +17,7 @@ public class Level_1 extends Level {
                 {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
                 {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
                 {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-                {1,0,0,0,0,0,0,2,0,0,0,0,0,2,0,0,0,0,0,0,0,0,0,1},
+                {1,0,0,0,0,0,0,2,0,0,3,0,0,2,0,0,0,0,0,0,0,0,0,1},
                 {1,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,1},
                 {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
                 {1,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1},
@@ -35,11 +35,8 @@ public class Level_1 extends Level {
         this.player = player;
         player = new Player(50,50,70,600);
 
-        platforms = createPlatforms();
+        createLevel();
 
-        // TODO: Create the puzzle chest
-
-        enemies = createEnemies(GameState.LEVEL_1);
         for (Enemy e : enemies) {
             e.setSpeedX(ENEMY_SPEED);
         }
