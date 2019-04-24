@@ -11,6 +11,7 @@ public class Level_Boss extends Level {
 
     public Level_Boss(Player player) {
         backgroundImage = new ImageIcon("Assets/castle.png").getImage();
+        setHeartImages();
         gameState = GameState.LEVEL_BOSS;
 
         tileMap = new int[][]{

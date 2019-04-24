@@ -1,12 +1,18 @@
 package Controller;
 
+import Object.Character.SpriteSheet;
 import Object.Item.Bullet;
 import Object.Item.Weapon;
 import Object.Platform;
 import Object.Character.Enemy;
 import Object.Character.Player;
 import Object.Item.Puzzle;
+
+import javax.imageio.ImageIO;
 import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 
 /**
@@ -31,6 +37,8 @@ public abstract class Level {
     protected int gravity = 1;
     protected int maxSpeedY = 15;
     protected int[][] tileMap;
+
+    protected ArrayList<BufferedImage> heartImages = new ArrayList<>();
 
     /**
      * Collisions between platforms and the player.
@@ -96,7 +104,6 @@ public abstract class Level {
             if(b.getBounds().intersects(e.getBounds())){
                 bulletToRemove = b;
                 e.takeDamage(player.getWeapon().getAttackDamage());
-                System.out.println(e.getHealth());
                 if(e.getHealth() <= 0){
                     enemyToRemove = e;
                     player.addToEnemiesKilled();
@@ -211,6 +218,7 @@ public abstract class Level {
      */
     public void paintLevel(Graphics2D g) {
         g.drawImage(backgroundImage, 0, 0, IMAGE_WIDTH, IMAGE_HEIGHT, null);
+        paintHearts(g);
 
         player.paintObject(g);
         puzzle.paintObject(g);
@@ -237,7 +245,6 @@ public abstract class Level {
                     Enemy newEnemy = new Enemy(55, 40, i * 50, (j + 1) * 50 + 10, gameState,
                             new Weapon(50,300,5),2,70);
                     enemies.add(newEnemy);
-                    System.out.println(newEnemy.getHealth());
                 }else if(tileMap[j][i] == 3) {
                     puzzle = new Puzzle(i*50, (j+1)*50+20,50,30);
                 }else if(tileMap[j][i] == 4) {
@@ -294,4 +301,30 @@ public abstract class Level {
         }
         return null;
     }
+
+    public void setHeartImages() {
+        String imageLocation = "Assets/hearts.png";
+        try {
+            BufferedImage heartSheet = ImageIO.read(new File(imageLocation));
+            SpriteSheet ss = new SpriteSheet(heartSheet,50,50);
+            heartImages.add(ss.getImage(0,0));
+            heartImages.add(ss.getImage(50,0));
+            heartImages.add(ss.getImage(100,0));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void paintHearts(Graphics2D g) {
+        int lives = player.getLives();
+        boolean halfHeart = player.getHealth() < player.getMaxHealth() && player.getHealth()>0;
+        for(int i=0; i < lives; i++) {
+            if (halfHeart && i == lives - 1) {
+                g.drawImage(heartImages.get(0), 50 * i + 50, 100, 50,
+                        50, null);
+            } else
+                g.drawImage(heartImages.get(1), 50 * i+50, 100, 50,
+                        50, null);
+        }
+        }
 }
