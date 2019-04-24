@@ -1,12 +1,15 @@
 package Controller;
 
+import Object.Character.Enemy;
 import Object.Character.Player;
+import Object.Item.Weapon;
 
 import javax.swing.*;
 
 public class Level_Boss extends Level {
+    private final double ENEMY_SPEED = 2;
 
-    public Level_Boss() {
+    public Level_Boss(Player player) {
         backgroundImage = new ImageIcon("Assets/castle.png").getImage();
         gameState = GameState.LEVEL_BOSS;
 
@@ -20,17 +23,22 @@ public class Level_Boss extends Level {
                 {1,0,0,0,0,1,1,0,0,0,0,3,0,0,0,0,0,1,1,0,0,0,0,1},
                 {1,0,0,0,0,0,0,0,0,0,1,1,1,1,0,0,0,0,0,0,0,0,0,1},
                 {1,0,0,0,0,0,0,0,0,1,1,1,1,1,1,0,0,0,0,0,0,0,0,1},
-                {1,0,0,0,0,0,2,0,0,0,0,0,0,0,0,0,2,0,0,0,0,0,0,1},
-                {1,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,1},
                 {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-                {1,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,1},
-                {1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1},
+                {1,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,1},
+                {1,0,0,0,1,1,0,0,0,0,0,4,0,0,0,0,0,0,1,1,0,0,0,1},
+                {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+                {1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1},
                 {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1}
         };
 
         //Set the player
-        player = new Player(50,50,500,600);
+        this.player = player;
+        player.setWeapon(new Weapon(70,350, 12));
+
         createLevel();
+        for (Enemy e : enemies) {
+            e.setSpeedX(ENEMY_SPEED);
+        }
 
         //Create the puzzle chest
         //Create the enemies

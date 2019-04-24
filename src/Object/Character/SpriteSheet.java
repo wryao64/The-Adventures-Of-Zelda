@@ -26,6 +26,14 @@ public class SpriteSheet {
     }
 
     /**
+     * Cut outs a sub image at the given co-ords.
+     */
+    public BufferedImage getImage(int x, int y,int w, int h) {
+        BufferedImage smallImg = image.getSubimage(x, y, w, h);
+        return smallImg;
+    }
+
+    /**
      * Cut outs a mirrored sub image at the given co-ords.
      */
     public BufferedImage getFlippedImage(int x, int y) {
@@ -38,5 +46,18 @@ public class SpriteSheet {
 
         return leftImage;
 
+    }
+
+    public BufferedImage getPerpendicularImage(int x, int y) {
+        BufferedImage smallImg = image.getSubimage(x, y, imageWidth, imageHeight);
+        BufferedImage rotatedImage = new BufferedImage(imageHeight, imageWidth, BufferedImage.TYPE_INT_ARGB);
+
+        Graphics2D g = rotatedImage.createGraphics();
+        g.translate((imageHeight - imageWidth) / 2, (imageHeight - imageWidth) / 2);
+        g.rotate(Math.PI / 2, imageHeight / 2, imageWidth / 2);
+        g.drawRenderedImage(smallImg, null);
+        g.dispose();
+
+        return rotatedImage;
     }
 }

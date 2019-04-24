@@ -3,7 +3,6 @@ package View;
 import Controller.GameController;
 import Controller.GameState;
 import Controller.Level;
-import jdk.nashorn.internal.scripts.JD;
 
 import javax.swing.*;
 import java.awt.*;
@@ -115,8 +114,18 @@ public class GameScreen extends JPanel implements KeyListener {
             level.setJumpKeyPressed(true);
             level.playerCanJump(false);
         }
+
         if (c == KeyEvent.VK_SPACE) {
             level.setPlayerShoot();
+        }
+
+        if (c == KeyEvent.VK_C) {
+            if(level.getPuzzleStatus()) {
+                level.getPlayer().collectOrb();
+                gameController.pauseGame(true);
+                window = (RootPaneContainer) SwingUtilities.getWindowAncestor(this);
+                new PuzzleScreen((Window) window, gameController);
+            }
         }
 
         // SCREEN CHANGE
@@ -210,5 +219,13 @@ public class GameScreen extends JPanel implements KeyListener {
         this.pauseGame();
         new ExitDialog((Window) window, gameController);
         glassPane.setVisible(false);
+    }
+
+    /**
+     * Creates pause dialog
+     */
+    private void puzzleOpened() {
+        window = (RootPaneContainer) SwingUtilities.getWindowAncestor(this);
+        new PuzzleScreen((Window) window, gameController);
     }
 }

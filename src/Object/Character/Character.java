@@ -16,17 +16,22 @@ public abstract class Character extends Object {
     protected ArrayList<BufferedImage> charImagesRight = new ArrayList<>();
     protected ArrayList<BufferedImage> charImagesLeft = new ArrayList<>();
     protected BufferedImage imageToPaint;
+    protected BufferedImage hurtImageLeft;
+    protected BufferedImage hurtImageRight;
+
+    protected int health;
+    protected boolean hurt = false;
+    protected int hurtImageCount = 0;
 
     protected int charDirection = 1;
     protected Weapon weapon;
     protected int movementCount = 0;
     protected int animSpeed = 1;
+    protected double speedX, speedY;
 
     public Character(double w, double h, double x, double y){
         super(w,h,x,y);
     }
-
-    protected double speedX, speedY;
 
     /*
     Horizontal movement of the character.
@@ -44,17 +49,27 @@ public abstract class Character extends Object {
      * Iterates through the movement images for the character to create walking animation effect.
      */
     public void switchImages() {
-        movementCount++;
-        if (charDirection == 1) {
-            if (movementCount >= charImagesRight.size() * animSpeed) {
-                movementCount = 0;
+            movementCount++;
+            if (charDirection == 1) {
+                if (movementCount >= charImagesRight.size() * animSpeed) {
+                    movementCount = 0;
+                }
+                imageToPaint = charImagesRight.get(movementCount / animSpeed);
+            } else {
+                if (movementCount >= charImagesLeft.size() * animSpeed) {
+                    movementCount = 0;
+                }
+                imageToPaint = charImagesLeft.get(movementCount / animSpeed);
             }
-            imageToPaint = charImagesRight.get(movementCount / animSpeed);
+    }
+
+    public void setImageToPaint(BufferedImage image, int speed) {
+        if (hurtImageCount < speed) {
+            hurtImageCount++;
+            imageToPaint = image;
         } else {
-            if (movementCount >= charImagesLeft.size() * animSpeed) {
-                movementCount = 0;
-            }
-            imageToPaint = charImagesLeft.get(movementCount / animSpeed);
+            hurt = false;
+            hurtImageCount = 0;
         }
     }
     /*
@@ -75,6 +90,12 @@ public abstract class Character extends Object {
     public void setWeapon(Weapon weapon) { this.weapon = weapon; }
 
     public Weapon getWeapon() { return weapon; }
+
+    public void setHealth(int health) { this.health = health; }
+
+    public int getHealth() { return health; }
+
+    public void takeDamage(int damage){ health = health - damage; hurt = true; }
 
 
     /**
