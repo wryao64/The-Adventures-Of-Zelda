@@ -7,9 +7,9 @@ import Object.Character.Player;
 import javax.swing.*;
 
 public class Level_2 extends Level {
-    private final int ENEMY_SPEED = 2;
+    private final double ENEMY_SPEED = 1.5;
 
-    public Level_2() {
+    public Level_2(Player player) {
         backgroundImage = new ImageIcon("Assets/floating.png").getImage();
         gameState = GameState.LEVEL_2;
 
@@ -20,7 +20,7 @@ public class Level_2 extends Level {
                 {1,0,0,0,0,0,0,2,0,0,0,0,0,0,0,0,0,2,0,0,0,0,0,1},
                 {1,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,1},
                 {1,0,0,0,0,0,0,0,0,1,0,0,0,0,1,0,0,0,0,0,0,0,0,1},
-                {1,0,0,0,1,1,0,0,0,0,0,3,0,0,0,0,0,0,1,1,0,0,0,1},
+                {1,0,0,0,1,1,0,0,0,0,0,3,4,0,0,0,0,0,1,1,0,0,0,1},
                 {1,2,0,0,0,0,0,0,0,0,1,1,1,1,0,0,0,0,0,0,0,2,0,1},
                 {1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1},
                 {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
@@ -32,7 +32,8 @@ public class Level_2 extends Level {
         };
 
         //Set the player
-        player = new Player(40,50,500,600);
+        this.player = player;
+        player.addLives(3);
 
        createLevel();
         for (Enemy e : enemies) {

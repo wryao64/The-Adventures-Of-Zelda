@@ -9,15 +9,14 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Player extends Character {
-    //private final int START_X = 4;
-    //private final int START_Y = 4;
     private final int IMAGE_WIDTH = 21;
     private final int IMAGE_HEIGHT = 27;
-    private final int IMG_RESIZED_W = 40;
-    private final int IMG_RESIZED_H = 50;
-    private final double MOVEMENT_SPEED= 2.5;
+    private final int IMG_RESIZED_W = 45;
+    private final int IMG_RESIZED_H = 55;
+    private final double MOVEMENT_SPEED= 3;
 
     private final int jumpHeight = 17;
+    private int maxHealth = 50;
     private double startPosX;
     private double startPosY;
 
@@ -25,6 +24,7 @@ public class Player extends Character {
     boolean canJump;
     boolean sideKeyPressed = false;
     boolean jumpKeyPressed = false;
+    private BufferedImage deadImage;
 
     private int enemiesKilled = 0;
     private int bossesKilled = 0;
@@ -32,6 +32,7 @@ public class Player extends Character {
 
     public Player(double w, double h, double x, double y){
         super(w,h,x,y);
+        setHealth(maxHealth);
 
         imageLocation = "Assets/player.png";
         BufferedImage playerSheet = loadImage();
@@ -44,6 +45,10 @@ public class Player extends Character {
         charImagesRight.add(spriteSheet.getImage(5,37));
         charImagesRight.add(spriteSheet.getImage(36,37));
         charImagesRight.add(spriteSheet.getImage(69,37));
+
+        deadImage = spriteSheet.getImage(64,106,IMAGE_HEIGHT,IMAGE_WIDTH);
+        hurtImageRight = spriteSheet.getImage(69,4);
+        hurtImageLeft = spriteSheet.getFlippedImage(69,4);
 
         charImagesLeft.add(spriteSheet.getFlippedImage(5,5));
         charImagesLeft.add(spriteSheet.getFlippedImage(36,5));
@@ -90,9 +95,15 @@ public class Player extends Character {
 
     public int getEnemiesKilled(){ return enemiesKilled; }
 
-    public void loseLife(){ lives--; }
+    public void loseLife(){
+        lives--;
+    }
 
     public void addToEnemiesKilled() { enemiesKilled ++; }
+
+    public void collectOrb() { orbsCollected++; }
+
+    public void addLives(int lives) { this.lives = this.lives + lives; }
 
     public double getMovementSpeed() { return MOVEMENT_SPEED; }
 
@@ -104,6 +115,11 @@ public class Player extends Character {
 
     public boolean getJumpKeyPressed() { return jumpKeyPressed; }
 
+    public boolean hurt() { return hurt; }
+
+    public void setInitPosition(double x, double y) { startPosX = x; startPosY = y;}
+
+    public void setMaxHealth(int health) { maxHealth = health; }
 
     /**
      * Returns all the stats necessary to calculated the final score.
@@ -115,6 +131,9 @@ public class Player extends Character {
         scoreMap.put("Bosses Slain: ", bossesKilled);
         scoreMap.put("Orbs Collected: ", orbsCollected);
         scoreMap.put("Lives left: ", lives);
+
+       // System.out.println("Enemies Killed: "+ enemiesKilled + " orbs: "+ orbsCollected
+        //+ " livesLeft: " + lives);
         return scoreMap;
     }
 
@@ -124,7 +143,6 @@ public class Player extends Character {
     public void move(){
         super.move();
         weapon.moveShot();
-//        System.out.println(canJump);
     }
 
     /**
@@ -132,9 +150,19 @@ public class Player extends Character {
      */
     @Override
     public void switchImages() {
-        if (sideKeyPressed) {
+        if(hurt == true) {
+            if (health > 0) {
+                if(charDirection == 1){
+                    setImageToPaint(hurtImageRight, 15);
+                }else{
+                    setImageToPaint(hurtImageLeft,15);
+                }
+            } else {
+                setImageToPaint(deadImage, 40);
+            }
+        } else if (sideKeyPressed) {
             super.switchImages();
-        } else {
+        } else{
             if (charDirection == 1) {
                 imageToPaint = charImagesRight.get(0);
             } else {
@@ -142,13 +170,34 @@ public class Player extends Character {
             }
         }
     }
+
+    @Override
+    public void setImageToPaint(BufferedImage image, int speed) {
+        if (hurtImageCount < speed) {
+            hurtImageCount++;
+            imageToPaint = image;
+        } else {
+            hurt = false;
+            hurtImageCount = 0;
+            if(image == deadImage) {
+                initPosition();
+                health = maxHealth;
+            }
+        }
+    }
     /**
      * Painting the player. Called by the level class
      */
     public void paintObject(Graphics2D g) {
+        getFinalStats();
         switchImages();
-        g.drawImage(imageToPaint, (int) posX, (int) posY, IMG_RESIZED_W,
+        if(imageToPaint == deadImage) {
+            g.drawImage(imageToPaint, (int) posX, (int) posY+(IMG_RESIZED_H-IMG_RESIZED_W), IMG_RESIZED_H,
+                    IMG_RESIZED_W, null);
+        }else {
+            g.drawImage(imageToPaint, (int) posX, (int) posY, IMG_RESIZED_W,
                     IMG_RESIZED_H, null);
+        }
         weapon.paintObject(g);
     }
 }

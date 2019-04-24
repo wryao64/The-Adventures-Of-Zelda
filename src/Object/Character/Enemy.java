@@ -8,8 +8,7 @@ import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
 public class Enemy extends Character {
-    private final int START_X = 9;
-    private final int START_Y = 39;
+
     private final int IMAGE_WIDTH = 18;
     private final int IMAGE_HEIGHT = 11;
     private final int IMG_RESIZED_W = 55;
@@ -21,7 +20,6 @@ public class Enemy extends Character {
 
     //The initial random frequency the enemy will shoot.
     private double randFreq = (Math.random() * (31)) + (shootFreq-0.5);
-    protected int health;
 
     //Amount of score points the enemy is worth.
     protected int points;
@@ -34,20 +32,24 @@ public class Enemy extends Character {
         SpriteSheet spriteSheet = new SpriteSheet(enemySheet,IMAGE_WIDTH,IMAGE_HEIGHT);
 
         //Adding the cut out of the sprites to the character movement arrays.
-        charImagesRight.add(spriteSheet.getImage(7,41));
-        charImagesRight.add(spriteSheet.getImage(39,41));
-        charImagesRight.add(spriteSheet.getImage(71,41));
-        charImagesRight.add(spriteSheet.getImage(103,41));
+        charImagesRight.add(spriteSheet.getImage(7,42));
+        charImagesRight.add(spriteSheet.getImage(39,42));
+        charImagesRight.add(spriteSheet.getImage(71,42));
+        charImagesRight.add(spriteSheet.getImage(103,42));
 
-        charImagesLeft.add(spriteSheet.getFlippedImage(7,41));
-        charImagesLeft.add(spriteSheet.getFlippedImage(39,41));
-        charImagesLeft.add(spriteSheet.getFlippedImage(71,41));
-        charImagesLeft.add(spriteSheet.getFlippedImage(103,41));
+        hurtImageLeft = spriteSheet.getImage(39,106);
+        hurtImageRight = spriteSheet.getFlippedImage(39,106);
+
+        charImagesLeft.add(spriteSheet.getFlippedImage(7,42));
+        charImagesLeft.add(spriteSheet.getFlippedImage(39,42));
+        charImagesLeft.add(spriteSheet.getFlippedImage(71,42));
+        charImagesLeft.add(spriteSheet.getFlippedImage(103,42));
 
         this.setSpeedY(SPEED_Y);
         super.weapon = weapon;
         this.shootFreq = shootFreq;
         this.health = health;
+        System.out.println(getHealth());
         animSpeed = 10;
     }
 
@@ -62,6 +64,10 @@ public class Enemy extends Character {
             case LEVEL_2:
                 imageLocation = "Assets/enemy_green.png";
                 break;
+            case LEVEL_BOSS:
+                imageLocation = "Assets/enemy_white.png";
+                break;
+
         }
     }
 
@@ -81,21 +87,24 @@ public class Enemy extends Character {
 
     public int getPoints() { return points; }
 
-    public int getHealth() { return health; }
-
-    public void takeDamage(int damage){ health = health - damage; }
 
     /**
      * Paints enemy. Called by Level object.
      */
     @Override
     public void paintObject(Graphics2D g) {
-       switchImages();
+        if(hurt){
+            if(charDirection == 1) {
+                setImageToPaint(hurtImageRight, 10);
+            }else{
+                setImageToPaint(hurtImageLeft,10);
+            }
+        }else {
+            switchImages();
+        }
         g.drawImage(imageToPaint, (int) posX, (int) posY, IMG_RESIZED_W,
                 IMG_RESIZED_H, null);
 
-        g.setColor(Color.RED);
-        g.drawString(health+"", (int)(posX +(width/2)), (int)(posY+(height/2)));
         weapon.paintObject(g);
     }
 }

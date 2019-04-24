@@ -26,6 +26,7 @@ public abstract class Level {
     protected ArrayList<Platform> platforms = new ArrayList<>();
     protected Puzzle puzzle;
     protected GameState gameState;
+    protected boolean puzzleOpened = false;
 
     protected int gravity = 1;
     protected int maxSpeedY = 15;
@@ -70,7 +71,6 @@ public abstract class Level {
         ArrayList<Enemy> enemiesToRemove = new ArrayList<>();
         for (Enemy e : enemies) {
           Enemy enemyToRemove;
-
           enemyToRemove = handlePlayerHitEnemy(e);
           handleEnemyHitPlayer(e);
 
@@ -96,6 +96,7 @@ public abstract class Level {
             if(b.getBounds().intersects(e.getBounds())){
                 bulletToRemove = b;
                 e.takeDamage(player.getWeapon().getAttackDamage());
+                System.out.println(e.getHealth());
                 if(e.getHealth() <= 0){
                     enemyToRemove = e;
                     player.addToEnemiesKilled();
@@ -117,8 +118,12 @@ public abstract class Level {
         for (Bullet b: bullets) {
             if(b.getBounds().intersects(player.getBounds())){
                 bulletToRemove = b;
-                player.loseLife();
-                player.initPosition();
+                if(!player.hurt()){
+                    player.takeDamage(e.getWeapon().getAttackDamage());
+                    if(player.getHealth()<=0){
+                        player.loseLife();
+                    }
+                }
             }
         }
         if(bulletToRemove != null) {
@@ -156,9 +161,9 @@ public abstract class Level {
         }
     }
 
-    public void checkPuzzleCollistion() {
+    public void checkPuzzleCollision() {
         if(player.getBounds().intersects(puzzle.getBounds())){
-            System.out.println("PUZZLE");
+            puzzleOpened = true;
         }
     }
 
@@ -184,7 +189,10 @@ public abstract class Level {
 
     public void setJumpKeyPressed(boolean pressed) { player.setJumpKeyPressed(pressed); }
 
-    public GameState getGameState() { return gameState; }
+    public boolean getPuzzleStatus() { return puzzleOpened; }
+
+    public Player getPlayer() { return player; }
+
     /**
      * Updating all the logic in the level/updates the values of the variables.
      */
@@ -193,7 +201,7 @@ public abstract class Level {
         player.fall(gravity,maxSpeedY);
         checkPlatformCollisions();
         checkPlayerEnemyCollisions();
-        checkPuzzleCollistion();
+        checkPuzzleCollision();
         player.move();
         enemyMove();
     }
@@ -210,7 +218,6 @@ public abstract class Level {
         for (Platform p : platforms){
             p.paintObject(g);
         }
-
         for (Enemy e : enemies) {
             e.paintObject(g);
         }
@@ -228,10 +235,15 @@ public abstract class Level {
                     platforms.add(newPlatform);
                 }else if(tileMap[j][i] == 2){
                     Enemy newEnemy = new Enemy(55, 40, i * 50, (j + 1) * 50 + 10, gameState,
-                            new Weapon(10,300,5),2,70);
+                            new Weapon(50,300,5),2,70);
                     enemies.add(newEnemy);
+                    System.out.println(newEnemy.getHealth());
                 }else if(tileMap[j][i] == 3) {
                     puzzle = new Puzzle(i*50, (j+1)*50+20,50,30);
+                }else if(tileMap[j][i] == 4) {
+                    player.setPosX(i*50);
+                    player.setPosY((j+1)*50);
+                    player.setInitPosition(i*50,(j+1)*50);
                 }
             }
         }

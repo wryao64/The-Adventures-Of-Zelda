@@ -1,5 +1,6 @@
 package Controller;
 
+import Object.Character.Player;
 import View.*;
 
 import javax.swing.*;
@@ -15,8 +16,16 @@ public class GameController implements Runnable {
     private WelcomeScreen welcomeScreen;
     private GameScreen gameScreen;
     private EndScreen endScreen;
-    private GameState currentState = GameState.WELCOME;
+    private PuzzleScreen puzzleScreen;
     private HighScoreScreen highScoreScreen;
+
+    private Level_Tutorial level_tutorial;
+    private Level_1 level_1;
+    private Level_2 level_2;
+    private Level_Boss level_Boss;
+
+
+    private GameState currentState = GameState.WELCOME;
     private volatile boolean paused = false;
 
     JFrame frame;
@@ -44,7 +53,7 @@ public class GameController implements Runnable {
                         update();
                         render();
 //                    }
-                  
+
                     //The time taken to do all the updates (in millis).
                     timeTakenMillis = (System.nanoTime() - startTime) / 1000000;
 
@@ -98,38 +107,34 @@ public class GameController implements Runnable {
                 break;
             case TUTORIAL:
                 gameScreen = new GameScreen();
-                gameScreen.setLevel(new Level_Tutorial(), "Tutorial");
+                level_tutorial = new Level_Tutorial();
+                gameScreen.setLevel(level_tutorial, "Tutorial");
                 frame.setContentPane(gameScreen);
                 gameScreen.requestFocusInWindow();
-
                 gameScreen.setGameController(this);
                 break;
             case LEVEL_1:
-                gameScreen.setLevel(new Level_1(), "Level 1");
+                level_1 = new Level_1(level_tutorial.getPlayer());
+                gameScreen.setLevel(level_1, "Level 1");
                 break;
             case LEVEL_2:
-                gameScreen.setLevel(new Level_2(), "Level 2");
+                level_2 = new Level_2(level_1.getPlayer());
+                gameScreen.setLevel(level_2, "Level 2");
                 break;
             case LEVEL_BOSS:
-                gameScreen.setLevel(new Level_Boss(), "Boss");
+                level_Boss = new Level_Boss(level_2.getPlayer());
+                gameScreen.setLevel(level_Boss, "Boss");
                 break;
-         //   case PAUSE:
-  //             frame.setContentPane(new PauseScreen());
-    //           break;
             case END:
                 endScreen = new EndScreen(true);
                 frame.setContentPane(endScreen);
                 endScreen.setGameController(this);
-                break;
-            case PUZZLE:
-                //pop-up window?
                 break;
             case HIGHSCORE:
                 highScoreScreen = new HighScoreScreen();
                 frame.setContentPane(highScoreScreen);
                 highScoreScreen.setGameController(this);
                 highScoreScreen.setPreviousState(currentState);
-
                 break;
         }
         frame.setVisible(true);
