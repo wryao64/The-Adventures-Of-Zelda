@@ -11,6 +11,7 @@ public class Level_2 extends Level {
 
     public Level_2(Player player) {
         backgroundImage = new ImageIcon("Assets/floating.png").getImage();
+        setHeartImages();
         gameState = GameState.LEVEL_2;
 
         tileMap = new int[][]{

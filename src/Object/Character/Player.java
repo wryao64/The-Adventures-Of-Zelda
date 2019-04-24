@@ -3,9 +3,7 @@ package Object.Character;
 import Object.Item.Weapon;
 
 import java.awt.*;
-import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
-import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Player extends Character {
@@ -121,6 +119,8 @@ public class Player extends Character {
 
     public void setMaxHealth(int health) { maxHealth = health; }
 
+    public int getMaxHealth() { return maxHealth; }
+
     /**
      * Returns all the stats necessary to calculated the final score.
      */
@@ -185,11 +185,11 @@ public class Player extends Character {
             }
         }
     }
+
     /**
      * Painting the player. Called by the level class
      */
     public void paintObject(Graphics2D g) {
-        getFinalStats();
         switchImages();
         if(imageToPaint == deadImage) {
             g.drawImage(imageToPaint, (int) posX, (int) posY+(IMG_RESIZED_H-IMG_RESIZED_W), IMG_RESIZED_H,
