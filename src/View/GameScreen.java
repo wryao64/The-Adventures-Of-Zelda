@@ -56,6 +56,7 @@ public class GameScreen extends JPanel implements KeyListener {
             try {
                 this.level = level;
                 levelLabel.setText("Level: " + levelName);
+                this.level.setGameScreen(this);
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -124,7 +125,7 @@ public class GameScreen extends JPanel implements KeyListener {
         if (c == KeyEvent.VK_C) {
             if(level.getPuzzleStatus()) {
                 level.getPlayer().collectOrb();
-                gameController.pauseGame(true);
+                gameController.setPaused(true);
                 window = (RootPaneContainer) SwingUtilities.getWindowAncestor(this);
                 new PuzzleScreen((Window) window, gameController);
             }
@@ -236,4 +237,5 @@ public class GameScreen extends JPanel implements KeyListener {
         window = (RootPaneContainer) SwingUtilities.getWindowAncestor(this);
         new PuzzleScreen((Window) window, gameController);
     }
+
 }

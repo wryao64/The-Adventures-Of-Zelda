@@ -54,14 +54,10 @@ public class Weapon extends Object {
     public void moveShot() {
         Bullet bulletToRemove = null;
       for(Bullet b : bullets) {
-          //System.out.println("Range " + (weaponPosX-range) + "-" + (weaponPosX+range));
-         // System.out.println(b.getBulletPosX());
 
           if ((b.getBulletPosX() > (weaponPosX - range)) && (b.getBulletPosX() < (weaponPosX + range))) {
-              //System.out.println("Shot in range");
               b.moveShot();
           } else {
-              //System.out.println("Shot removed");
               bulletToRemove = b;
           }
       }
@@ -85,6 +81,8 @@ public class Weapon extends Object {
     public void setMaxBullets(int maxBullets) { this.maxBullets = maxBullets; }
 
     public void setBulletSize(int size) { bulletSize = size; }
+
+    public void setRange(int range) { this.range = range; }
 
     public ArrayList<Bullet> getBullets() { return bullets; }
 
