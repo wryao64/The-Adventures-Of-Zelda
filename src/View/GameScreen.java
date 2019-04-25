@@ -43,6 +43,8 @@ public class GameScreen extends JPanel implements KeyListener {
 
         topBar.add(levelLabel);
         topBar.add(Box.createRigidArea(new Dimension(700, 0)));
+
+        Sound.playBackgroundMusic();
     }
 
     public void setGameController(GameController controller){
