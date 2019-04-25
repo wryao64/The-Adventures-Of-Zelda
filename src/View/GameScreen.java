@@ -3,6 +3,7 @@ package View;
 import Controller.GameController;
 import Controller.GameState;
 import Controller.Level;
+import Controller.Sound;
 
 import javax.swing.*;
 import java.awt.*;
@@ -160,6 +161,12 @@ public class GameScreen extends JPanel implements KeyListener {
         if (c == KeyEvent.VK_ESCAPE) {
             gameController.pauseGame(true);
             this.exitPressed();
+        }
+
+        // FOR TESTING PURPOSES: play sound
+        if (c == KeyEvent.VK_S) {
+            String sound = Sound.SOUND_LOCATION + "enemy_hit.wav";
+            Sound.playSound(sound);
         }
     }
 
