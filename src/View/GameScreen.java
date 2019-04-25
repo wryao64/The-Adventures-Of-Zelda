@@ -43,7 +43,6 @@ public class GameScreen extends JPanel implements KeyListener {
 
         topBar.add(levelLabel);
         topBar.add(Box.createRigidArea(new Dimension(700, 0)));
-        // TODO: ADD LIVES HERE
     }
 
     public void setGameController(GameController controller){
@@ -165,7 +164,7 @@ public class GameScreen extends JPanel implements KeyListener {
 
         // FOR TESTING PURPOSES: play sound
         if (c == KeyEvent.VK_S) {
-            String sound = Sound.SOUND_LOCATION + "enemy_hit.wav";
+            String sound = Sound.SOUND_LOCATION + "player_hit.wav";
             Sound.playSound(sound);
         }
     }
