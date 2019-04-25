@@ -25,6 +25,9 @@ public abstract class Level {
     private final int PLATFORM_SIZE = 50;
     private final int DIFF = 5;
 
+    private static final String PLAYER_HIT_SOUND = Sound.SOUND_LOCATION + "player_hit.wav";
+    private static final String ENEMY_HIT_SOUND = Sound.SOUND_LOCATION + "enemy_hit.wav";
+
     Image backgroundImage;
 
     protected Player player;
@@ -104,6 +107,10 @@ public abstract class Level {
             if(b.getBounds().intersects(e.getBounds())){
                 bulletToRemove = b;
                 e.takeDamage(player.getWeapon().getAttackDamage());
+
+                // Sound of enemy being hit
+                Sound.playSound(ENEMY_HIT_SOUND);
+
                 if(e.getHealth() <= 0){
                     enemyToRemove = e;
                     player.addToEnemiesKilled();
@@ -122,11 +129,17 @@ public abstract class Level {
     private void handleEnemyHitPlayer(Enemy e) {
         ArrayList<Bullet> bullets = e.getWeapon().getBullets();
         Bullet bulletToRemove = null;
+
         for (Bullet b: bullets) {
             if(b.getBounds().intersects(player.getBounds())){
                 bulletToRemove = b;
+
+                // Sound of player being hit
+                Sound.playSound(PLAYER_HIT_SOUND);
+
                 if(!player.hurt()){
                     player.takeDamage(e.getWeapon().getAttackDamage());
+
                     if(player.getHealth()<=0){
                         player.loseLife();
                     }
@@ -326,5 +339,5 @@ public abstract class Level {
                 g.drawImage(heartImages.get(1), 50 * i+50, 100, 50,
                         50, null);
         }
-        }
+    }
 }
