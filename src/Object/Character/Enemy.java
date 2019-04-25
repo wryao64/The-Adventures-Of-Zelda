@@ -19,7 +19,7 @@ public class Enemy extends Character {
     private double shootFreq;
 
     //The initial random frequency the enemy will shoot.
-    private double randFreq = (Math.random() * (31)) + (shootFreq-0.5);
+    private double randFreq = (Math.random() * ((shootFreq+0.5)*60-(shootFreq-0.5)*60)) + (shootFreq-0.5)*60;
 
     //Amount of score points the enemy is worth.
     protected int points;
@@ -49,7 +49,6 @@ public class Enemy extends Character {
         super.weapon = weapon;
         this.shootFreq = shootFreq;
         this.health = health;
-        System.out.println(getHealth());
         animSpeed = 10;
     }
 
@@ -74,18 +73,21 @@ public class Enemy extends Character {
     public void move() {
         super.move();
         //Counter to keep track of when the enemy has to shoot again.
-        moveCount++;
+        moveCount = moveCount + 1;
         weapon.moveShot();
+        System.out.println(moveCount);
         //Once the counter reaches the desired period, shoot the weapon again.
         if (moveCount > randFreq) {
             shootWeapon();
             //Randomly generate the count for when next time the enemy will shoot.
-            randFreq = (Math.random() * (31)) + (shootFreq - 0.5);
+            randFreq = (Math.random() * ((shootFreq+0.5)*60-(shootFreq-0.5)*60)) + (shootFreq-0.5)*60;
             moveCount = 0;
         }
     }
 
     public int getPoints() { return points; }
+
+    public void setShootFreq(double shootFreq) { this.shootFreq = shootFreq; }
 
 
     /**

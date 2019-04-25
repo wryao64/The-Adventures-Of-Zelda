@@ -7,7 +7,7 @@ import Object.Character.Player;
 import javax.swing.*;
 
 public class Level_Tutorial extends Level {
-    private final int ENEMY_SPEED = 1;
+    private final double ENEMY_SPEED = 0.75;
 
     public Level_Tutorial() {
         backgroundImage = new ImageIcon("Assets/icy_mountains.png").getImage();
@@ -38,6 +38,8 @@ public class Level_Tutorial extends Level {
         createLevel();
         for (Enemy e : enemies) {
             e.setSpeedX(ENEMY_SPEED);
+            e.getWeapon().setRange(150);
+            e.setShootFreq(3.5);
         }
     }
     public Player getPlayer () {

@@ -14,11 +14,10 @@ public class Player extends Character {
     private final double MOVEMENT_SPEED= 3;
 
     private final int jumpHeight = 17;
-    private int maxHealth = 50;
     private double startPosX;
     private double startPosY;
 
-    private int lives = 5;
+    private int hearts = 5;
     boolean canJump;
     boolean sideKeyPressed = false;
     boolean jumpKeyPressed = false;
@@ -30,7 +29,6 @@ public class Player extends Character {
 
     public Player(double w, double h, double x, double y){
         super(w,h,x,y);
-        setHealth(maxHealth);
 
         imageLocation = "Assets/player.png";
         BufferedImage playerSheet = loadImage();
@@ -44,7 +42,6 @@ public class Player extends Character {
         charImagesRight.add(spriteSheet.getImage(36,37));
         charImagesRight.add(spriteSheet.getImage(69,37));
 
-        deadImage = spriteSheet.getImage(64,106,IMAGE_HEIGHT,IMAGE_WIDTH);
         hurtImageRight = spriteSheet.getImage(69,4);
         hurtImageLeft = spriteSheet.getFlippedImage(69,4);
 
@@ -89,19 +86,18 @@ public class Player extends Character {
     /**
      * Getters and Setters.
      */
-    public int getLives(){ return lives; }
+    public int getLives(){ return hearts; }
 
-    public int getEnemiesKilled(){ return enemiesKilled; }
-
-    public void loseLife(){
-        lives--;
+    public void loseHeart(){
+        hearts--;
+        hurt = true;
     }
 
     public void addToEnemiesKilled() { enemiesKilled ++; }
 
     public void collectOrb() { orbsCollected++; }
 
-    public void addLives(int lives) { this.lives = this.lives + lives; }
+    public void addLives(int lives) { this.hearts = this.hearts + lives; }
 
     public double getMovementSpeed() { return MOVEMENT_SPEED; }
 
@@ -117,9 +113,6 @@ public class Player extends Character {
 
     public void setInitPosition(double x, double y) { startPosX = x; startPosY = y;}
 
-    public void setMaxHealth(int health) { maxHealth = health; }
-
-    public int getMaxHealth() { return maxHealth; }
 
     /**
      * Returns all the stats necessary to calculated the final score.
@@ -130,7 +123,7 @@ public class Player extends Character {
         scoreMap.put("Enemies Slain: ", enemiesKilled);
         scoreMap.put("Bosses Slain: ", bossesKilled);
         scoreMap.put("Orbs Collected: ", orbsCollected);
-        scoreMap.put("Lives left: ", lives);
+        scoreMap.put("Lives left: ", hearts);
 
        // System.out.println("Enemies Killed: "+ enemiesKilled + " orbs: "+ orbsCollected
         //+ " livesLeft: " + lives);
@@ -151,15 +144,13 @@ public class Player extends Character {
     @Override
     public void switchImages() {
         if(hurt == true) {
-            if (health > 0) {
-                if(charDirection == 1){
-                    setImageToPaint(hurtImageRight, 15);
-                }else{
-                    setImageToPaint(hurtImageLeft,15);
-                }
-            } else {
-                setImageToPaint(deadImage, 40);
+            System.out.println("painted pic");
+            if(charDirection == 1){
+                setImageToPaint(hurtImageRight, 15);
+            }else{
+                setImageToPaint(hurtImageLeft,15);
             }
+
         } else if (sideKeyPressed) {
             super.switchImages();
         } else{
@@ -179,10 +170,6 @@ public class Player extends Character {
         } else {
             hurt = false;
             hurtImageCount = 0;
-            if(image == deadImage) {
-                initPosition();
-                health = maxHealth;
-            }
         }
     }
 

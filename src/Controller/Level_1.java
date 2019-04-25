@@ -7,7 +7,7 @@ import Object.Character.Player;
 import javax.swing.*;
 
 public class Level_1 extends Level {
-    private final int ENEMY_SPEED = 2;
+    private final double ENEMY_SPEED = 1.5;
 
     public Level_1(Player player) {
         backgroundImage = new ImageIcon("Assets/volcanic_mountains.png").getImage();
@@ -18,7 +18,7 @@ public class Level_1 extends Level {
                 {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
                 {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
                 {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-                {1,0,0,0,0,0,0,0,0,0,3,0,0,0,0,0,0,0,0,0,0,0,0,1},
+                {1,0,0,0,0,0,2,0,0,0,3,0,0,0,2,0,0,0,0,0,0,0,0,1},
                 {1,0,0,0,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,0,0,0,0,1},
                 {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
                 {1,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1},
@@ -33,7 +33,6 @@ public class Level_1 extends Level {
         };
 
         this.player = player;
-        player.setMaxHealth(60);
         player.setHealth(60);
         //Upgrading the players weapon.
         player.setWeapon(new Weapon(20,350, 7));
@@ -43,6 +42,8 @@ public class Level_1 extends Level {
 
         for (Enemy e : enemies) {
             e.setSpeedX(ENEMY_SPEED);
+            e.getWeapon().setRange(250);
+            e.setShootFreq(3);
         }
     }
 }

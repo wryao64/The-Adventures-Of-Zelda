@@ -7,6 +7,7 @@ import Object.Platform;
 import Object.Character.Enemy;
 import Object.Character.Player;
 import Object.Item.Puzzle;
+import View.GameScreen;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -40,6 +41,8 @@ public abstract class Level {
     protected int gravity = 1;
     protected int maxSpeedY = 15;
     protected int[][] tileMap;
+
+    protected GameScreen gameScreen;
 
     protected ArrayList<BufferedImage> heartImages = new ArrayList<>();
 
@@ -100,12 +103,12 @@ public abstract class Level {
      */
     private Enemy handlePlayerHitEnemy(Enemy e) {
         ArrayList<Bullet> bullets = player.getWeapon().getBullets();
-        Bullet bulletToRemove = null;
+        ArrayList<Bullet> bulletsToRemove = new ArrayList<>();
         Enemy enemyToRemove = null;
 
         for (Bullet b: bullets) {
             if(b.getBounds().intersects(e.getBounds())){
-                bulletToRemove = b;
+                bulletsToRemove.add(b);
                 e.takeDamage(player.getWeapon().getAttackDamage());
 
                 // Sound of enemy being hit
@@ -117,8 +120,10 @@ public abstract class Level {
                 }
             }
         }
-        if(bulletToRemove != null){
-            player.getWeapon().removeBullet(bulletToRemove);
+        if(bulletsToRemove.size() != 0) {
+            for (Bullet b : bulletsToRemove) {
+                player.getWeapon().removeBullet(b);
+            }
         }
        return enemyToRemove;
     }
@@ -138,11 +143,11 @@ public abstract class Level {
                 Sound.playSound(PLAYER_HIT_SOUND);
 
                 if(!player.hurt()){
-                    player.takeDamage(e.getWeapon().getAttackDamage());
-
-                    if(player.getHealth()<=0){
-                        player.loseLife();
+                    player.loseHeart();
+                    if(player.getLives() <= 0){
+                        //skip to endscreen
                     }
+
                 }
             }
         }
@@ -156,15 +161,18 @@ public abstract class Level {
      */
     private void bulletPlatformCollision(Platform p) {
         ArrayList<Bullet> bulletsPlayer = player.getWeapon().getBullets();
-        Bullet bulletToRemovePlayer = null;
+        ArrayList<Bullet> bulletsToRemovePlayer = new ArrayList<>();
 
+        //SOMETiMES ThrowS EXCEPTION
         for (Bullet b: bulletsPlayer) {
             if(b.getBounds().intersects(p.getBounds())){
-                bulletToRemovePlayer = b;
+                bulletsToRemovePlayer.add(b);
             }
         }
-        if(bulletToRemovePlayer != null) {
-            player.getWeapon().removeBullet(bulletToRemovePlayer);
+        if(bulletsToRemovePlayer.size() != 0) {
+            for(Bullet b : bulletsToRemovePlayer){
+                player.getWeapon().removeBullet(b);
+            }
         }
 
         for (Enemy e : enemies) {
@@ -213,6 +221,8 @@ public abstract class Level {
 
     public Player getPlayer() { return player; }
 
+    public void setGameScreen(GameScreen gameScreen) { this.gameScreen = gameScreen; }
+
     /**
      * Updating all the logic in the level/updates the values of the variables.
      */
@@ -256,7 +266,7 @@ public abstract class Level {
                     platforms.add(newPlatform);
                 }else if(tileMap[j][i] == 2){
                     Enemy newEnemy = new Enemy(55, 40, i * 50, (j + 1) * 50 + 10, gameState,
-                            new Weapon(50,300,5),2,70);
+                            new Weapon(50,300,5),2,40);
                     enemies.add(newEnemy);
                 }else if(tileMap[j][i] == 3) {
                     puzzle = new Puzzle(i*50, (j+1)*50+20,50,30);
@@ -330,14 +340,9 @@ public abstract class Level {
 
     public void paintHearts(Graphics2D g) {
         int lives = player.getLives();
-        boolean halfHeart = player.getHealth() < player.getMaxHealth() && player.getHealth()>0;
         for(int i=0; i < lives; i++) {
-            if (halfHeart && i == lives - 1) {
-                g.drawImage(heartImages.get(0), 50 * i + 50, 100, 50,
-                        50, null);
-            } else
-                g.drawImage(heartImages.get(1), 50 * i+50, 100, 50,
-                        50, null);
+            g.drawImage(heartImages.get(1), 50 * i+50, 100, 50,
+                    50, null);
         }
     }
 }
