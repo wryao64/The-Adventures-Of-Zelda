@@ -2,6 +2,7 @@ package Controller;
 
 import Object.Character.Enemy;
 import Object.Character.Player;
+import Object.Item.BossWeapon;
 import Object.Item.Weapon;
 
 import javax.swing.*;
@@ -17,10 +18,10 @@ public class Level_Boss extends Level {
         tileMap = new int[][]{
                 {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1},
                 {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
-                {1,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,0,1},
+                {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
                 {1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1},
                 {1,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,1},
-                {1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1},
+                {1,0,0,0,0,0,0,0,0,0,0,0,5,0,0,0,0,0,0,0,0,0,0,1},
                 {1,0,0,0,0,1,1,0,0,0,0,3,0,0,0,0,0,1,1,0,0,0,0,1},
                 {1,0,0,0,0,0,0,0,0,0,1,1,1,1,0,0,0,0,0,0,0,0,0,1},
                 {1,0,0,0,0,0,0,0,0,1,1,1,1,1,1,0,0,0,0,0,0,0,0,1},
@@ -34,7 +35,7 @@ public class Level_Boss extends Level {
 
         //Set the player
         this.player = player;
-        player.setWeapon(new Weapon(70,350, 12));
+        player.setWeapon(new Weapon(50,350, 12));
 
         createLevel();
         for (Enemy e : enemies) {

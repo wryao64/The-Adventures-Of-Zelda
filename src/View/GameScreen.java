@@ -122,12 +122,18 @@ public class GameScreen extends JPanel implements KeyListener {
             level.setPlayerShoot();
         }
 
-        if (c == KeyEvent.VK_C) {
+        if (c == KeyEvent.VK_O) {
             if(level.getPuzzleStatus()) {
-                level.getPlayer().collectOrb();
-                gameController.setPaused(true);
-                window = (RootPaneContainer) SwingUtilities.getWindowAncestor(this);
-                new PuzzleScreen((Window) window, gameController);
+                if (gameController.getCurrentState() == GameState.LEVEL_BOSS){
+                    gameController.setPaused(true);
+                    gameController.updateGameState(GameState.END,true,level.getPlayer().getFinalStats());
+                    System.out.println("here");
+                }else {
+                    level.getPlayer().collectOrb();
+                    gameController.setPaused(true);
+                    window = (RootPaneContainer) SwingUtilities.getWindowAncestor(this);
+                    new PuzzleScreen((Window) window, gameController);
+                }
             }
         }
 
@@ -230,12 +236,8 @@ public class GameScreen extends JPanel implements KeyListener {
         glassPane.setVisible(false);
     }
 
-    /**
-     * Creates pause dialog
-     */
-    private void puzzleOpened() {
-        window = (RootPaneContainer) SwingUtilities.getWindowAncestor(this);
-        new PuzzleScreen((Window) window, gameController);
+    public void setSuccess(boolean success) {
+        gameController.updateGameState(GameState.END,success,level.getPlayer().getFinalStats());
     }
 
 }

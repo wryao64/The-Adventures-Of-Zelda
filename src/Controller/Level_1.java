@@ -36,7 +36,7 @@ public class Level_1 extends Level {
         player.setHealth(60);
         //Upgrading the players weapon.
         player.setWeapon(new Weapon(20,350, 7));
-        player.getWeapon().setMaxBullets(3);
+        player.getWeapon().setMaxBullets(2);
 
         createLevel();
 

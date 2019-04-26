@@ -59,6 +59,8 @@ public class PuzzleScreen extends JDialog implements KeyListener{
         setVisible(true);
         pack();
     }
+
+
     @Override
     public void keyTyped(KeyEvent e) {
 
