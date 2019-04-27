@@ -127,7 +127,7 @@ public class GameScreen extends JPanel implements KeyListener {
                 if (gameController.getCurrentState() == GameState.LEVEL_BOSS){
                     gameController.setPaused(true);
                     gameController.updateGameState(GameState.END,true,level.getPlayer().getFinalStats());
-                    System.out.println("here");
+//                    System.out.println("here");
                 }else {
                     level.getPlayer().collectOrb();
                     gameController.setPaused(true);

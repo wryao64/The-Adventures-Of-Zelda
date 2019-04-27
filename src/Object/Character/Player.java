@@ -146,7 +146,7 @@ public class Player extends Character {
     @Override
     public void switchImages() {
         if(hurt == true) {
-            System.out.println("painted pic");
+//            System.out.println("painted pic");
             if(charDirection == 1){
                 setImageToPaint(hurtImageRight, 15);
             }else{
