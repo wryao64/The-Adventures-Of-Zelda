@@ -11,7 +11,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 public abstract class Character extends Object {
-    public String imageLocation;
 
     protected ArrayList<BufferedImage> charImagesRight = new ArrayList<>();
     protected ArrayList<BufferedImage> charImagesLeft = new ArrayList<>();
@@ -97,18 +96,5 @@ public abstract class Character extends Object {
 
     public void takeDamage(int damage){ health = health - damage; hurt = true; }
 
-
-    /**
-     * Loads the sprite sheet for the given character.
-     */
-    public BufferedImage loadImage() {
-        BufferedImage charSetImage = null;
-        try {
-            charSetImage = ImageIO.read(new File(imageLocation));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return charSetImage;
-    }
 
 }

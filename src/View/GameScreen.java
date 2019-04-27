@@ -10,6 +10,7 @@ import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.TimerTask;
+import java.util.Timer;
 import java.util.concurrent.CompletableFuture;
 
 
@@ -18,13 +19,13 @@ public class GameScreen extends JPanel implements KeyListener {
     private JPanel glassPane;
     private RootPaneContainer window;
 
-    private long startTime;
+    private String timeString = "00:00";
     private int timeCount;
 
     Color glassPaneColor = new Color(0, 0, 0, 175);
 
     Level level;
-    Boolean pause = false;
+    Boolean paused = false;
     JLabel levelLabel;
 
     public GameScreen() {
@@ -32,8 +33,6 @@ public class GameScreen extends JPanel implements KeyListener {
         this.setPreferredSize(new Dimension(WIDTH,HEIGHT));
         this.setFocusable(true);
         this.addKeyListener(this);
-
-        startTime = System.nanoTime();
 
         JPanel topBar = new JPanel();
         topBar.setPreferredSize(new Dimension(WIDTH, 50));
@@ -51,6 +50,7 @@ public class GameScreen extends JPanel implements KeyListener {
         topBar.add(Box.createRigidArea(new Dimension(700, 0)));
 
         Sound.playBackgroundMusic();
+        timer();
     }
 
     public void setGameController(GameController controller){
@@ -81,6 +81,9 @@ public class GameScreen extends JPanel implements KeyListener {
         super.paintComponent(g);
         Graphics2D g2d = (Graphics2D) g;
         level.paintLevel(g2d);
+        g.setColor(Color.WHITE);
+        g.setFont(new Font("Helvetica", Font.BOLD, 24));
+        g.drawString("Time: "+ timeString,535,130);
     }
 
     /**
@@ -102,7 +105,7 @@ public class GameScreen extends JPanel implements KeyListener {
 
         // pause game
         if (c == KeyEvent.VK_P) {
-            gameController.pauseGame(true);
+            gameController.setPaused(true);
             this.pausePressed();
             return; // prevents player movement from registering
         }
@@ -130,15 +133,15 @@ public class GameScreen extends JPanel implements KeyListener {
 
         if (c == KeyEvent.VK_O) {
             if(level.getPuzzleStatus()) {
+
                 if (gameController.getCurrentState() == GameState.LEVEL_BOSS){
                     gameController.setPaused(true);
                     gameController.updateGameState(GameState.END,true,level.getPlayer().getFinalStats());
-                    System.out.println("here");
                 }else {
                     level.getPlayer().collectOrb();
                     gameController.setPaused(true);
                     window = (RootPaneContainer) SwingUtilities.getWindowAncestor(this);
-                    new PuzzleScreen((Window) window, gameController);
+                    new PuzzleScreen((Window) window, gameController,this);
                 }
             }
         }
@@ -173,7 +176,7 @@ public class GameScreen extends JPanel implements KeyListener {
         }
         // Shortcut: Exit game
         if (c == KeyEvent.VK_ESCAPE) {
-            gameController.pauseGame(true);
+            gameController.setPaused(true);
             this.exitPressed();
         }
 
@@ -228,7 +231,7 @@ public class GameScreen extends JPanel implements KeyListener {
         // create modal JDialog for pause screen
         window = (RootPaneContainer) SwingUtilities.getWindowAncestor(this);
         this.pauseGame();
-        new PauseScreen((Window) window, gameController);
+        new PauseScreen((Window) window, gameController,this);
         glassPane.setVisible(false);
     }
 
@@ -246,41 +249,31 @@ public class GameScreen extends JPanel implements KeyListener {
         gameController.updateGameState(GameState.END,success,level.getPlayer().getFinalStats());
     }
 
-   /* private void timer (){
+    public void timer (){
         Timer timer = new Timer("Timer");
-        timeCount = 0;
 
         TimerTask repeatedTask = new TimerTask() {
             public void run() {
-                String s_time = String.format("%02d:%02d:%02d",
-                        timeCount / 3600,
+                timeString = String.format("%02d:%02d",
                         (timeCount % 3600) / 60,
                         timeCount % 60);
+                if(!paused) {
+                    timeCount++;
+                }else{
+                    System.out.println("cancelled");
+                    timer.cancel();
+                }
 
-                System.out.println(s_time);
+                System.out.println(timeString);
             }
         };
 
-
         long delay  = 1000L;
         long period = 1000L;
-        
-        timer.scheduleAtFixedRate(new TimerTask() {
-            @Override
-            public void run() {
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        String s_time = String.format("%02d:%02d:%02d",
-                                countTimer / 3600,
-                                (countTimer % 3600) / 60,
-                                countTimer % 60);
-                        tv_timer.setText(s_time);
-                        if (!pauseTimer) countTimer++;
-                    }
-                });
-            }
-        }, 1000, 1000);
-    }*/
+        timer.scheduleAtFixedRate(repeatedTask,delay,period);
+    }
 
+    public void setPause(Boolean paused) {
+        this.paused = paused;
+    }
 }

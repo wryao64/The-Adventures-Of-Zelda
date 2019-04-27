@@ -36,7 +36,7 @@ public class Level_Tutorial extends Level {
         };
         //Set the player
         player = new Player(45,55,70,600);
-        player.setWeapon(new Weapon(20,250, 7));
+        player.setWeapon(new Weapon(20,250, 7,false));
 
         createLevel();
         for (Enemy e : enemies) {

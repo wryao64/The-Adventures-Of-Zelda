@@ -19,13 +19,15 @@ public class PuzzleScreen extends JDialog implements KeyListener{
 
     GameController gameController;
     GameState nextState;
+    GameScreen gameScreen;
 
     private final int IMAGE_WIDTH = 450;
     private final int IMAGE_HEIGHT = 450;
 
-    public PuzzleScreen(Window window, GameController gameController) {
+    public PuzzleScreen(Window window, GameController gameController,GameScreen gameScreen) {
         super(window, "", Dialog.ModalityType.APPLICATION_MODAL);
         this.gameController = gameController;
+        this.gameScreen = gameScreen;
 
         GameState state = gameController.getCurrentState();
         switch (state) {
@@ -41,6 +43,8 @@ public class PuzzleScreen extends JDialog implements KeyListener{
                 nextState = GameState.LEVEL_BOSS;
                 backgroundImage = new ImageIcon("Assets/power.png").getImage();
                 break;
+            case LEVEL_BOSS:
+                nextState = GameState.END;
         }
 
         setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
@@ -69,6 +73,8 @@ public class PuzzleScreen extends JDialog implements KeyListener{
             this.dispose();
             gameController.setPaused(false);
             gameController.updateGameState(nextState);
+            gameScreen.setPause(false);
+            gameScreen.timer();
         }
     }
 

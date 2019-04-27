@@ -49,11 +49,8 @@ public class GameController implements Runnable {
                 //Current time when loop is entered.
                 startTime = System.nanoTime();
 
-                //Bad temporary fix to the synch/level null pointer problem.
-//                    if(currentState == GameState.TUTORIAL) {
                 update();
                 render();
-//                    }
 
                 //The time taken to do all the updates (in millis).
                 timeTakenMillis = (System.nanoTime() - startTime) / 1000000;
@@ -91,10 +88,6 @@ public class GameController implements Runnable {
         if (gameScreen != null && gameScreen.getLevel() != null) {
             gameScreen.update();
         }
-    }
-
-    public void pauseGame(boolean paused) {
-        this.paused = paused;
     }
 
     public void updateGameState(GameState nextState) {
@@ -187,6 +180,7 @@ public class GameController implements Runnable {
 
     public void setPaused(boolean paused) {
         this.paused = paused;
+        gameScreen.setPause(true);
     }
 
     public GameState getCurrentState() {
