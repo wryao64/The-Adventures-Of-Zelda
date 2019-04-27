@@ -1,10 +1,8 @@
 package Controller;
 
-import Object.Character.Player;
 import View.*;
 
 import javax.swing.*;
-import java.awt.image.BufferStrategy;
 import java.util.HashMap;
 
 public class GameController implements Runnable {
@@ -94,8 +92,7 @@ public class GameController implements Runnable {
         // handle switching of screens
         switch (nextState) {
             case WELCOME:
-                paused = false;
-                endScreen =null;
+                this.resetGame();
                 welcomeScreen = new WelcomeScreen();
                 welcomeScreen.setGameController(this);
                 frame.setContentPane(welcomeScreen);
@@ -127,6 +124,7 @@ public class GameController implements Runnable {
                 highScoreScreen.setPreviousState(currentState);
                 break;
         }
+
         frame.setVisible(true);
         currentState = nextState;
     }
@@ -174,10 +172,8 @@ public class GameController implements Runnable {
         WelcomeScreen welcomePanel = new WelcomeScreen();
         welcomePanel.setGameController(this);
         frame.setContentPane(welcomePanel);
-//        frame.getContentPane().add(welcomePanel);
         frame.setVisible(true);
     }
-
     public void setPaused(boolean paused) {
         this.paused = paused;
         gameScreen.setPause(true);
@@ -185,5 +181,10 @@ public class GameController implements Runnable {
 
     public GameState getCurrentState() {
         return currentState;
+    }
+
+    private void resetGame() {
+        paused = false;
+        endScreen = null;
     }
 }

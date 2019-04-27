@@ -2,7 +2,6 @@ package Controller;
 
 import Object.Character.Enemy;
 import Object.Character.Player;
-import Object.Item.BossWeapon;
 import Object.Item.Weapon;
 
 import javax.swing.*;
@@ -43,8 +42,5 @@ public class Level_Boss extends Level {
         for (Enemy e : enemies) {
             e.setSpeedX(ENEMY_SPEED);
         }
-
-        //Create the puzzle chest
-        //Create the enemies
     }
 }

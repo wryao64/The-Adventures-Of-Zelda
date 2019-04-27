@@ -1,14 +1,14 @@
 package Controller;
 
-import sun.audio.AudioData;
 import sun.audio.AudioPlayer;
 import sun.audio.AudioStream;
-import sun.audio.ContinuousAudioDataStream;
 
 import java.io.*;
 
 public class Sound {
     public static final String SOUND_LOCATION = "Assets/Sound/";
+    private static AudioPlayer ap = AudioPlayer.player;
+    private static AudioStream stream = null;
 
     public static void playSound(String soundLocation) {
         AudioPlayer ap = AudioPlayer.player;
@@ -28,16 +28,11 @@ public class Sound {
     }
 
     public static void playBackgroundMusic() {
-        AudioPlayer ap = AudioPlayer.player;
         InputStream input;
-        AudioStream stream = null;
-        ContinuousAudioDataStream loop = null;
 
         try {
             input = new FileInputStream(SOUND_LOCATION + "background.wav");
             stream = new AudioStream(input);
-//            AudioData data = stream.getData();
-//            loop = new ContinuousAudioDataStream(data);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
@@ -45,5 +40,11 @@ public class Sound {
         }
 
         ap.start(stream);
+    }
+
+    public static void stopBackgroundMusic() {
+        if (stream != null) {
+            ap.stop(stream);
+        }
     }
 }

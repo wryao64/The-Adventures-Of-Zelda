@@ -2,6 +2,7 @@ package View;
 
 import Controller.GameController;
 import Controller.GameState;
+import Controller.Sound;
 import Controller.ScoreManager;
 
 import javax.swing.*;
@@ -34,7 +35,7 @@ public class EndScreen extends JPanel {
         this.setBackground(new Color(255, 234, 206));
         this.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
 
-        // Main headingk
+        // Main heading
         mainLabel = new JLabel("");
         mainLabel.setFont(new Font(mainLabel.getFont().getName(), mainLabel.getFont().getStyle(), 50));
         mainLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -64,7 +65,6 @@ public class EndScreen extends JPanel {
         JButton highScoreButton = new JButton("HIGH SCORES");
         highScoreButton.addActionListener(e -> {
             if (newHighScore) {
-                System.out.println("right method call");
                 gameController.updateGameState(GameState.HIGHSCORE,playerStats.get("Total: ").toString(),success,playerStats);
             } else
                 gameController.updateGameState(GameState.HIGHSCORE);
@@ -96,6 +96,8 @@ public class EndScreen extends JPanel {
         // TODO: add buttons
         this.add(buttonPanel);
         this.add(new Label(playerStats.toString()));
+      
+        Sound.stopBackgroundMusic();
     }
 
     public void setGameController(GameController controller){

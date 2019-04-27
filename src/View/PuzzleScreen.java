@@ -1,18 +1,12 @@
 package View;
 
-import Controller.Game;
 import Controller.GameController;
 import Controller.GameState;
 
 import javax.swing.*;
-import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.awt.image.BufferedImage;
-import java.util.ArrayList;
-
-import Controller.GameState;
 
 public class PuzzleScreen extends JDialog implements KeyListener{
     Image backgroundImage;

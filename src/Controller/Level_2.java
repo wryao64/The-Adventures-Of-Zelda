@@ -1,6 +1,5 @@
 package Controller;
 
-import Object.Item.Weapon;
 import Object.Character.Enemy;
 import Object.Character.Player;
 
@@ -39,6 +38,7 @@ public class Level_2 extends Level {
         player.getWeapon().changeImage(gameState);
 
        createLevel();
+
         for (Enemy e : enemies) {
             e.setSpeedX(ENEMY_SPEED);
         }

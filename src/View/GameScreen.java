@@ -152,10 +152,12 @@ public class GameScreen extends JPanel implements KeyListener {
             // TODO: equip all orbs
             gameController.updateGameState(GameState.LEVEL_BOSS);
         }
+
         // FOR TESTING PURPOSES: skips to end screen
         if (c == KeyEvent.VK_E) {
             gameController.updateGameState(GameState.END);
         }
+
         // FOR TESTING PURPOSES: skips to next level
         if (c == KeyEvent.VK_N) {
             GameState state = gameController.getCurrentState();

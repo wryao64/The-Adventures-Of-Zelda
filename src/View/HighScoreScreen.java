@@ -7,7 +7,6 @@ import Controller.ScoreManager;
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
-import java.util.HashMap;
 
 public class HighScoreScreen extends JPanel {
 
@@ -43,10 +42,8 @@ public class HighScoreScreen extends JPanel {
         JButton button = new JButton("BACK");
         button.addActionListener(e ->{
             if(previousGameState == GameState.END){
-                System.out.println("setEndScreen");
                 gameController.setEndScreen(endScreen);
             }else {
-                System.out.println("updateGameState");
                 gameController.updateGameState(previousGameState);
             }
 
@@ -100,7 +97,6 @@ public class HighScoreScreen extends JPanel {
                     scoreLabel1.setFont(new Font(title.getFont().getName(), title.getFont().getStyle(), 32));
 
                     if(s.equals(scoreToHighlight)) {
-                        System.out.println("highlighted");
                         scoreLabel0.setForeground(Color.white);
                         scoreLabel1.setForeground(Color.white);
                         scoreToHighlight = null;
