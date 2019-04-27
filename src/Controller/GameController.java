@@ -5,6 +5,7 @@ import View.*;
 
 import javax.swing.*;
 import java.awt.image.BufferStrategy;
+import java.util.HashMap;
 
 public class GameController implements Runnable {
     public final int WIDTH = 1200;
@@ -37,47 +38,47 @@ public class GameController implements Runnable {
         long waitTime;
 
         //Time for one loop to run in order to maintain 60 fps
-        long targetTime = 1000/fps;
+        long targetTime = 1000 / fps;
         running = true;
 
         runGame();
 
         while (running) {
 
-                if(!paused) {
-                    //Current time when loop is entered.
-                    startTime = System.nanoTime();
+            if (!paused) {
+                //Current time when loop is entered.
+                startTime = System.nanoTime();
 
-                    //Bad temporary fix to the synch/level null pointer problem.
+                //Bad temporary fix to the synch/level null pointer problem.
 //                    if(currentState == GameState.TUTORIAL) {
-                        update();
-                        render();
+                update();
+                render();
 //                    }
 
-                    //The time taken to do all the updates (in millis).
-                    timeTakenMillis = (System.nanoTime() - startTime) / 1000000;
+                //The time taken to do all the updates (in millis).
+                timeTakenMillis = (System.nanoTime() - startTime) / 1000000;
 
-                    //Extra time left over that loop needs to wait to get desired fps.
-                    waitTime = targetTime - timeTakenMillis;
+                //Extra time left over that loop needs to wait to get desired fps.
+                waitTime = targetTime - timeTakenMillis;
 
-                    //Sleep the thread for the extra time if there is extra time
-                    if (waitTime > 4) {
-                        try {
-                            Thread.sleep(waitTime);
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
-                        }
+                //Sleep the thread for the extra time if there is extra time
+                if (waitTime > 4) {
+                    try {
+                        Thread.sleep(waitTime);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
                     }
                 }
-          }
+            }
+        }
     }
 
     /**
      * Handles all the drawing of objects onto the screen
      */
-    public void render(){
+    public void render() {
 
-        if(gameScreen != null && gameScreen.getLevel() != null) {
+        if (gameScreen != null && gameScreen.getLevel() != null) {
             gameScreen.repaint();
         }
     }
@@ -85,23 +86,24 @@ public class GameController implements Runnable {
     /**
      * Updates all the logic of the game.
      */
-    public void update(){
+    public void update() {
 
-        if(gameScreen != null && gameScreen.getLevel() != null) {
+        if (gameScreen != null && gameScreen.getLevel() != null) {
             gameScreen.update();
         }
     }
 
-    public void pauseGame(boolean paused){
+    public void pauseGame(boolean paused) {
         this.paused = paused;
     }
 
     public void updateGameState(GameState nextState) {
         // handle switching of screens
-        switch(nextState) {
+        switch (nextState) {
             case WELCOME:
                 paused = false;
-                welcomeScreen =  new WelcomeScreen();
+                endScreen =null;
+                welcomeScreen = new WelcomeScreen();
                 welcomeScreen.setGameController(this);
                 frame.setContentPane(welcomeScreen);
                 break;
@@ -125,13 +127,8 @@ public class GameController implements Runnable {
                 level_Boss = new Level_Boss(level_2.getPlayer());
                 gameScreen.setLevel(level_Boss, "Boss");
                 break;
-            case END:
-                endScreen = new EndScreen(true);
-                frame.setContentPane(endScreen);
-                endScreen.setGameController(this);
-                break;
             case HIGHSCORE:
-                highScoreScreen = new HighScoreScreen();
+                highScoreScreen = new HighScoreScreen(null);
                 frame.setContentPane(highScoreScreen);
                 highScoreScreen.setGameController(this);
                 highScoreScreen.setPreviousState(currentState);
@@ -141,6 +138,37 @@ public class GameController implements Runnable {
         currentState = nextState;
     }
 
+    public void updateGameState(GameState nextState, Boolean success, HashMap<String, Integer> stats) {
+        if (nextState == GameState.END) {
+            if (endScreen == null) {
+                endScreen = new EndScreen(success, stats);
+            }
+            endScreen.setGameController(this);
+            paused = true;
+            frame.setContentPane(endScreen);
+            endScreen.setGameController(this);
+        }
+        frame.setVisible(true);
+        currentState = nextState;
+    }
+
+    public void updateGameState(GameState nextState, String total, Boolean success,HashMap<String, Integer> stats) {
+        highScoreScreen = new HighScoreScreen(total);
+        highScoreScreen.setGameController(this);
+        highScoreScreen.setPreviousState(currentState);
+        highScoreScreen.setEndScreen(endScreen);
+
+        frame.setContentPane(highScoreScreen);
+
+        frame.setVisible(true);
+        currentState =nextState;
+    }
+
+    public void setEndScreen(EndScreen endScreen) {
+        frame.setContentPane(endScreen);
+        frame.setVisible(true);
+        currentState = GameState.END;
+    }
 
     public void runGame() {
         frame = new JFrame("The Adventures of Zelda");

@@ -5,19 +5,17 @@ import java.util.ArrayList;
 
 public class ScoreManager {
 
-    ArrayList<String[]> topScores = new ArrayList<>();
+    ArrayList<String> topScores = new ArrayList<>();
     String fileName = "./Resources/HighScores.txt";
 
     public ScoreManager() {
-        ArrayList<String[]> list = new ArrayList<>();
         String currentLine = null;
 
         try {
             FileReader fileReader = new FileReader(fileName);
             BufferedReader bufferedReader = new BufferedReader(fileReader);
             while((currentLine = bufferedReader.readLine()) != null&& currentLine.trim().length() > 0) {
-                String[] splited = currentLine.split("\\s+");
-                topScores.add(splited);
+                topScores.add(currentLine);
             }
             bufferedReader.close();
         }
@@ -29,19 +27,19 @@ public class ScoreManager {
     /**
      * Returns the top ten scores currently stored.
      */
-    public ArrayList<String[]> getTopScores(){
-        return topScores;
+    public ArrayList<String> getTopScores(){
+        return sort(topScores);
     }
 
     /**
      * Takes a new score and if the score makes it into the high score list, adds it to the list.
      */
-    public boolean newScore(String[] newScore){
+    public boolean newScore(String newScore){
 
         if(topScores.size() < 10) {
             topScores.add(newScore);
         }else {
-            if(Integer.parseInt(newScore[1]) > Integer.parseInt(topScores.get(topScores.size()-1)[1])){
+            if(Integer.parseInt(newScore) > Integer.parseInt(topScores.get(topScores.size()-1))){
                 topScores.remove(topScores.size()-1);
                 topScores.add(newScore);
             }else{
@@ -62,8 +60,8 @@ public class ScoreManager {
            BufferedWriter outputWriter = null;
            try{
                outputWriter = new BufferedWriter(new FileWriter(fileName));
-                for (String[] s : topScores) {
-                    String lineToWrite = s[0] + " " + s[1] + "\n";
+                for (String s : topScores) {
+                    String lineToWrite = s + "\n";
                     outputWriter.write(lineToWrite);
                 }
                 outputWriter.flush();
@@ -78,14 +76,14 @@ public class ScoreManager {
     /**
      * Sorts the high scores in ascending order.
      */
-    private ArrayList<String[]> sort(ArrayList<String[]> scoreList) {
+    private ArrayList<String> sort(ArrayList<String> scoreList) {
 
         for(int i = 0; i < scoreList.size(); i++) {
-            String[] currentHighest = scoreList.get(i);
+            String currentHighest = scoreList.get(i);
             int position= i;
 
-            while (position >0 && Integer.parseInt(currentHighest[1]) >
-                    Integer.parseInt(scoreList.get(position - 1)[1]) ){
+            while (position >0 && Integer.parseInt(currentHighest) >
+                    Integer.parseInt(scoreList.get(position - 1)) ){
                 scoreList.set(position, scoreList.get(position - 1));
                 scoreList.set(position - 1, currentHighest);
                 position--;

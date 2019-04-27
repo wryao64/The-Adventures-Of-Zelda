@@ -95,6 +95,8 @@ public class Player extends Character {
 
     public void addToEnemiesKilled() { enemiesKilled ++; }
 
+    public void addToBossesKilled() { bossesKilled ++; }
+
     public void collectOrb() { orbsCollected++; }
 
     public void addLives(int lives) { this.hearts = this.hearts + lives; }
@@ -119,14 +121,14 @@ public class Player extends Character {
      */
     public HashMap<String,Integer> getFinalStats() {
 
+        int total = enemiesKilled*50 + bossesKilled*150 + orbsCollected*100 + hearts*50;
         HashMap<String,Integer> scoreMap = new HashMap<>();
         scoreMap.put("Enemies Slain: ", enemiesKilled);
         scoreMap.put("Bosses Slain: ", bossesKilled);
         scoreMap.put("Orbs Collected: ", orbsCollected);
         scoreMap.put("Lives left: ", hearts);
+        scoreMap.put("Total: ", total);
 
-       // System.out.println("Enemies Killed: "+ enemiesKilled + " orbs: "+ orbsCollected
-        //+ " livesLeft: " + lives);
         return scoreMap;
     }
 
