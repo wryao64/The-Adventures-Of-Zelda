@@ -5,13 +5,16 @@ import Object.Character.Enemy;
 import Object.Character.Player;
 
 import javax.swing.*;
+import java.awt.image.BufferedImage;
 
 public class Level_Tutorial extends Level {
     private final double ENEMY_SPEED = 0.75;
 
     public Level_Tutorial() {
         backgroundImage = new ImageIcon("Assets/icy_mountains.png").getImage();
+        inventoryImage = loadImage("Assets/tutorial_inv.png");
         setHeartImages();
+
         gameState = GameState.TUTORIAL;
 
                 tileMap = new int [][]{

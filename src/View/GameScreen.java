@@ -9,6 +9,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.util.TimerTask;
 import java.util.concurrent.CompletableFuture;
 
 
@@ -16,6 +17,9 @@ public class GameScreen extends JPanel implements KeyListener {
     private GameController gameController;
     private JPanel glassPane;
     private RootPaneContainer window;
+
+    private long startTime;
+    private int timeCount;
 
     Color glassPaneColor = new Color(0, 0, 0, 175);
 
@@ -28,6 +32,8 @@ public class GameScreen extends JPanel implements KeyListener {
         this.setPreferredSize(new Dimension(WIDTH,HEIGHT));
         this.setFocusable(true);
         this.addKeyListener(this);
+
+        startTime = System.nanoTime();
 
         JPanel topBar = new JPanel();
         topBar.setPreferredSize(new Dimension(WIDTH, 50));
@@ -241,5 +247,42 @@ public class GameScreen extends JPanel implements KeyListener {
     public void setSuccess(boolean success) {
         gameController.updateGameState(GameState.END,success,level.getPlayer().getFinalStats());
     }
+
+   /* private void timer (){
+        Timer timer = new Timer("Timer");
+        timeCount = 0;
+
+        TimerTask repeatedTask = new TimerTask() {
+            public void run() {
+                String s_time = String.format("%02d:%02d:%02d",
+                        timeCount / 3600,
+                        (timeCount % 3600) / 60,
+                        timeCount % 60);
+
+                System.out.println(s_time);
+            }
+        };
+
+
+        long delay  = 1000L;
+        long period = 1000L;
+        
+        timer.scheduleAtFixedRate(new TimerTask() {
+            @Override
+            public void run() {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        String s_time = String.format("%02d:%02d:%02d",
+                                countTimer / 3600,
+                                (countTimer % 3600) / 60,
+                                countTimer % 60);
+                        tv_timer.setText(s_time);
+                        if (!pauseTimer) countTimer++;
+                    }
+                });
+            }
+        }, 1000, 1000);
+    }*/
 
 }
