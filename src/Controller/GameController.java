@@ -1,10 +1,8 @@
 package Controller;
 
-import Object.Character.Player;
 import View.*;
 
 import javax.swing.*;
-import java.awt.image.BufferStrategy;
 import java.util.HashMap;
 
 public class GameController implements Runnable {
@@ -49,11 +47,8 @@ public class GameController implements Runnable {
                 //Current time when loop is entered.
                 startTime = System.nanoTime();
 
-                //Bad temporary fix to the synch/level null pointer problem.
-//                    if(currentState == GameState.TUTORIAL) {
                 update();
                 render();
-//                    }
 
                 //The time taken to do all the updates (in millis).
                 timeTakenMillis = (System.nanoTime() - startTime) / 1000000;
@@ -93,7 +88,7 @@ public class GameController implements Runnable {
         }
     }
 
-    public void pauseGame(boolean paused) {
+    public void setPaused(boolean paused) {
         this.paused = paused;
     }
 
@@ -101,8 +96,7 @@ public class GameController implements Runnable {
         // handle switching of screens
         switch (nextState) {
             case WELCOME:
-                paused = false;
-                endScreen =null;
+                this.resetGame();
                 welcomeScreen = new WelcomeScreen();
                 welcomeScreen.setGameController(this);
                 frame.setContentPane(welcomeScreen);
@@ -134,6 +128,7 @@ public class GameController implements Runnable {
                 highScoreScreen.setPreviousState(currentState);
                 break;
         }
+
         frame.setVisible(true);
         currentState = nextState;
     }
@@ -181,15 +176,15 @@ public class GameController implements Runnable {
         WelcomeScreen welcomePanel = new WelcomeScreen();
         welcomePanel.setGameController(this);
         frame.setContentPane(welcomePanel);
-//        frame.getContentPane().add(welcomePanel);
         frame.setVisible(true);
-    }
-
-    public void setPaused(boolean paused) {
-        this.paused = paused;
     }
 
     public GameState getCurrentState() {
         return currentState;
+    }
+
+    private void resetGame() {
+        paused = false;
+        endScreen = null;
     }
 }

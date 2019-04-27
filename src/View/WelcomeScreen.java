@@ -7,8 +7,6 @@ import Controller.GameController;
 import Controller.GameState;
 
 public class WelcomeScreen extends JPanel {
-//    private final int BORDER_SIZE = 30;
-
     private GameController gameController;
     private GameState gameState = GameState.WELCOME;
 

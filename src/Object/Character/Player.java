@@ -75,14 +75,6 @@ public class Player extends Character {
         }
     }
 
-    /*
-    Resets the player back to the starting position in the level ie when they die
-     */
-    public void initPosition(){
-        posX = startPosX;
-        posY = startPosY;
-    }
-
     /**
      * Getters and Setters.
      */
@@ -146,7 +138,6 @@ public class Player extends Character {
     @Override
     public void switchImages() {
         if(hurt == true) {
-//            System.out.println("painted pic");
             if(charDirection == 1){
                 setImageToPaint(hurtImageRight, 15);
             }else{
@@ -180,6 +171,7 @@ public class Player extends Character {
      */
     public void paintObject(Graphics2D g) {
         switchImages();
+
         if(imageToPaint == deadImage) {
             g.drawImage(imageToPaint, (int) posX, (int) posY+(IMG_RESIZED_H-IMG_RESIZED_W), IMG_RESIZED_H,
                     IMG_RESIZED_W, null);

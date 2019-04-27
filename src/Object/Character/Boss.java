@@ -5,8 +5,6 @@ import Object.Item.BossWeapon;
 import Object.Item.Weapon;
 
 import java.awt.*;
-import java.awt.geom.Rectangle2D;
-import java.awt.image.BufferedImage;
 
 public class Boss extends Enemy {
     private final int IMG_RESIZED_W = 350;

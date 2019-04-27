@@ -96,7 +96,7 @@ public class GameScreen extends JPanel implements KeyListener {
 
         // pause game
         if (c == KeyEvent.VK_P) {
-            gameController.pauseGame(true);
+            gameController.setPaused(true);
             this.pausePressed();
             return; // prevents player movement from registering
         }
@@ -143,10 +143,12 @@ public class GameScreen extends JPanel implements KeyListener {
             // TODO: equip all orbs
             gameController.updateGameState(GameState.LEVEL_BOSS);
         }
+
         // FOR TESTING PURPOSES: skips to end screen
         if (c == KeyEvent.VK_E) {
             gameController.updateGameState(GameState.END);
         }
+
         // FOR TESTING PURPOSES: skips to next level
         if (c == KeyEvent.VK_N) {
             GameState state = gameController.getCurrentState();
@@ -167,7 +169,7 @@ public class GameScreen extends JPanel implements KeyListener {
         }
         // Shortcut: Exit game
         if (c == KeyEvent.VK_ESCAPE) {
-            gameController.pauseGame(true);
+            gameController.setPaused(true);
             this.exitPressed();
         }
 

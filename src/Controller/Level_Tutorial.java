@@ -36,6 +36,7 @@ public class Level_Tutorial extends Level {
         player.setWeapon(new Weapon(20,250, 7));
 
         createLevel();
+
         for (Enemy e : enemies) {
             e.setSpeedX(ENEMY_SPEED);
             e.getWeapon().setRange(150);

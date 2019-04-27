@@ -9,7 +9,7 @@ public class ScoreManager {
     String fileName = "./Resources/HighScores.txt";
 
     public ScoreManager() {
-        String currentLine = null;
+        String currentLine;
 
         try {
             FileReader fileReader = new FileReader(fileName);
@@ -35,7 +35,6 @@ public class ScoreManager {
      * Takes a new score and if the score makes it into the high score list, adds it to the list.
      */
     public boolean newScore(String newScore){
-
         if(topScores.size() < 10) {
             topScores.add(newScore);
         }else {
@@ -46,6 +45,7 @@ public class ScoreManager {
                 return false;
             }
         }
+
         //Sort the array again with the added score.
         topScores = sort(topScores);
         writeToFile();
@@ -56,28 +56,27 @@ public class ScoreManager {
      * Writing the high scores into a file. Rewrites the file every time.
      */
     private void writeToFile() {
+        BufferedWriter outputWriter;
 
-           BufferedWriter outputWriter = null;
-           try{
-               outputWriter = new BufferedWriter(new FileWriter(fileName));
-                for (String s : topScores) {
-                    String lineToWrite = s + "\n";
-                    outputWriter.write(lineToWrite);
-                }
-                outputWriter.flush();
-                outputWriter.close();
-           } catch (FileNotFoundException e) {
-               e.printStackTrace();
-           } catch (IOException ex) {
-               ex.printStackTrace();
-           }
+       try{
+           outputWriter = new BufferedWriter(new FileWriter(fileName));
+            for (String s : topScores) {
+                String lineToWrite = s + "\n";
+                outputWriter.write(lineToWrite);
+            }
+            outputWriter.flush();
+            outputWriter.close();
+       } catch (FileNotFoundException e) {
+           e.printStackTrace();
+       } catch (IOException ex) {
+           ex.printStackTrace();
+       }
     }
 
     /**
      * Sorts the high scores in ascending order.
      */
     private ArrayList<String> sort(ArrayList<String> scoreList) {
-
         for(int i = 0; i < scoreList.size(); i++) {
             String currentHighest = scoreList.get(i);
             int position= i;
@@ -89,6 +88,7 @@ public class ScoreManager {
                 position--;
             }
         }
+
         return scoreList;
     }
 }

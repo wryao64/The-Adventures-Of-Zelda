@@ -57,6 +57,7 @@ public abstract class Level {
                 player.setSpeedY(0);
                 player.setPosY(p.getPosY()+ p.getHeight());
             }
+
             //Player collides with the top of the platform i.e walking on it
             if(player.getBounds().intersects(p.getTop()) && player.getSpeedY()>0){
                 player.setSpeedY(0);
@@ -66,14 +67,17 @@ public abstract class Level {
                     playerCanJump(true);
                 }
             }
+
             //Player collides with the right edge of the platform
             if(player.getBounds().intersects(p.getRight()) && player.getSpeedX() < 0){
                 player.setSpeedX(0);
             }
+
             //Player collides with the left edge of the platform
             if(player.getBounds().intersects(p.getLeft()) && player.getSpeedX() > 0) {
                 player.setSpeedX(0);
             }
+
             bulletPlatformCollision(p);
         }
     }
@@ -84,6 +88,7 @@ public abstract class Level {
     public void checkPlayerEnemyCollisions() {
 
         ArrayList<Enemy> enemiesToRemove = new ArrayList<>();
+
         for (Enemy e : enemies) {
           Enemy enemyToRemove;
           enemyToRemove = handlePlayerHitEnemy(e);
@@ -93,6 +98,7 @@ public abstract class Level {
                 enemiesToRemove.add(enemyToRemove);
             }
         }
+
         for(Enemy e : enemiesToRemove) {
             enemies.remove(e);
         }
@@ -126,11 +132,13 @@ public abstract class Level {
                 }
             }
         }
+
         if(bulletsToRemove.size() != 0) {
             for (Bullet b : bulletsToRemove) {
                 player.getWeapon().removeBullet(b);
             }
         }
+
        return enemyToRemove;
     }
 
@@ -156,6 +164,7 @@ public abstract class Level {
                 }
             }
         }
+
         if(bulletToRemove != null) {
             e.getWeapon().removeBullet(bulletToRemove);
         }
@@ -168,12 +177,13 @@ public abstract class Level {
         ArrayList<Bullet> bulletsPlayer = player.getWeapon().getBullets();
         ArrayList<Bullet> bulletsToRemovePlayer = new ArrayList<>();
 
-        //SOMETiMES ThrowS EXCEPTION
+        // TODO: SOMETiMES ThrowS EXCEPTION
         for (Bullet b: bulletsPlayer) {
             if(b.getBounds().intersects(p.getBounds())){
                 bulletsToRemovePlayer.add(b);
             }
         }
+
         if(bulletsToRemovePlayer.size() != 0) {
             for(Bullet b : bulletsToRemovePlayer){
                 player.getWeapon().removeBullet(b);
@@ -183,11 +193,13 @@ public abstract class Level {
         for (Enemy e : enemies) {
             Bullet bulletToRemoveEnemy = null;
             ArrayList<Bullet> bulletsEnemy = e.getWeapon().getBullets();
+
             for (Bullet b : bulletsEnemy) {
                 if (b.getBounds().intersects(p.getBounds())) {
                     bulletToRemoveEnemy = b;
                 }
             }
+
             if (bulletToRemoveEnemy != null) {
                  e.getWeapon().removeBullet(bulletToRemoveEnemy);
             }
@@ -234,9 +246,11 @@ public abstract class Level {
     public void updateLevel() {
         //First check collisions with blocks and then move the player using updated x and y values.
         player.fall(gravity,maxSpeedY);
+
         checkPlatformCollisions();
         checkPlayerEnemyCollisions();
         checkPuzzleCollision();
+
         player.move();
         enemyMove();
     }
@@ -254,6 +268,7 @@ public abstract class Level {
         for (Platform p : platforms){
             p.paintObject(g);
         }
+
         for (Enemy e : enemies) {
             e.paintObject(g);
         }
@@ -296,11 +311,13 @@ public abstract class Level {
             for (Enemy e : enemies) {
                 // finds next platform the enemy will move to
                 Platform p = findPlatform(e);
+
                 if (p == null) { // no further platform
                     int dir = e.getDir();
                     e.setDir(- dir); // reverse direction
                     e.setSpeedX(-e.getSpeedX());
                 }
+
                 e.move();
             }
         }
@@ -348,6 +365,7 @@ public abstract class Level {
 
     public void paintHearts(Graphics2D g) {
         int lives = player.getLives();
+
         for(int i=0; i < lives; i++) {
             g.drawImage(heartImages.get(1), 50 * i+50, 100, 50,
                     50, null);
