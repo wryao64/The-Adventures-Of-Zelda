@@ -76,7 +76,6 @@ public class Enemy extends Character {
         super.move();
         //Counter to keep track of when the enemy has to shoot again.
         moveCount = moveCount + 1;
-        System.out.println("moved");
         weapon.moveShot();
         //Once the counter reaches the desired period, shoot the weapon again.
         if (moveCount > randFreq) {
