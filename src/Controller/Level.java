@@ -32,6 +32,7 @@ public abstract class Level {
     private static final String ENEMY_HIT_SOUND = Sound.SOUND_LOCATION + "enemy_hit.wav";
 
     Image backgroundImage;
+    BufferedImage inventoryImage;
 
     protected Player player;
     protected ArrayList<Enemy> enemies = new ArrayList<>();
@@ -246,6 +247,7 @@ public abstract class Level {
      */
     public void paintLevel(Graphics2D g) {
         g.drawImage(backgroundImage, 0, 0, IMAGE_WIDTH, IMAGE_HEIGHT, null);
+        g.drawImage(inventoryImage, 945, 105, 200, 50, null);
         paintHearts(g);
 
         player.paintObject(g);
@@ -352,5 +354,18 @@ public abstract class Level {
             g.drawImage(heartImages.get(1), 50 * i+50, 100, 50,
                     50, null);
         }
+    }
+
+    /**
+     * Loads the sprite sheet for the given character.
+     */
+    public BufferedImage loadImage(String imageLocation) {
+        BufferedImage charSetImage = null;
+        try {
+            charSetImage = ImageIO.read(new File(imageLocation));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return charSetImage;
     }
 }

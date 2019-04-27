@@ -11,7 +11,9 @@ public class Level_1 extends Level {
 
     public Level_1(Player player) {
         backgroundImage = new ImageIcon("Assets/volcanic_mountains.png").getImage();
+        inventoryImage = loadImage("Assets/lvl1_inv.png");
         setHeartImages();
+
         gameState = GameState.LEVEL_1;
 
         tileMap = new int[][]{
