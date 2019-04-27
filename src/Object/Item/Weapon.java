@@ -5,6 +5,10 @@ import java.awt.geom.Rectangle2D;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 
+import Controller.GameState;
+import Controller.Level_Tutorial;
+import Object.Object;
+
 public class Weapon extends Object {
 
     protected int attackDamage;
@@ -20,10 +24,14 @@ public class Weapon extends Object {
 
     protected ArrayList<Bullet> bullets = new ArrayList<>();
 
-    public Weapon(int damage, int range, int shotSpeed){
+    protected GameState gameState = GameState.TUTORIAL;
+    protected Boolean enemy;
+
+    public Weapon(int damage, int range, int shotSpeed,boolean enemy){
         this.attackDamage = damage;
         this.range = range;
         this.shotSpeed = shotSpeed;
+        this.enemy = enemy;
     }
 
     public void shoot(double posX, double posY,double dir) {
@@ -42,7 +50,7 @@ public class Weapon extends Object {
             //Initialise the current and start y position of the player, these will not change.
             this.weaponPosY = posY + 20;
 
-            Bullet bullet = new Bullet(weaponPosX, weaponPosY, shotSpeed * bulletDir, range);
+            Bullet bullet = new Bullet(weaponPosX, weaponPosY, shotSpeed * bulletDir, range,gameState,enemy);
             bullets.add(bullet);
         }
     }
@@ -74,6 +82,10 @@ public class Weapon extends Object {
             b.paintObject(g);
         }
 
+    }
+
+    public void changeImage(GameState gameState) {
+        this.gameState = gameState;
     }
 
     public int getAttackDamage(){ return attackDamage; }

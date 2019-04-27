@@ -13,12 +13,14 @@ public class PauseScreen extends JDialog{
 
     private GameController gameController;
     private PausePane pausePane;
+    private GameScreen gameScreen;
 
     private static final Color backgroundColor = new Color(123, 63, 0);
 
-    public PauseScreen(Window window, GameController gameController) {
+    public PauseScreen(Window window, GameController gameController,GameScreen gameScreen) {
         super(window, "", Dialog.ModalityType.APPLICATION_MODAL);
         this.gameController = gameController;
+        this.gameScreen = gameScreen;
 
         pausePane = new PausePane();
         this.getContentPane().add(pausePane);
@@ -66,6 +68,8 @@ public class PauseScreen extends JDialog{
             int c = e.getKeyCode();
             if (c == KeyEvent.VK_P) {
                 gameController.setPaused(false);
+                gameScreen.setPause(false);
+                gameScreen.timer();
                 Window win = SwingUtilities.getWindowAncestor(button1);
                 win.dispose();
             }
@@ -88,6 +92,8 @@ public class PauseScreen extends JDialog{
                     gameController.updateGameState(GameState.WELCOME);
                 } else if (button.getText() == "RESUME") {
                     gameController.setPaused(false);
+                    gameScreen.setPause(false);
+                    gameScreen.timer();
                 }
 
                 Window win = SwingUtilities.getWindowAncestor(button);

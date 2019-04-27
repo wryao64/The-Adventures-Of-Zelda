@@ -1,8 +1,11 @@
 package Object;
 
+import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 
 public abstract class Object {
     private final int PADDING_WIDTH = 1;
@@ -10,6 +13,7 @@ public abstract class Object {
     protected double posX, posY;
     protected double width, height;
     protected BufferedImage image;
+    protected String imageLocation;
 
     public Object (double w, double h, double x, double y){
         width = w;
@@ -22,6 +26,7 @@ public abstract class Object {
         posX = x;
         posY = y;
     }
+    public Object(){}
 
     /*
     Collision areas for the object. Spans around the perimeter of the object.
@@ -84,4 +89,17 @@ public abstract class Object {
     public double getHeight() { return height; }
 
     public BufferedImage getImage(){ return image; }
+
+    /**
+     * Loads the sprite sheet for the given character.
+     */
+    public BufferedImage loadImage() {
+        BufferedImage charSetImage = null;
+        try {
+            charSetImage = ImageIO.read(new File(imageLocation));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return charSetImage;
+    }
 }

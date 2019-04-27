@@ -88,10 +88,6 @@ public class GameController implements Runnable {
         }
     }
 
-    public void setPaused(boolean paused) {
-        this.paused = paused;
-    }
-
     public void updateGameState(GameState nextState) {
         // handle switching of screens
         switch (nextState) {
@@ -177,6 +173,10 @@ public class GameController implements Runnable {
         welcomePanel.setGameController(this);
         frame.setContentPane(welcomePanel);
         frame.setVisible(true);
+    }
+    public void setPaused(boolean paused) {
+        this.paused = paused;
+        gameScreen.setPause(true);
     }
 
     public GameState getCurrentState() {

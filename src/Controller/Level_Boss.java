@@ -35,7 +35,8 @@ public class Level_Boss extends Level {
 
         //Set the player
         this.player = player;
-        player.setWeapon(new Weapon(50,350, 12));
+        player.setWeapon(new Weapon(50,350, 12,false));
+        player.getWeapon().changeImage(gameState);
 
         createLevel();
         for (Enemy e : enemies) {

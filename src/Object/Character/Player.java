@@ -53,7 +53,7 @@ public class Player extends Character {
 
         startPosY = y;
         startPosX = x;
-        weapon = new Weapon(25,250,7);
+        weapon = new Weapon(25,250,7,false);
         animSpeed = 5;
     }
 

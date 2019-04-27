@@ -35,6 +35,7 @@ public class Level_2 extends Level {
         //Set the player
         this.player = player;
         player.addLives(3);
+        player.getWeapon().changeImage(gameState);
 
        createLevel();
 

@@ -284,14 +284,21 @@ public abstract class Level {
         for (int i  = 0; i<24; i++){
             for (int j = 0; j<15; j++){
                 if(tileMap[j][i] == 1){
-                    Platform newPlatform = new Platform(i *50, (j + 1) * 50);
+                    Platform newPlatform;
+                    if(i == 0 || i == 23 || j == 0 || j==14 ) {
+                        newPlatform = new Platform(i * 50, (j + 1) * 50, gameState, true);
+                    }else{
+                        newPlatform = new Platform(i * 50, (j + 1) * 50, gameState, false);
+                    }
                     platforms.add(newPlatform);
                 }else if(tileMap[j][i] == 2){
+                    Weapon weapon = new Weapon(50,300,5,true);
+                    weapon.changeImage(gameState);
                     Enemy newEnemy = new Enemy(55, 40, i * 50, (j + 1) * 50 + 10, gameState,
-                            new Weapon(50,300,5),2,40);
+                            weapon,2,40);
                     enemies.add(newEnemy);
                 }else if(tileMap[j][i] == 3) {
-                    puzzle = new Puzzle(i*50, (j+1)*50+20,50,30);
+                    puzzle = new Puzzle(i*50, (j+1)*50+10,50,40);
                 }else if(tileMap[j][i] == 4) {
                     player.setPosX(i*50);
                     player.setPosY((j+1)*50);
