@@ -122,6 +122,7 @@ public class GameController implements Runnable {
                 frame.setContentPane(highScoreScreen);
                 highScoreScreen.setGameController(this);
                 highScoreScreen.setPreviousState(currentState);
+                highScoreScreen.setEndScreen(endScreen);
                 break;
         }
 
@@ -143,7 +144,7 @@ public class GameController implements Runnable {
         currentState = nextState;
     }
 
-    public void updateGameState(GameState nextState, String total, Boolean success,HashMap<String, Integer> stats) {
+    public void updateGameState(GameState nextState, String total) {
         highScoreScreen = new HighScoreScreen(total);
         highScoreScreen.setGameController(this);
         highScoreScreen.setPreviousState(currentState);

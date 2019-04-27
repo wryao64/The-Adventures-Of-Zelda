@@ -65,7 +65,7 @@ public class EndScreen extends JPanel {
         JButton highScoreButton = new JButton("HIGH SCORES");
         highScoreButton.addActionListener(e -> {
             if (newHighScore) {
-                gameController.updateGameState(GameState.HIGHSCORE,playerStats.get("Total: ").toString(),success,playerStats);
+                gameController.updateGameState(GameState.HIGHSCORE,playerStats.get("Total: ").toString());
             } else
                 gameController.updateGameState(GameState.HIGHSCORE);
         }
