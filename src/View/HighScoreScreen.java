@@ -11,24 +11,20 @@ import java.util.HashMap;
 
 public class HighScoreScreen extends JPanel {
 
+    private EndScreen endScreen;
     private ScoreManager scoreManager;
     private GameController gameController;
     private ArrayList<String> topScores;
     private GameState previousGameState;
     private String scoreToHighlight;
 
-    private HashMap<String, Integer> playerStats;
-    private boolean success;
-
     private JPanel centrePanel;
     private JLabel title;
 
-    public HighScoreScreen(String scoreToHighlight,boolean success,HashMap<String, Integer> stats) {
+    public HighScoreScreen(String scoreToHighlight) {
         scoreManager = new ScoreManager();
         topScores = scoreManager.getTopScores();
         this.scoreToHighlight = scoreToHighlight;
-        this.playerStats = stats;
-        this.success = success;
 
         this.setLayout(new BorderLayout());
         this.setPreferredSize(new Dimension(WIDTH, HEIGHT));
@@ -47,8 +43,10 @@ public class HighScoreScreen extends JPanel {
         JButton button = new JButton("BACK");
         button.addActionListener(e ->{
             if(previousGameState == GameState.END){
-                gameController.updateGameState(previousGameState,success,playerStats);
+                System.out.println("setEndScreen");
+                gameController.setEndScreen(endScreen);
             }else {
+                System.out.println("updateGameState");
                 gameController.updateGameState(previousGameState);
             }
 
@@ -132,8 +130,9 @@ public class HighScoreScreen extends JPanel {
 
     public void setPreviousState( GameState gameState) {
         previousGameState = gameState;
-        System.out.println(previousGameState);
     }
+
+    public void setEndScreen(EndScreen endscreen) { this.endScreen = endscreen; }
 
 
 }

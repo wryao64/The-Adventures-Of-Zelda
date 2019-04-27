@@ -6,16 +6,18 @@ import Object.Item.Weapon;
 
 import java.awt.*;
 import java.awt.geom.Rectangle2D;
+import java.awt.image.BufferedImage;
 
 public class Boss extends Enemy {
-    private final int IMAGE_WIDTH = 18;
-    private final int IMAGE_HEIGHT = 11;
-    private final int IMG_RESIZED_W = 55;
-    private final int IMG_RESIZED_H = 40;
+    private final int IMG_RESIZED_W = 350;
+    private final int IMG_RESIZED_H = 200;
 
     public Boss(int w, int h, int x, int y, Weapon weapon, double shootFreq, int health) {
         super(w,h,x,y, GameState.LEVEL_BOSS, weapon,shootFreq,health);
         enemyID = "Boss";
+
+        imageLocation = "Assets/boss.png";
+        imageToPaint = loadImage();
     }
 
     public void shootWeapon(){
@@ -25,7 +27,9 @@ public class Boss extends Enemy {
 
     @Override
     public void paintObject(Graphics2D g) {
-        g.fill(new Rectangle2D.Double(posX, posY, width, height));
+        g.drawImage(imageToPaint, (int) posX-135, (int) posY-100, IMG_RESIZED_W,
+                IMG_RESIZED_H, null);
+        g.draw(getBounds());
         weapon.paintObject(g);
     }
 

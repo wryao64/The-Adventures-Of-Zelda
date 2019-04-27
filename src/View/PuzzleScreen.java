@@ -41,10 +41,6 @@ public class PuzzleScreen extends JDialog implements KeyListener{
                 nextState = GameState.LEVEL_BOSS;
                 backgroundImage = new ImageIcon("Assets/power.png").getImage();
                 break;
-            case LEVEL_BOSS:
-                nextState = GameState.LEVEL_BOSS;
-                backgroundImage = new ImageIcon("Assets/power.png").getImage();
-                break;
         }
 
         setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);

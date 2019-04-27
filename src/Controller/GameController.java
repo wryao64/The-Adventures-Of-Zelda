@@ -102,6 +102,7 @@ public class GameController implements Runnable {
         switch (nextState) {
             case WELCOME:
                 paused = false;
+                endScreen =null;
                 welcomeScreen = new WelcomeScreen();
                 welcomeScreen.setGameController(this);
                 frame.setContentPane(welcomeScreen);
@@ -127,7 +128,7 @@ public class GameController implements Runnable {
                 gameScreen.setLevel(level_Boss, "Boss");
                 break;
             case HIGHSCORE:
-                highScoreScreen = new HighScoreScreen(null,false,null);
+                highScoreScreen = new HighScoreScreen(null);
                 frame.setContentPane(highScoreScreen);
                 highScoreScreen.setGameController(this);
                 highScoreScreen.setPreviousState(currentState);
@@ -139,7 +140,9 @@ public class GameController implements Runnable {
 
     public void updateGameState(GameState nextState, Boolean success, HashMap<String, Integer> stats) {
         if (nextState == GameState.END) {
-            endScreen = new EndScreen(success, stats);
+            if (endScreen == null) {
+                endScreen = new EndScreen(success, stats);
+            }
             endScreen.setGameController(this);
             paused = true;
             frame.setContentPane(endScreen);
@@ -150,14 +153,21 @@ public class GameController implements Runnable {
     }
 
     public void updateGameState(GameState nextState, String total, Boolean success,HashMap<String, Integer> stats) {
-        highScoreScreen = new HighScoreScreen(total,success,stats);
+        highScoreScreen = new HighScoreScreen(total);
         highScoreScreen.setGameController(this);
         highScoreScreen.setPreviousState(currentState);
+        highScoreScreen.setEndScreen(endScreen);
 
         frame.setContentPane(highScoreScreen);
 
         frame.setVisible(true);
         currentState =nextState;
+    }
+
+    public void setEndScreen(EndScreen endScreen) {
+        frame.setContentPane(endScreen);
+        frame.setVisible(true);
+        currentState = GameState.END;
     }
 
     public void runGame() {

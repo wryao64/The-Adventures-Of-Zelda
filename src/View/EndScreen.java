@@ -26,7 +26,6 @@ public class EndScreen extends JPanel {
         playerStats = stats;
 
         if(sm.newScore(playerStats.get("Total: ").toString())){
-            System.out.println("new high score");
             newHighScore = true;
         }
 
