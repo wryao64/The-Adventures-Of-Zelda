@@ -14,6 +14,8 @@ public class Enemy extends Character {
     private final int IMG_RESIZED_W = 55;
     private final int IMG_RESIZED_H = 40;
 
+    protected String enemyID;
+
     private final int SPEED_Y = 0;
     private int moveCount = 0;
     private double shootFreq;
@@ -24,7 +26,7 @@ public class Enemy extends Character {
     //Amount of score points the enemy is worth.
     protected int points;
 
-    public Enemy(int w, int h, int x, int y, GameState level, Weapon weapon, int shootFreq, int health) {
+    public Enemy(int w, int h, int x, int y, GameState level, Weapon weapon, double shootFreq, int health) {
         super(w,h,x,y);
 
         this.setImage(level);
@@ -50,6 +52,7 @@ public class Enemy extends Character {
         this.shootFreq = shootFreq;
         this.health = health;
         animSpeed = 10;
+        enemyID = "Enemy";
     }
 
     private void setImage(GameState level) {
@@ -66,7 +69,6 @@ public class Enemy extends Character {
             case LEVEL_BOSS:
                 imageLocation = "Assets/enemy_white.png";
                 break;
-
         }
     }
 
@@ -74,8 +76,8 @@ public class Enemy extends Character {
         super.move();
         //Counter to keep track of when the enemy has to shoot again.
         moveCount = moveCount + 1;
+        System.out.println("moved");
         weapon.moveShot();
-        System.out.println(moveCount);
         //Once the counter reaches the desired period, shoot the weapon again.
         if (moveCount > randFreq) {
             shootWeapon();
@@ -89,12 +91,12 @@ public class Enemy extends Character {
 
     public void setShootFreq(double shootFreq) { this.shootFreq = shootFreq; }
 
-
     /**
      * Paints enemy. Called by Level object.
      */
     @Override
     public void paintObject(Graphics2D g) {
+        weapon.paintObject(g);
         if(hurt){
             if(charDirection == 1) {
                 setImageToPaint(hurtImageRight, 10);
@@ -107,6 +109,7 @@ public class Enemy extends Character {
         g.drawImage(imageToPaint, (int) posX, (int) posY, IMG_RESIZED_W,
                 IMG_RESIZED_H, null);
 
-        weapon.paintObject(g);
     }
+
+    public String toString() { return enemyID; }
 }

@@ -7,18 +7,18 @@ import java.util.ArrayList;
 
 public class Weapon extends Object {
 
-    private int attackDamage;
-    private int shotSpeed;
-    private int range;
+    protected int attackDamage;
+    protected int shotSpeed;
+    protected int range;
 
-    private double bulletDir;
-    private double bulletSize = 12;
-    private double weaponPosX;
-    private double weaponPosY;
+    protected double bulletDir;
+    protected double bulletSize = 12;
+    protected double weaponPosX;
+    protected double weaponPosY;
 
-    private double maxBullets = 1;
+    protected double maxBullets = 1;
 
-    private ArrayList<Bullet> bullets = new ArrayList<>();
+    protected ArrayList<Bullet> bullets = new ArrayList<>();
 
     public Weapon(int damage, int range, int shotSpeed){
         this.attackDamage = damage;
@@ -52,7 +52,7 @@ public class Weapon extends Object {
      * in the range of the weapon.
      */
     public void moveShot() {
-        Bullet bulletToRemove = null;
+      Bullet bulletToRemove = null;
       for(Bullet b : bullets) {
 
           if ((b.getBulletPosX() > (weaponPosX - range)) && (b.getBulletPosX() < (weaponPosX + range))) {

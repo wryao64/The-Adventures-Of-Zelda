@@ -1,6 +1,8 @@
 package Controller;
 
+import Object.Character.Boss;
 import Object.Character.SpriteSheet;
+import Object.Item.BossWeapon;
 import Object.Item.Bullet;
 import Object.Item.Weapon;
 import Object.Platform;
@@ -43,7 +45,6 @@ public abstract class Level {
     protected int[][] tileMap;
 
     protected GameScreen gameScreen;
-
     protected ArrayList<BufferedImage> heartImages = new ArrayList<>();
 
     /**
@@ -115,8 +116,13 @@ public abstract class Level {
                 Sound.playSound(ENEMY_HIT_SOUND);
 
                 if(e.getHealth() <= 0){
-                    enemyToRemove = e;
-                    player.addToEnemiesKilled();
+                    if(e.toString() == "Boss") {
+                        enemyToRemove = e;
+                        player.addToBossesKilled();
+                    }else {
+                        enemyToRemove = e;
+                        player.addToEnemiesKilled();
+                    }
                 }
             }
         }
@@ -145,9 +151,8 @@ public abstract class Level {
                 if(!player.hurt()){
                     player.loseHeart();
                     if(player.getLives() <= 0){
-                        //skip to endscreen
+                        gameScreen.setSuccess(false);
                     }
-
                 }
             }
         }
@@ -274,6 +279,10 @@ public abstract class Level {
                     player.setPosX(i*50);
                     player.setPosY((j+1)*50);
                     player.setInitPosition(i*50,(j+1)*50);
+                }else if(tileMap[j][i] == 5) {
+                    Boss boss = new Boss(100,100,(i+1)*50,(j+1)*50,
+                            new BossWeapon(50,250,8),2.5,50);
+                    enemies.add(boss);
                 }
             }
         }
@@ -287,7 +296,6 @@ public abstract class Level {
             for (Enemy e : enemies) {
                 // finds next platform the enemy will move to
                 Platform p = findPlatform(e);
-
                 if (p == null) { // no further platform
                     int dir = e.getDir();
                     e.setDir(- dir); // reverse direction
