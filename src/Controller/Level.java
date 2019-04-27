@@ -298,7 +298,11 @@ public abstract class Level {
                             weapon,2,40);
                     enemies.add(newEnemy);
                 }else if(tileMap[j][i] == 3) {
-                    puzzle = new Puzzle(i*50, (j+1)*50+10,50,40);
+                    if(gameState == GameState.LEVEL_BOSS) {
+                        puzzle = new Puzzle(i*50, (j+1)*50-20,70,70,gameState);
+                    }else{
+                        puzzle = new Puzzle(i*50, (j+1)*50+10,50,40,gameState);
+                    }
                 }else if(tileMap[j][i] == 4) {
                     player.setPosX(i*50);
                     player.setPosY((j+1)*50);
