@@ -23,6 +23,7 @@ public class GameScreen extends JPanel implements KeyListener {
     private int timeCount;
 
     Color glassPaneColor = new Color(0, 0, 0, 175);
+    private static final String CHEST_OPEN_SOUND = Sound.SOUND_LOCATION + "chest_open.wav";
 
     Level level;
     Boolean paused = false;
@@ -140,6 +141,7 @@ public class GameScreen extends JPanel implements KeyListener {
                 }else {
                     level.getPlayer().collectOrb();
                     gameController.setPaused(true);
+                    Sound.playSound(CHEST_OPEN_SOUND);
                     window = (RootPaneContainer) SwingUtilities.getWindowAncestor(this);
                     new PuzzleScreen((Window) window, gameController,this);
                 }
