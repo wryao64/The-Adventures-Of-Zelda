@@ -139,6 +139,7 @@ public class GameScreen extends JPanel implements KeyListener {
             if(level.getPuzzleStatus()) {
 
                 if (gameController.getCurrentState() == GameState.LEVEL_BOSS){
+                    System.out.println("boss puzzle chest");
                     gameController.setPaused(true);
                     gameController.updateGameState(GameState.END,true,level.getPlayer().getFinalStats());
                 }else {
