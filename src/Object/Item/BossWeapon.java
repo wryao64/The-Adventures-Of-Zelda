@@ -1,10 +1,11 @@
 package Object.Item;
 
 public class BossWeapon extends Weapon {
+    public static final String IMAGE_LOCATION = "Resources/Assets/";
 
     public BossWeapon(int damage, int range, int shotSpeed) {
         super(damage,range,shotSpeed,true);
-        imageLocation = "Assets/bulletBoss.png";
+        imageLocation =  IMAGE_LOCATION + "bulletBoss.png";
         image = loadImage();
     }
 

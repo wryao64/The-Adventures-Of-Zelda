@@ -7,11 +7,13 @@ import Object.Item.Weapon;
 import javax.swing.*;
 
 public class Level_Boss extends Level {
+    public static final String IMAGE_LOCATION = "Resources/Assets/";
+
     private final double ENEMY_SPEED = 2;
 
     public Level_Boss(Player player) {
-        backgroundImage = new ImageIcon("Assets/castle.png").getImage();
-        inventoryImage = loadImage("Assets/boss_inv.png");
+        backgroundImage = new ImageIcon(IMAGE_LOCATION + "castle.png").getImage();
+        inventoryImage = loadImage(IMAGE_LOCATION + "boss_inv.png");
         this.setHeartImages();
 
         gameState = GameState.LEVEL_BOSS;

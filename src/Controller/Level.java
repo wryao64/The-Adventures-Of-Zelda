@@ -23,6 +23,8 @@ import java.util.ArrayList;
  * Handles the logistics of the level like the current score, which enemies are killed and the number of lives of the player.
  */
 public abstract class Level {
+    public static final String IMAGE_LOCATION = "Resources/Assets/";
+
     private final int IMAGE_HEIGHT = 800;
     private final int IMAGE_WIDTH = 1200;
     private final int PLATFORM_SIZE = 50;
@@ -176,7 +178,7 @@ public abstract class Level {
     }
 
     public void setHeartImages() {
-        String imageLocation = "Assets/hearts.png";
+        String imageLocation = IMAGE_LOCATION + "hearts.png";
         try {
             BufferedImage heartSheet = ImageIO.read(new File(imageLocation));
             SpriteSheet ss = new SpriteSheet(heartSheet, 50, 50);

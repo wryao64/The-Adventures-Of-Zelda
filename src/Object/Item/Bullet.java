@@ -8,6 +8,8 @@ import Object.Character.SpriteSheet;
 import Object.Object;
 
 public class Bullet extends Object {
+    public static final String IMAGE_LOCATION = "Resources/Assets/";
+
     double weaponPosX;
 
     double speedX = 0;
@@ -52,7 +54,7 @@ public class Bullet extends Object {
         switch (level) {
             case TUTORIAL:
                 if (!enemy) {
-                    imageLocation = "Assets/bulletTutorial.png";
+                    imageLocation = IMAGE_LOCATION + "bulletTutorial.png";
                     image = loadImage();
 
                     if (speedX > 0) {
@@ -60,13 +62,13 @@ public class Bullet extends Object {
                         image = spriteSheet.getFlippedImage(0, 0);
                     }
                 } else {
-                    imageLocation = "Assets/enemyTBullet.png";
+                    imageLocation = IMAGE_LOCATION + "enemyTBullet.png";
                     image = loadImage();
                 }
                 break;
             case LEVEL_1:
                 if (!enemy) {
-                    imageLocation = "Assets/level1Bullet.png";
+                    imageLocation = IMAGE_LOCATION + "level1Bullet.png";
                     image = loadImage();
 
                     if (speedX > 0) {
@@ -74,13 +76,13 @@ public class Bullet extends Object {
                         image = spriteSheet.getFlippedImage(0, 0);
                     }
                 } else {
-                    imageLocation = "Assets/enemy1Bullet.png";
+                    imageLocation = IMAGE_LOCATION + "enemy1Bullet.png";
                     image = loadImage();
                 }
                 break;
             case LEVEL_2:
                 if (!enemy) {
-                    imageLocation = "Assets/level2Bullet.png";
+                    imageLocation = IMAGE_LOCATION + "level2Bullet.png";
                     image = loadImage();
 
                     if (speedX > 0) {
@@ -88,13 +90,13 @@ public class Bullet extends Object {
                         image = spriteSheet.getFlippedImage(0, 0);
                     }
                 } else {
-                    imageLocation = "Assets/enemy2Bullet.png";
+                    imageLocation = IMAGE_LOCATION + "enemy2Bullet.png";
                     image = loadImage();
                 }
                 break;
             case LEVEL_BOSS:
                 if (!enemy) {
-                    imageLocation = "Assets/bossBullet.png";
+                    imageLocation = IMAGE_LOCATION + "bossBullet.png";
                     image = loadImage();
 
                     if (speedX > 0) {
@@ -102,7 +104,7 @@ public class Bullet extends Object {
                         image = spriteSheet.getFlippedImage(0, 0);
                     }
                 } else {
-                    imageLocation = "Assets/enemyBossBullet.png";
+                    imageLocation = IMAGE_LOCATION + "enemyBossBullet.png";
                     image = loadImage();
                 }
                 break;

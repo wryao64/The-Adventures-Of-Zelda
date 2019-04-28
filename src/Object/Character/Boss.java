@@ -7,6 +7,8 @@ import Object.Item.Weapon;
 import java.awt.*;
 
 public class Boss extends Enemy {
+    public static final String IMAGE_LOCATION = "Resources/Assets/";
+
     private final int IMG_RESIZED_W = 350;
     private final int IMG_RESIZED_H = 200;
 
@@ -14,7 +16,7 @@ public class Boss extends Enemy {
         super(w, h, x, y, GameState.LEVEL_BOSS, weapon, shootFreq, health);
         enemyID = "Boss";
 
-        imageLocation = "Assets/boss.png";
+        imageLocation = IMAGE_LOCATION + "boss.png";
         imageToPaint = loadImage();
     }
 
