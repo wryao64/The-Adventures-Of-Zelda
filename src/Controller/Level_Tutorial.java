@@ -11,14 +11,17 @@ import java.awt.image.BufferedImage;
 public class Level_Tutorial extends Level {
     BufferedImage tutorialTip1;
     BufferedImage tutorialTip2;
+    BufferedImage tutorialTip3;
 
-    private final double ENEMY_SPEED = 0.75;
+    private final double ENEMY_SPEED = 1;
 
     public Level_Tutorial(Player player) {
         backgroundImage = new ImageIcon("Assets/icy_mountains.png").getImage();
         inventoryImage = loadImage("Assets/tutorial_inv.png");
         tutorialTip1 = loadImage("Assets/tutorialTip1.png");
         tutorialTip2 = loadImage("Assets/tutorialTip2.png");
+        tutorialTip3 = loadImage("Assets/tutorialTip3.png");
+
 
         setHeartImages();
 
@@ -49,8 +52,8 @@ public class Level_Tutorial extends Level {
 
         for (Enemy e : enemies) {
             e.setSpeedX(ENEMY_SPEED);
-            e.getWeapon().setRange(150);
-            e.setShootFreq(3.5);
+            e.getWeapon().setRange(200);
+            e.setShootFreq(2.5);
         }
     }
     public Player getPlayer () {
@@ -61,5 +64,6 @@ public class Level_Tutorial extends Level {
         super.paintLevel(g);
         g.drawImage(tutorialTip1, 100, 650, 150, 50, null);
         g.drawImage(tutorialTip2, 500, 450, 150, 50, null);
+        g.drawImage(tutorialTip3, 250, 150, 150, 50, null);
     }
 }
