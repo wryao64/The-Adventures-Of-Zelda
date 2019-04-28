@@ -22,8 +22,7 @@ public class Level_Tutorial extends Level {
         tutorialTip2 = loadImage("Assets/tutorialTip2.png");
         tutorialTip3 = loadImage("Assets/tutorialTip3.png");
 
-
-        setHeartImages();
+        this.setHeartImages();
 
         gameState = GameState.TUTORIAL;
 
@@ -48,7 +47,7 @@ public class Level_Tutorial extends Level {
         this.player = player;
         this.player.setWeapon(new Weapon(20,250, 7,false));
 
-        createLevel();
+        this.createLevel();
 
         for (Enemy e : enemies) {
             e.setSpeedX(ENEMY_SPEED);
@@ -56,6 +55,7 @@ public class Level_Tutorial extends Level {
             e.setShootFreq(2.5);
         }
     }
+
     public Player getPlayer () {
         return player;
     }

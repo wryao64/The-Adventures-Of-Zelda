@@ -11,7 +11,8 @@ public class Level_2 extends Level {
     public Level_2(Player player) {
         backgroundImage = new ImageIcon("Assets/floating.png").getImage();
         inventoryImage = loadImage("Assets/lvl2_inv.png");
-        setHeartImages();
+        this.setHeartImages();
+
         gameState = GameState.LEVEL_2;
 
         tileMap = new int[][]{
@@ -37,7 +38,7 @@ public class Level_2 extends Level {
         player.addLives(3);
         player.getWeapon().changeImage(gameState);
 
-       createLevel();
+        this.createLevel();
 
         for (Enemy e : enemies) {
             e.setSpeedX(ENEMY_SPEED);

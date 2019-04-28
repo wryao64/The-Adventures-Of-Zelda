@@ -4,7 +4,6 @@ import java.io.*;
 import java.util.ArrayList;
 
 public class ScoreManager {
-
     ArrayList<String> topScores = new ArrayList<>();
     String fileName = "./Resources/HighScores.txt";
 
@@ -14,15 +13,18 @@ public class ScoreManager {
         try {
             FileReader fileReader = new FileReader(fileName);
             BufferedReader bufferedReader = new BufferedReader(fileReader);
+
             while((currentLine = bufferedReader.readLine()) != null&& currentLine.trim().length() > 0) {
                 topScores.add(currentLine);
             }
-            bufferedReader.close();
-        }
-        catch(FileNotFoundException ex) { ex.printStackTrace(); }
-        catch(IOException ex) { ex.printStackTrace(); }
-    }
 
+            bufferedReader.close();
+        } catch(FileNotFoundException ex) {
+            ex.printStackTrace();
+        } catch(IOException ex) {
+            ex.printStackTrace();
+        }
+    }
 
     /**
      * Returns the top ten scores currently stored.
@@ -48,7 +50,7 @@ public class ScoreManager {
 
         //Sort the array again with the added score.
         topScores = sort(topScores);
-        writeToFile();
+        this.writeToFile();
         return true;
     }
 
@@ -58,19 +60,21 @@ public class ScoreManager {
     private void writeToFile() {
         BufferedWriter outputWriter;
 
-       try{
+        try{
            outputWriter = new BufferedWriter(new FileWriter(fileName));
+
             for (String s : topScores) {
                 String lineToWrite = s + "\n";
                 outputWriter.write(lineToWrite);
             }
+
             outputWriter.flush();
             outputWriter.close();
-       } catch (FileNotFoundException e) {
-           e.printStackTrace();
-       } catch (IOException ex) {
-           ex.printStackTrace();
-       }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
     }
 
     /**

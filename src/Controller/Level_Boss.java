@@ -12,7 +12,8 @@ public class Level_Boss extends Level {
     public Level_Boss(Player player) {
         backgroundImage = new ImageIcon("Assets/castle.png").getImage();
         inventoryImage = loadImage("Assets/boss_inv.png");
-        setHeartImages();
+        this.setHeartImages();
+
         gameState = GameState.LEVEL_BOSS;
 
         tileMap = new int[][]{
@@ -38,7 +39,8 @@ public class Level_Boss extends Level {
         player.setWeapon(new Weapon(50,350, 12,false));
         player.getWeapon().changeImage(gameState);
 
-        createLevel();
+        this.createLevel();
+
         for (Enemy e : enemies) {
             e.setSpeedX(ENEMY_SPEED);
         }

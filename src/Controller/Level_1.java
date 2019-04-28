@@ -12,7 +12,7 @@ public class Level_1 extends Level {
     public Level_1(Player player) {
         backgroundImage = new ImageIcon("Assets/volcanic_mountains.png").getImage();
         inventoryImage = loadImage("Assets/lvl1_inv.png");
-        setHeartImages();
+        this.setHeartImages();
 
         gameState = GameState.LEVEL_1;
 
@@ -42,7 +42,7 @@ public class Level_1 extends Level {
         player.getWeapon().setMaxBullets(2);
         player.getWeapon().changeImage(gameState);
 
-        createLevel();
+        this.createLevel();
 
         for (Enemy e : enemies) {
             e.setSpeedX(ENEMY_SPEED);
