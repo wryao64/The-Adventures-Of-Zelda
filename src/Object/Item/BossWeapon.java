@@ -8,7 +8,7 @@ public class BossWeapon extends Weapon {
         image = loadImage();
     }
 
-    public void shoot (double charPosX, double charPosY, double charWidth, double charHeight) {
+    public void shoot(double charPosX, double charPosY, double charWidth, double charHeight) {
         weaponPosX = charPosX + charWidth/2;
         weaponPosY = charPosY + charHeight/2;
 
@@ -27,6 +27,7 @@ public class BossWeapon extends Weapon {
 
     public void moveShot() {
         Bullet bulletToRemove = null;
+
         for(Bullet b : bullets) {
             if ((b.getBulletPosX() > (weaponPosX - range)) && (b.getBulletPosX() < (weaponPosX + range))) {
                 b.moveShot();
