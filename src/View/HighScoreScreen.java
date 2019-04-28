@@ -35,7 +35,8 @@ public class HighScoreScreen extends JPanel {
         this.setBorder(BorderFactory.createEmptyBorder(50, 20, 20, 50));
 
         JPanel panel = new JPanel();
-        panel.setLayout(new FlowLayout());
+        panel.setLayout(new BoxLayout(panel, BoxLayout.LINE_AXIS));
+        panel.setBackground(backgroundColor);
 
         title = new JLabel("HighScores");
         title.setForeground(Color.ORANGE);
@@ -54,9 +55,10 @@ public class HighScoreScreen extends JPanel {
                 }
         );
 
+        panel.add(Box.createRigidArea(new Dimension(10, 0)));
         panel.add(button);
+        panel.add(Box.createRigidArea(new Dimension(340, 0)));
         panel.add(title);
-        panel.setBackground(backgroundColor);
 
         centrePanel = setUpCentrePanel();
         centrePanel.setBackground(backgroundColor);
