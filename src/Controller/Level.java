@@ -308,8 +308,8 @@ public abstract class Level {
                     player.setPosY((j+1)*50);
                     player.setInitPosition(i*50,(j+1)*50);
                 }else if(tileMap[j][i] == 5) {
-                    Boss boss = new Boss(100,100,(i+1)*50,(j+1)*50,
-                            new BossWeapon(50,250,8),2.5,50);
+                    Boss boss = new Boss(100,200,(i+1)*50,(j-1)*50,
+                            new BossWeapon(50,250,8),2.5,300);
                     enemies.add(boss);
                 }
             }

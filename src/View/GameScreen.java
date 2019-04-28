@@ -23,6 +23,8 @@ public class GameScreen extends JPanel implements KeyListener {
     private int timeCount;
 
     Color glassPaneColor = new Color(0, 0, 0, 175);
+    private static final Color backgroundColor = new Color(123, 63, 0);
+
     private static final String CHEST_OPEN_SOUND = Sound.SOUND_LOCATION + "chest_open.wav";
 
     Level level;
@@ -37,13 +39,14 @@ public class GameScreen extends JPanel implements KeyListener {
 
         JPanel topBar = new JPanel();
         topBar.setPreferredSize(new Dimension(WIDTH, 50));
-        topBar.setBackground(new Color(186, 122, 50));
+        topBar.setBackground(backgroundColor);
         topBar.setLayout(new BoxLayout(topBar, BoxLayout.LINE_AXIS));
         topBar.setBorder(BorderFactory.createEmptyBorder(0, 20, 0, 20));
 
         // Level label
         levelLabel = new JLabel("");
         levelLabel.setFont(new Font(levelLabel.getFont().getName(), levelLabel.getFont().getStyle(), 20));
+        levelLabel.setForeground(Color.ORANGE);
 
         this.add(topBar, BorderLayout.NORTH);
 
