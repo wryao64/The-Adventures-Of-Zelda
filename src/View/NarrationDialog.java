@@ -15,7 +15,7 @@ public class NarrationDialog extends JDialog implements KeyListener {
     NarrationPane narrationPane;
 
     private final int IMAGE_WIDTH = 1200;
-    private final int IMAGE_HEIGHT = 200;
+    private final int IMAGE_HEIGHT = 150;
 
     Image[] imageArray = {
             new ImageIcon("Assets/Rauru1.png").getImage(),
