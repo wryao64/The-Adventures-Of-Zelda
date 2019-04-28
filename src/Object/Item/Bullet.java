@@ -50,7 +50,6 @@ public class Bullet extends Object {
     }
 
     private void setImage(GameState level,Boolean enemy) {
-        System.out.println(level);
         switch(level) {
             case TUTORIAL:
                 if(!enemy) {

@@ -262,11 +262,10 @@ public class GameScreen extends JPanel implements KeyListener {
                 if(!paused) {
                     timeCount++;
                 }else{
-                    System.out.println("cancelled");
                     timer.cancel();
                 }
 
-                System.out.println(timeString);
+//                System.out.println(timeString);
             }
         };
 
