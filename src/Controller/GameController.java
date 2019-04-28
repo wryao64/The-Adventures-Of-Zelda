@@ -12,6 +12,7 @@ public class GameController implements Runnable {
 
     private int fps = 60;
     private boolean running;
+    private boolean narration = false;
 
     private WelcomeScreen welcomeScreen;
     private GameScreen gameScreen;
@@ -77,7 +78,8 @@ public class GameController implements Runnable {
         if (gameScreen != null && gameScreen.getLevel() != null) {
             gameScreen.repaint();
 
-            if (this.getCurrentState() == GameState.TUTORIAL) {
+            if (!narration && this.getCurrentState() == GameState.TUTORIAL) {
+                gameScreen.setPause(true);
                 window = (RootPaneContainer) SwingUtilities.getWindowAncestor(gameScreen);
                 new NarrationDialog((Window) window, this);
             }
@@ -184,15 +186,21 @@ public class GameController implements Runnable {
     }
     public void setPaused(boolean paused) {
         this.paused = paused;
-        gameScreen.setPause(true);
+        gameScreen.setPause(paused);
     }
 
     public GameState getCurrentState() {
         return currentState;
     }
 
+    public void finishNarration() {
+        narration = true;
+
+    }
+
     private void resetGame() {
         paused = false;
         endScreen = null;
+        narration = false;
     }
 }

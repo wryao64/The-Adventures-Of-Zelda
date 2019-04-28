@@ -52,13 +52,15 @@ public class NarrationDialog extends JDialog implements KeyListener {
         int c = e.getKeyCode();
 
         if (c == KeyEvent.VK_ENTER) {
-            narrationImage = imageArray[imageIndex];
-            imageIndex++;
-            narrationPane.repaint();
-        }
-
-        if (imageIndex == 4) {
-            this.dispose();
+            if (imageIndex < imageArray.length) {
+                narrationImage = imageArray[imageIndex];
+                imageIndex++;
+                narrationPane.repaint();
+            } else {
+                gameController.finishNarration();
+                gameController.setPaused(false);
+                this.dispose();
+            }
         }
     }
 
