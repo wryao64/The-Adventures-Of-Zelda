@@ -3,6 +3,7 @@ package Controller;
 import View.*;
 
 import javax.swing.*;
+import java.awt.*;
 import java.util.HashMap;
 
 public class GameController implements Runnable {
@@ -11,6 +12,7 @@ public class GameController implements Runnable {
 
     private int fps = 60;
     private boolean running;
+    private boolean narration = false;
 
     private WelcomeScreen welcomeScreen;
     private GameScreen gameScreen;
@@ -23,11 +25,11 @@ public class GameController implements Runnable {
     private Level_2 level_2;
     private Level_Boss level_Boss;
 
-
     private GameState currentState = GameState.WELCOME;
     private volatile boolean paused = false;
 
     JFrame frame;
+    private RootPaneContainer window;
 
     @Override
     public void run() {
@@ -75,7 +77,14 @@ public class GameController implements Runnable {
 
         if (gameScreen != null && gameScreen.getLevel() != null) {
             gameScreen.repaint();
+
+            if (!narration && this.getCurrentState() == GameState.TUTORIAL) {
+                gameScreen.setPause(true);
+                window = (RootPaneContainer) SwingUtilities.getWindowAncestor(gameScreen);
+                new NarrationDialog((Window) window, this);
+            }
         }
+
     }
 
     /**
@@ -177,15 +186,21 @@ public class GameController implements Runnable {
     }
     public void setPaused(boolean paused) {
         this.paused = paused;
-        gameScreen.setPause(true);
+        gameScreen.setPause(paused);
     }
 
     public GameState getCurrentState() {
         return currentState;
     }
 
+    public void finishNarration() {
+        narration = true;
+
+    }
+
     private void resetGame() {
         paused = false;
         endScreen = null;
+        narration = false;
     }
 }
