@@ -20,21 +20,20 @@ public class WelcomeScreen extends JPanel {
         JLabel welcomeLabel = new JLabel("The Adventures of Zelda");
         welcomeLabel.setFont(new Font(welcomeLabel.getFont().getName(), welcomeLabel.getFont().getStyle(), 50));
         welcomeLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
-//        welcomeLabel.setOpaque(true); //shows bg color
 
         // Play button
         JButton playButton = new JButton("PLAY");
         playButton.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         playButton.addActionListener(e ->
-            gameController.updateGameState(GameState.TUTORIAL)
+                gameController.updateGameState(GameState.TUTORIAL)
         );
 
         // High score button
         JButton highScoreButton = new JButton("HIGH SCORES");
         highScoreButton.setAlignmentX(Component.CENTER_ALIGNMENT);
         highScoreButton.addActionListener(e ->
-            gameController.updateGameState(GameState.HIGHSCORE)
+                gameController.updateGameState(GameState.HIGHSCORE)
         );
 
         // Add components to panel
@@ -46,7 +45,7 @@ public class WelcomeScreen extends JPanel {
         this.add(highScoreButton);
     }
 
-    public void setGameController(GameController controller){
+    public void setGameController(GameController controller) {
         gameController = controller;
     }
 }

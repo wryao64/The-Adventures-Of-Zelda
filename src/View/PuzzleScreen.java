@@ -8,7 +8,7 @@ import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
-public class PuzzleScreen extends JDialog implements KeyListener{
+public class PuzzleScreen extends JDialog implements KeyListener {
     Image backgroundImage;
 
     GameController gameController;
@@ -18,7 +18,7 @@ public class PuzzleScreen extends JDialog implements KeyListener{
     private final int IMAGE_WIDTH = 450;
     private final int IMAGE_HEIGHT = 450;
 
-    public PuzzleScreen(Window window, GameController gameController,GameScreen gameScreen) {
+    public PuzzleScreen(Window window, GameController gameController, GameScreen gameScreen) {
         super(window, "", Dialog.ModalityType.APPLICATION_MODAL);
         this.gameController = gameController;
         this.gameScreen = gameScreen;
@@ -41,17 +41,18 @@ public class PuzzleScreen extends JDialog implements KeyListener{
                 nextState = GameState.END;
         }
 
-        setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-        setBounds(300, 300, IMAGE_WIDTH, IMAGE_HEIGHT);
+        this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+        this.setBounds(300, 300, IMAGE_WIDTH, IMAGE_HEIGHT);
 
         PuzzlePane puzzlePane = new PuzzlePane();
+
         this.getContentPane().add(puzzlePane);
         this.addKeyListener(this);
-        setFocusable(true);
-        setUndecorated(true);
-        setLocationRelativeTo(window);
-        setVisible(true);
-        pack();
+        this.setFocusable(true);
+        this.setUndecorated(true);
+        this.setLocationRelativeTo(window);
+        this.setVisible(true);
+        this.pack();
     }
 
 
@@ -63,7 +64,7 @@ public class PuzzleScreen extends JDialog implements KeyListener{
     @Override
     public void keyPressed(KeyEvent e) {
         int c = e.getKeyCode();
-        if (c == KeyEvent.VK_ENTER){
+        if (c == KeyEvent.VK_ENTER) {
             this.dispose();
             gameController.setPaused(false);
             gameController.updateGameState(nextState);
@@ -79,13 +80,13 @@ public class PuzzleScreen extends JDialog implements KeyListener{
 
     public class PuzzlePane extends JPanel {
 
-        public PuzzlePane(){
+        public PuzzlePane() {
             this.setLayout(null);
             setFocusable(true);
         }
 
         @Override
-        public void paintComponent(Graphics g){
+        public void paintComponent(Graphics g) {
             super.paintComponent(g);
             g.drawImage(backgroundImage, 0, 0, IMAGE_WIDTH, IMAGE_HEIGHT, null);
 

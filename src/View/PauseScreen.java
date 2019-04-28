@@ -9,8 +9,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
-public class PauseScreen extends JDialog{
-
+public class PauseScreen extends JDialog {
     private GameController gameController;
     private PausePane pausePane;
     private GameScreen gameScreen;
@@ -19,7 +18,7 @@ public class PauseScreen extends JDialog{
     private static final Color backgroundColor = new Color(123, 63, 0);
     private static final Font regularFont = new Font(fontFamily, Font.BOLD, 16);
 
-    public PauseScreen(Window window, GameController gameController,GameScreen gameScreen) {
+    public PauseScreen(Window window, GameController gameController, GameScreen gameScreen) {
         super(window, "", Dialog.ModalityType.APPLICATION_MODAL);
         this.gameController = gameController;
         this.gameScreen = gameScreen;
@@ -36,7 +35,6 @@ public class PauseScreen extends JDialog{
      * Pane contains contents of Pause Screen
      */
     public class PausePane extends JPanel implements KeyListener {
-
         private JButton button1, button2;
 
         public PausePane() {
@@ -64,7 +62,8 @@ public class PauseScreen extends JDialog{
         }
 
         @Override
-        public void keyTyped(KeyEvent e) { }
+        public void keyTyped(KeyEvent e) {
+        }
 
         @Override
         public void keyPressed(KeyEvent e) {
@@ -79,7 +78,8 @@ public class PauseScreen extends JDialog{
         }
 
         @Override
-        public void keyReleased(KeyEvent e) { }
+        public void keyReleased(KeyEvent e) {
+        }
 
         // removes dialog
         private class pauseAction extends AbstractAction {
