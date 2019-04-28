@@ -109,7 +109,7 @@ public class GameScreen extends JPanel implements KeyListener {
     public void keyPressed(KeyEvent e) {
         int c = e.getKeyCode();
 
-        // pause game
+        // PAUSE GAME
         if (c == KeyEvent.VK_P) {
             gameController.setPaused(true);
             this.pausePressed();
@@ -179,16 +179,11 @@ public class GameScreen extends JPanel implements KeyListener {
                     break;
             }
         }
+
         // Shortcut: Exit game
         if (c == KeyEvent.VK_ESCAPE) {
             gameController.setPaused(true);
             this.exitPressed();
-        }
-
-        // FOR TESTING PURPOSES: play sound
-        if (c == KeyEvent.VK_S) {
-            String sound = Sound.SOUND_LOCATION + "player_hit.wav";
-            Sound.playSound(sound);
         }
     }
 
