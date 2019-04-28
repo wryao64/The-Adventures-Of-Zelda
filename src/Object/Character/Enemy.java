@@ -7,6 +7,7 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 
 public class Enemy extends Character {
+    public static final String IMAGE_LOCATION = "Resources/Assets/";
 
     private final int IMAGE_WIDTH = 18;
     private final int IMAGE_HEIGHT = 11;
@@ -57,16 +58,16 @@ public class Enemy extends Character {
     private void setImage(GameState level) {
         switch (level) {
             case TUTORIAL:
-                imageLocation = "Assets/enemy_blue.png";
+                imageLocation = IMAGE_LOCATION + "enemy_blue.png";
                 break;
             case LEVEL_1:
-                imageLocation = "Assets/enemy_red.png";
+                imageLocation = IMAGE_LOCATION + "enemy_red.png";
                 break;
             case LEVEL_2:
-                imageLocation = "Assets/enemy_green.png";
+                imageLocation = IMAGE_LOCATION + "enemy_green.png";
                 break;
             case LEVEL_BOSS:
-                imageLocation = "Assets/enemy_white.png";
+                imageLocation = IMAGE_LOCATION + "enemy_white.png";
                 break;
         }
     }

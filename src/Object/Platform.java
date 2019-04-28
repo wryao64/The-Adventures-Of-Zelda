@@ -6,7 +6,7 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 
 public class Platform extends Object {
-
+    public static final String IMAGE_LOCATION = "Resources/Assets/";
     BufferedImage platformImage;
     BufferedImage cornerPlatformImage;
 
@@ -23,30 +23,30 @@ public class Platform extends Object {
         switch (level) {
             case TUTORIAL:
                 if (corner) {
-                    imageLocation = "Assets/tutorialCorner.png";
+                    imageLocation = IMAGE_LOCATION + "tutorialCorner.png";
                 } else {
-                    imageLocation = "Assets/tutorialTile.png";
+                    imageLocation = IMAGE_LOCATION + "tutorialTile.png";
                 }
                 break;
             case LEVEL_1:
                 if (corner) {
-                    imageLocation = "Assets/level1Corner.png";
+                    imageLocation = IMAGE_LOCATION + "level1Corner.png";
                 } else {
-                    imageLocation = "Assets/level1Tile.png";
+                    imageLocation = IMAGE_LOCATION + "level1Tile.png";
                 }
                 break;
             case LEVEL_2:
                 if (corner) {
-                    imageLocation = "Assets/level2Corner.png";
+                    imageLocation = IMAGE_LOCATION + "level2Corner.png";
                 } else {
-                    imageLocation = "Assets/level2Tile.png";
+                    imageLocation = IMAGE_LOCATION + "level2Tile.png";
                 }
                 break;
             case LEVEL_BOSS:
                 if (corner) {
-                    imageLocation = "Assets/bossCorner.png";
+                    imageLocation = IMAGE_LOCATION + "bossCorner.png";
                 } else {
-                    imageLocation = "Assets/bossTile.png";
+                    imageLocation = IMAGE_LOCATION + "bossTile.png";
                 }
                 break;
         }

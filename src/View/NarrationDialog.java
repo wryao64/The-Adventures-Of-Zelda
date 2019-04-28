@@ -8,6 +8,8 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
 public class NarrationDialog extends JDialog implements KeyListener {
+    public static final String IMAGE_LOCATION = "Resources/Assets/";
+
     int imageIndex = 1;
     Image narrationImage;
 
@@ -18,10 +20,10 @@ public class NarrationDialog extends JDialog implements KeyListener {
     private final int IMAGE_HEIGHT = 150;
 
     Image[] imageArray = {
-            new ImageIcon("Assets/Rauru1.png").getImage(),
-            new ImageIcon("Assets/Rauru2.png").getImage(),
-            new ImageIcon("Assets/Rauru3.png").getImage(),
-            new ImageIcon("Assets/Rauru4.png").getImage(),
+            new ImageIcon(IMAGE_LOCATION + "Rauru1.png").getImage(),
+            new ImageIcon(IMAGE_LOCATION + "Rauru2.png").getImage(),
+            new ImageIcon(IMAGE_LOCATION + "Rauru3.png").getImage(),
+            new ImageIcon(IMAGE_LOCATION + "Rauru4.png").getImage(),
     };
 
     public NarrationDialog(Window window, GameController gameController) {

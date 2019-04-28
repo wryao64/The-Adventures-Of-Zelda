@@ -12,6 +12,7 @@ public class Player extends Character {
     private final int IMG_RESIZED_W = 45;
     private final int IMG_RESIZED_H = 55;
     private final double MOVEMENT_SPEED = 3;
+    public static final String IMAGE_LOCATION = "Resources/Assets/";
 
     private final int jumpHeight = 17;
     private double startPosX;
@@ -30,7 +31,7 @@ public class Player extends Character {
     public Player(double w, double h, double x, double y) {
         super(w, h, x, y);
 
-        imageLocation = "Assets/player.png";
+        imageLocation = IMAGE_LOCATION + "player.png";
         BufferedImage playerSheet = loadImage();
 
         SpriteSheet spriteSheet = new SpriteSheet(playerSheet, IMAGE_WIDTH, IMAGE_HEIGHT);

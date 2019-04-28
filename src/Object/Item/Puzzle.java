@@ -6,13 +6,15 @@ import Controller.GameState;
 import Object.Object;
 
 public class Puzzle extends Object {
+    public static final String IMAGE_LOCATION = "Resources/Assets/";
+
     public Puzzle(double posX, double posY, double w, double h, GameState gameState) {
         super(w, h, posX, posY);
 
         if (gameState == GameState.LEVEL_BOSS) {
-            imageLocation = "Assets/cage.png";
+            imageLocation = IMAGE_LOCATION + "cage.png";
         } else {
-            imageLocation = "Assets/chest.png";
+            imageLocation = IMAGE_LOCATION + "chest.png";
         }
 
         image = loadImage();
