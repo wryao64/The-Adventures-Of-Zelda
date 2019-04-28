@@ -6,7 +6,7 @@ import sun.audio.AudioStream;
 import java.io.*;
 
 public class Sound {
-    public static final String SOUND_LOCATION = "Assets/Sound/";
+    public static final String SOUND_LOCATION = "Resources/Assets/Sound/";
     private static AudioPlayer ap = AudioPlayer.player;
     private static AudioStream stream = null;
 

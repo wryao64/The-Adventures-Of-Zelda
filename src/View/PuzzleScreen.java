@@ -15,6 +15,8 @@ public class PuzzleScreen extends JDialog implements KeyListener {
     GameState nextState;
     GameScreen gameScreen;
 
+    public static final String IMAGE_LOCATION = "Resources/Assets/";
+
     private final int IMAGE_WIDTH = 450;
     private final int IMAGE_HEIGHT = 450;
 
@@ -27,15 +29,15 @@ public class PuzzleScreen extends JDialog implements KeyListener {
         switch (state) {
             case TUTORIAL:
                 nextState = GameState.LEVEL_1;
-                backgroundImage = new ImageIcon("Assets/wisdom.png").getImage();
+                backgroundImage = new ImageIcon(IMAGE_LOCATION + "wisdom.png").getImage();
                 break;
             case LEVEL_1:
                 nextState = GameState.LEVEL_2;
-                backgroundImage = new ImageIcon("Assets/courage.png").getImage();
+                backgroundImage = new ImageIcon(IMAGE_LOCATION + "courage.png").getImage();
                 break;
             case LEVEL_2:
                 nextState = GameState.LEVEL_BOSS;
-                backgroundImage = new ImageIcon("Assets/power.png").getImage();
+                backgroundImage = new ImageIcon(IMAGE_LOCATION + "power.png").getImage();
                 break;
             case LEVEL_BOSS:
                 nextState = GameState.END;

@@ -9,6 +9,8 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 
 public class Level_Tutorial extends Level {
+    public static final String IMAGE_LOCATION = "Resources/Assets/";
+
     BufferedImage tutorialTip1;
     BufferedImage tutorialTip2;
     BufferedImage tutorialTip3;
@@ -16,11 +18,11 @@ public class Level_Tutorial extends Level {
     private final double ENEMY_SPEED = 1;
 
     public Level_Tutorial(Player player) {
-        backgroundImage = new ImageIcon("Assets/icy_mountains.png").getImage();
-        inventoryImage = loadImage("Assets/tutorial_inv.png");
-        tutorialTip1 = loadImage("Assets/tutorialTip1.png");
-        tutorialTip2 = loadImage("Assets/tutorialTip2.png");
-        tutorialTip3 = loadImage("Assets/tutorialTip3.png");
+        backgroundImage = new ImageIcon(IMAGE_LOCATION + "icy_mountains.png").getImage();
+        inventoryImage = loadImage(IMAGE_LOCATION + "tutorial_inv.png");
+        tutorialTip1 = loadImage(IMAGE_LOCATION + "tutorialTip1.png");
+        tutorialTip2 = loadImage(IMAGE_LOCATION + "tutorialTip2.png");
+        tutorialTip3 = loadImage(IMAGE_LOCATION + "tutorialTip3.png");
 
         this.setHeartImages();
 

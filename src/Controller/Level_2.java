@@ -6,11 +6,13 @@ import Object.Character.Player;
 import javax.swing.*;
 
 public class Level_2 extends Level {
+    public static final String IMAGE_LOCATION = "Resources/Assets/";
+
     private final double ENEMY_SPEED = 1.5;
 
     public Level_2(Player player) {
-        backgroundImage = new ImageIcon("Assets/floating.png").getImage();
-        inventoryImage = loadImage("Assets/lvl2_inv.png");
+        backgroundImage = new ImageIcon(IMAGE_LOCATION + "floating.png").getImage();
+        inventoryImage = loadImage(IMAGE_LOCATION + "lvl2_inv.png");
         this.setHeartImages();
 
         gameState = GameState.LEVEL_2;
