@@ -28,17 +28,17 @@ public class NarrationDialog extends JDialog implements KeyListener {
         super(window, "", Dialog.ModalityType.APPLICATION_MODAL);
         this.gameController = gameController;
 
-        narrationImage = imageArray[0];
-
-        setBounds(0, 300, IMAGE_WIDTH, IMAGE_HEIGHT);
-
-        narrationPane = new NarrationPane();
-        this.getContentPane().add(narrationPane);
+        this.setBounds(0, 0, IMAGE_WIDTH, IMAGE_HEIGHT);
         this.addKeyListener(this);
         this.setFocusable(true);
         this.setUndecorated(true);
         this.setLocationRelativeTo(window);
-        setVisible(true);
+
+        narrationImage = imageArray[0];
+        narrationPane = new NarrationPane();
+        this.getContentPane().add(narrationPane);
+
+        this.setVisible(true);
         pack();
     }
 
