@@ -77,10 +77,12 @@ public class HighScoreScreen extends JPanel {
             panel.add(noScoresLabel);
         }else{
             JLabel rankLabel = new JLabel("Rank");
+            rankLabel.setForeground(Color.BLACK);
             rankLabel.setFont(new Font(title.getFont().getName(), title.getFont().getStyle(), 32));
             panel.add(rankLabel);
 
             JLabel scoreLabel = new JLabel("Score");
+            scoreLabel.setForeground(Color.BLACK);
             scoreLabel.setFont(new Font(title.getFont().getName(), title.getFont().getStyle(), 32));
             panel.add(scoreLabel);
 

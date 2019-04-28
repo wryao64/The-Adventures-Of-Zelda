@@ -116,7 +116,7 @@ public class Player extends Character {
         int total = enemiesKilled*50 + bossesKilled*150 + orbsCollected*100 + hearts*50;
         HashMap<String,Integer> scoreMap = new HashMap<>();
         scoreMap.put("Enemies Slain: ", enemiesKilled);
-        scoreMap.put("Bosses Slain: ", bossesKilled);
+        scoreMap.put("Boss Slain: ", bossesKilled);
         scoreMap.put("Orbs Collected: ", orbsCollected);
         scoreMap.put("Lives left: ", hearts);
         scoreMap.put("Total: ", total);
