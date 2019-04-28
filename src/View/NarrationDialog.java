@@ -59,6 +59,7 @@ public class NarrationDialog extends JDialog implements KeyListener {
             } else {
                 gameController.finishNarration();
                 gameController.setPaused(false);
+                gameController.timer();
                 this.dispose();
             }
         }

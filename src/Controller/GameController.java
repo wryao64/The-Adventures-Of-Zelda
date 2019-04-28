@@ -184,6 +184,7 @@ public class GameController implements Runnable {
         frame.setContentPane(welcomePanel);
         frame.setVisible(true);
     }
+
     public void setPaused(boolean paused) {
         this.paused = paused;
         gameScreen.setPause(paused);
@@ -202,5 +203,9 @@ public class GameController implements Runnable {
         paused = false;
         endScreen = null;
         narration = false;
+    }
+
+    public void timer() {
+        gameScreen.timer();
     }
 }
