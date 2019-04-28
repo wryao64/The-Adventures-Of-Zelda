@@ -200,7 +200,9 @@ public class GameController implements Runnable {
     }
 
     private void resetGame() {
+        Sound.stopBackgroundMusic();
         paused = false;
+        gameScreen = null;
         endScreen = null;
         narration = false;
     }
