@@ -8,7 +8,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
-public class Level_Tutorial extends Level {
+public class LevelTutorial extends Level {
     public static final String IMAGE_LOCATION = "Resources/Assets/";
 
     BufferedImage tutorialTip1;
@@ -17,7 +17,7 @@ public class Level_Tutorial extends Level {
 
     private final double ENEMY_SPEED = 1;
 
-    public Level_Tutorial(Player player) {
+    public LevelTutorial(Player player) {
         backgroundImage = new ImageIcon(IMAGE_LOCATION + "icy_mountains.png").getImage();
         inventoryImage = loadImage(IMAGE_LOCATION + "tutorial_inv.png");
         tutorialTip1 = loadImage(IMAGE_LOCATION + "tutorialTip1.png");
