@@ -1,16 +1,12 @@
 package Object.Item;
 
 import java.awt.*;
-import java.awt.geom.Rectangle2D;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 import Controller.GameState;
-import Controller.Level_Tutorial;
 import Object.Object;
 
 public class Weapon extends Object {
-
     protected int attackDamage;
     protected int shotSpeed;
     protected int range;
@@ -27,15 +23,15 @@ public class Weapon extends Object {
     protected GameState gameState = GameState.TUTORIAL;
     protected Boolean enemy;
 
-    public Weapon(int damage, int range, int shotSpeed,boolean enemy){
+    public Weapon(int damage, int range, int shotSpeed, boolean enemy) {
         this.attackDamage = damage;
         this.range = range;
         this.shotSpeed = shotSpeed;
         this.enemy = enemy;
     }
 
-    public void shoot(double posX, double posY,double dir) {
-        if(bullets.size() < maxBullets) {
+    public void shoot(double posX, double posY, double dir) {
+        if (bullets.size() < maxBullets) {
             //Sets the direction to shoot as either to the right or to the left depending on which direction the player is
             //facing.
             this.bulletDir = dir;
@@ -50,7 +46,7 @@ public class Weapon extends Object {
             //Initialise the current and start y position of the player, these will not change.
             this.weaponPosY = posY + 20;
 
-            Bullet bullet = new Bullet(weaponPosX, weaponPosY, shotSpeed * bulletDir, range,gameState,enemy);
+            Bullet bullet = new Bullet(weaponPosX, weaponPosY, shotSpeed * bulletDir, range, gameState, enemy);
             bullets.add(bullet);
         }
     }
@@ -60,25 +56,25 @@ public class Weapon extends Object {
      * in the range of the weapon.
      */
     public void moveShot() {
-      Bullet bulletToRemove = null;
-      for(Bullet b : bullets) {
+        Bullet bulletToRemove = null;
+        for (Bullet b : bullets) {
 
-          if ((b.getBulletPosX() > (weaponPosX - range)) && (b.getBulletPosX() < (weaponPosX + range))) {
-              b.moveShot();
-          } else {
-              bulletToRemove = b;
-          }
-      }
-      if(bulletToRemove != null) {
-          bullets.remove(bulletToRemove);
-      }
+            if ((b.getBulletPosX() > (weaponPosX - range)) && (b.getBulletPosX() < (weaponPosX + range))) {
+                b.moveShot();
+            } else {
+                bulletToRemove = b;
+            }
+        }
+        if (bulletToRemove != null) {
+            bullets.remove(bulletToRemove);
+        }
     }
 
     /**
      * Paint the bullet fired by the gun.
      */
     public void paintObject(Graphics2D g) {
-        for(Bullet b : bullets){
+        for (Bullet b : bullets) {
             b.paintObject(g);
         }
 
@@ -88,15 +84,23 @@ public class Weapon extends Object {
         this.gameState = gameState;
     }
 
-    public int getAttackDamage(){ return attackDamage; }
+    public int getAttackDamage() {
+        return attackDamage;
+    }
 
-    public void setMaxBullets(int maxBullets) { this.maxBullets = maxBullets; }
+    public void setMaxBullets(int maxBullets) {
+        this.maxBullets = maxBullets;
+    }
 
-    public void setBulletSize(int size) { bulletSize = size; }
+    public void setRange(int range) {
+        this.range = range;
+    }
 
-    public void setRange(int range) { this.range = range; }
+    public ArrayList<Bullet> getBullets() {
+        return bullets;
+    }
 
-    public ArrayList<Bullet> getBullets() { return bullets; }
-
-    public void removeBullet(Bullet b) { bullets.remove(b); }
+    public void removeBullet(Bullet b) {
+        bullets.remove(b);
+    }
 }

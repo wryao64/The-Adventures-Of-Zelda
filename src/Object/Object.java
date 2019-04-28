@@ -15,37 +15,38 @@ public abstract class Object {
     protected BufferedImage image;
     protected String imageLocation;
 
-    public Object (double w, double h, double x, double y){
+    public Object(double w, double h, double x, double y) {
         width = w;
         height = h;
         posX = x;
         posY = y;
     }
 
-    public Object (double x, double y){
+    public Object(double x, double y) {
         posX = x;
         posY = y;
     }
-    public Object(){}
 
-    /*
-    Collision areas for the object. Spans around the perimeter of the object.
+    public Object() {
+    }
+
+    /**
+     * Collision areas for the object. Spans around the perimeter of the object.
      */
-
-    public Rectangle2D getTop(){
-        return new Rectangle2D.Double( posX+4, posY-1, width-8, 4);
+    public Rectangle2D getTop() {
+        return new Rectangle2D.Double(posX + 4, posY - 1, width - 8, 4);
     }
 
-    public Rectangle2D getBottom(){
-        return new Rectangle2D.Double(posX+4, posY + height-3, width-8, 4);
+    public Rectangle2D getBottom() {
+        return new Rectangle2D.Double(posX + 4, posY + height - 3, width - 8, 4);
     }
 
-    public Rectangle2D getLeft(){
-        return new Rectangle2D.Double(posX+1, posY+4, 4, height-8);
+    public Rectangle2D getLeft() {
+        return new Rectangle2D.Double(posX + 1, posY + 4, 4, height - 8);
     }
 
-    public Rectangle2D getRight(){
-        return new Rectangle2D.Double(posX +width -4, posY +4, 4, height-8);
+    public Rectangle2D getRight() {
+        return new Rectangle2D.Double(posX + width - 4, posY + 4, 4, height - 8);
     }
 
     public Rectangle2D getBottomLeftEdge() {
@@ -57,10 +58,10 @@ public abstract class Object {
     }
 
     /**
-     *Returns shape that spans the whole bounding box of the object.
-    */
-    public Rectangle2D getBounds(){
-        return new Rectangle2D.Double(posX,posY,width,height);
+     * Returns shape that spans the whole bounding box of the object.
+     */
+    public Rectangle2D getBounds() {
+        return new Rectangle2D.Double(posX, posY, width, height);
     }
 
 
@@ -71,24 +72,34 @@ public abstract class Object {
 
     /**
      * Getters and Setters.
-    */
-    public void setPosX(double x){
+     */
+    public void setPosX(double x) {
         posX = x;
     }
 
-    public void setPosY(double y){
+    public void setPosY(double y) {
         posY = y;
     }
 
-    public double getPosX(){ return posX; }
+    public double getPosX() {
+        return posX;
+    }
 
-    public double getPosY(){ return posY; }
+    public double getPosY() {
+        return posY;
+    }
 
-    public double getWidth() { return width; }
+    public double getWidth() {
+        return width;
+    }
 
-    public double getHeight() { return height; }
+    public double getHeight() {
+        return height;
+    }
 
-    public BufferedImage getImage(){ return image; }
+    public BufferedImage getImage() {
+        return image;
+    }
 
     /**
      * Loads the sprite sheet for the given character.

@@ -12,7 +12,7 @@ import java.util.HashMap;
 public class EndScreen extends JPanel {
     private GameController gameController;
     private GameState gameState = GameState.END;
-    HashMap<String,Integer> playerStats;
+    HashMap<String, Integer> playerStats;
 
     private boolean hasWon;
     private boolean newHighScore = false;
@@ -27,11 +27,11 @@ public class EndScreen extends JPanel {
     private static final Font mainFont = new Font(fontFamily, Font.PLAIN, 50);
     private static final Font regularFont = new Font(fontFamily, Font.PLAIN, 30);
 
-    public EndScreen(boolean success, HashMap<String,Integer> stats) {
+    public EndScreen(boolean success, HashMap<String, Integer> stats) {
         hasWon = success;
         playerStats = stats;
 
-        if(sm.newScore(playerStats.get("Total: ").toString())){
+        if (sm.newScore(playerStats.get("Total: ").toString())) {
             newHighScore = true;
         }
 
@@ -75,11 +75,11 @@ public class EndScreen extends JPanel {
         // High score button
         JButton highScoreButton = new JButton("HIGH SCORES");
         highScoreButton.addActionListener(e -> {
-            if (newHighScore) {
-                gameController.updateGameState(GameState.HIGHSCORE,playerStats.get("Total: ").toString());
-            } else
-                gameController.updateGameState(GameState.HIGHSCORE);
-        }
+                    if (newHighScore) {
+                        gameController.updateGameState(GameState.HIGHSCORE, playerStats.get("Total: ").toString());
+                    } else
+                        gameController.updateGameState(GameState.HIGHSCORE);
+                }
         );
 
         buttonPanel.add(homeButton);
@@ -111,14 +111,14 @@ public class EndScreen extends JPanel {
         Sound.stopBackgroundMusic();
     }
 
-    public void setGameController(GameController controller){
+    public void setGameController(GameController controller) {
         gameController = controller;
     }
 
     private void wonGameMessage() {
         mainLabel.setText("Congratulations!");
         subLabel.setText("You have rescued Link and the world is safe from Gandora!");
-        if(newHighScore) {
+        if (newHighScore) {
             hsLabel.setText("You have a new high score! Click 'High Scores' to check your standings");
         }
     }
@@ -126,7 +126,7 @@ public class EndScreen extends JPanel {
     private void lostGameMessage() {
         mainLabel.setText("GAME OVER");
         subLabel.setText("Gandora has taken over the world!");
-        if(newHighScore) {
+        if (newHighScore) {
             hsLabel.setText("You have a new high score! Click 'High Scores' to check your standings");
         }
     }

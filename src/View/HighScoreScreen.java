@@ -46,12 +46,12 @@ public class HighScoreScreen extends JPanel {
         title.setFont(mainFont);
 
         JButton button = new JButton("BACK");
-        button.addActionListener(e ->{
-            if(previousGameState == GameState.END){
-                gameController.setEndScreen(endScreen);
-            }else {
-                gameController.updateGameState(previousGameState);
-            }
+        button.addActionListener(e -> {
+                    if (previousGameState == GameState.END) {
+                        gameController.setEndScreen(endScreen);
+                    } else {
+                        gameController.updateGameState(previousGameState);
+                    }
 
                 }
         );
@@ -61,19 +61,30 @@ public class HighScoreScreen extends JPanel {
         panel.add(Box.createRigidArea(new Dimension(340, 0)));
         panel.add(title);
 
-        centrePanel = setUpCentrePanel();
+        centrePanel = this.setUpCentrePanel();
         centrePanel.setBackground(backgroundColor);
         centrePanel.setAlignmentX(CENTER_ALIGNMENT);
 
         this.add(panel, BorderLayout.NORTH);
-        this.add(centrePanel,BorderLayout.CENTER);
+        this.add(centrePanel, BorderLayout.CENTER);
     }
 
+    public void setGameController(GameController gm) {
+        gameController = gm;
+    }
 
-    public JPanel setUpCentrePanel() {
+    public void setPreviousState(GameState gameState) {
+        previousGameState = gameState;
+    }
+
+    public void setEndScreen(EndScreen endscreen) {
+        this.endScreen = endscreen;
+    }
+
+    private JPanel setUpCentrePanel() {
         JPanel panel = new JPanel();
         panel.setBackground(backgroundColor);
-        panel.setLayout(new GridLayout(0,2));
+        panel.setLayout(new GridLayout(0, 2));
         panel.setAlignmentX(CENTER_ALIGNMENT);
 
         if (topScores.size() == 0) {
@@ -81,7 +92,7 @@ public class HighScoreScreen extends JPanel {
             noScoresLabel.setForeground(Color.ORANGE);
             noScoresLabel.setFont(regularFont);
             panel.add(noScoresLabel);
-        }else{
+        } else {
             JLabel rankLabel = new JLabel("Rank");
             rankLabel.setForeground(Color.BLACK);
             rankLabel.setFont(regularFont);
@@ -92,11 +103,11 @@ public class HighScoreScreen extends JPanel {
             scoreLabel.setFont(regularFont);
             panel.add(scoreLabel);
 
-            for(int i = 0; i < 10; i++ ){
-                if(i <topScores.size()) {
+            for (int i = 0; i < 10; i++) {
+                if (i < topScores.size()) {
                     String s = topScores.get(i);
 
-                    String scoreString0 = i+1 + ".";
+                    String scoreString0 = i + 1 + ".";
                     JLabel scoreLabel0 = new JLabel(scoreString0);
                     scoreLabel0.setFont(regularFont);
 
@@ -104,39 +115,28 @@ public class HighScoreScreen extends JPanel {
                     JLabel scoreLabel1 = new JLabel(scoreString1);
                     scoreLabel1.setFont(regularFont);
 
-                    if(s.equals(scoreToHighlight)) {
+                    if (s.equals(scoreToHighlight)) {
                         scoreLabel0.setForeground(Color.white);
                         scoreLabel1.setForeground(Color.white);
                         scoreToHighlight = null;
-                    }else{
+                    } else {
                         scoreLabel0.setForeground(Color.orange);
                         scoreLabel1.setForeground(Color.orange);
                     }
 
                     panel.add(scoreLabel0);
                     panel.add(scoreLabel1);
-                }else{
+                } else {
                     panel.add(new Label(""));
                     panel.add(new Label(""));
 
                 }
             }
         }
+
         JPanel wrapperPanel = new JPanel(new GridBagLayout());
         wrapperPanel.add(panel);
         return panel;
 
     }
-
-    public void setGameController(GameController gm) {
-        gameController = gm;
-    }
-
-    public void setPreviousState( GameState gameState) {
-        previousGameState = gameState;
-    }
-
-    public void setEndScreen(EndScreen endscreen) { this.endScreen = endscreen; }
-
-
 }

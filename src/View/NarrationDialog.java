@@ -72,13 +72,13 @@ public class NarrationDialog extends JDialog implements KeyListener {
 
     public class NarrationPane extends JPanel {
 
-        public NarrationPane(){
+        public NarrationPane() {
             this.setLayout(null);
             setFocusable(true);
         }
 
         @Override
-        public void paintComponent(Graphics g){
+        public void paintComponent(Graphics g) {
             super.paintComponent(g);
             g.drawImage(narrationImage, 0, 0, IMAGE_WIDTH, IMAGE_HEIGHT, null);
 

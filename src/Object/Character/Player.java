@@ -11,7 +11,7 @@ public class Player extends Character {
     private final int IMAGE_HEIGHT = 27;
     private final int IMG_RESIZED_W = 45;
     private final int IMG_RESIZED_H = 55;
-    private final double MOVEMENT_SPEED= 3;
+    private final double MOVEMENT_SPEED = 3;
 
     private final int jumpHeight = 17;
     private double startPosX;
@@ -27,39 +27,39 @@ public class Player extends Character {
     private int bossesKilled = 0;
     private int orbsCollected = 0;
 
-    public Player(double w, double h, double x, double y){
-        super(w,h,x,y);
+    public Player(double w, double h, double x, double y) {
+        super(w, h, x, y);
 
         imageLocation = "Assets/player.png";
         BufferedImage playerSheet = loadImage();
 
-        SpriteSheet spriteSheet = new SpriteSheet(playerSheet,IMAGE_WIDTH,IMAGE_HEIGHT);
+        SpriteSheet spriteSheet = new SpriteSheet(playerSheet, IMAGE_WIDTH, IMAGE_HEIGHT);
 
         //Adding the cut out of the sprites to the character movement arrays.
-        charImagesRight.add(spriteSheet.getImage(5,4));
-        charImagesRight.add(spriteSheet.getImage(36,5));
-        charImagesRight.add(spriteSheet.getImage(5,37));
-        charImagesRight.add(spriteSheet.getImage(36,37));
-        charImagesRight.add(spriteSheet.getImage(69,37));
+        charImagesRight.add(spriteSheet.getImage(5, 4));
+        charImagesRight.add(spriteSheet.getImage(36, 5));
+        charImagesRight.add(spriteSheet.getImage(5, 37));
+        charImagesRight.add(spriteSheet.getImage(36, 37));
+        charImagesRight.add(spriteSheet.getImage(69, 37));
 
-        hurtImageRight = spriteSheet.getImage(69,4);
-        hurtImageLeft = spriteSheet.getFlippedImage(69,4);
+        hurtImageRight = spriteSheet.getImage(69, 4);
+        hurtImageLeft = spriteSheet.getFlippedImage(69, 4);
 
-        charImagesLeft.add(spriteSheet.getFlippedImage(5,5));
-        charImagesLeft.add(spriteSheet.getFlippedImage(36,5));
-        charImagesLeft.add(spriteSheet.getFlippedImage(5,37));
-        charImagesLeft.add(spriteSheet.getFlippedImage(36,37));
-        charImagesLeft.add(spriteSheet.getFlippedImage(69,37));
+        charImagesLeft.add(spriteSheet.getFlippedImage(5, 5));
+        charImagesLeft.add(spriteSheet.getFlippedImage(36, 5));
+        charImagesLeft.add(spriteSheet.getFlippedImage(5, 37));
+        charImagesLeft.add(spriteSheet.getFlippedImage(36, 37));
+        charImagesLeft.add(spriteSheet.getFlippedImage(69, 37));
 
         startPosY = y;
         startPosX = x;
-        weapon = new Weapon(25,250,7,false);
+        weapon = new Weapon(25, 250, 7, false);
         animSpeed = 5;
     }
 
     public void jump() {
-        if(canJump) {
-            speedY = - jumpHeight;
+        if (canJump) {
+            speedY = -jumpHeight;
             canJump = false;
         }
     }
@@ -67,10 +67,10 @@ public class Player extends Character {
     /**
      * Simulates effect of gravity by accelerating player speed in y direction.
      */
-    public void fall(int gravity, int maxSpeedY){
-        if(speedY <  maxSpeedY) {
+    public void fall(int gravity, int maxSpeedY) {
+        if (speedY < maxSpeedY) {
             speedY += gravity;
-        }else{
+        } else {
             speedY = maxSpeedY;
         }
     }
@@ -78,43 +78,67 @@ public class Player extends Character {
     /**
      * Getters and Setters.
      */
-    public int getLives(){ return hearts; }
+    public int getLives() {
+        return hearts;
+    }
 
-    public void loseHeart(){
+    public void loseHeart() {
         hearts--;
         hurt = true;
     }
 
-    public void addToEnemiesKilled() { enemiesKilled ++; }
+    public void addToEnemiesKilled() {
+        enemiesKilled++;
+    }
 
-    public void addToBossesKilled() { bossesKilled ++; }
+    public void addToBossesKilled() {
+        bossesKilled++;
+    }
 
-    public void collectOrb() { orbsCollected++; }
+    public void collectOrb() {
+        orbsCollected++;
+    }
 
-    public void addLives(int lives) { this.hearts = this.hearts + lives; }
+    public void addLives(int lives) {
+        this.hearts = this.hearts + lives;
+    }
 
-    public double getMovementSpeed() { return MOVEMENT_SPEED; }
+    public double getMovementSpeed() {
+        return MOVEMENT_SPEED;
+    }
 
-    public void setCanJump(boolean jump) { canJump = jump; }
+    public void setCanJump(boolean jump) {
+        canJump = jump;
+    }
 
-    public void setKeyPressed(boolean pressed) { sideKeyPressed = pressed; }
+    public void setKeyPressed(boolean pressed) {
+        sideKeyPressed = pressed;
+    }
 
-    public void setJumpKeyPressed(boolean pressed) { jumpKeyPressed = pressed; }
+    public void setJumpKeyPressed(boolean pressed) {
+        jumpKeyPressed = pressed;
+    }
 
-    public boolean getJumpKeyPressed() { return jumpKeyPressed; }
+    public boolean getJumpKeyPressed() {
+        return jumpKeyPressed;
+    }
 
-    public boolean hurt() { return hurt; }
+    public boolean hurt() {
+        return hurt;
+    }
 
-    public void setInitPosition(double x, double y) { startPosX = x; startPosY = y;}
-
+    public void setInitPosition(double x, double y) {
+        startPosX = x;
+        startPosY = y;
+    }
 
     /**
      * Returns all the stats necessary to calculated the final score.
      */
-    public HashMap<String,Integer> getFinalStats() {
+    public HashMap<String, Integer> getFinalStats() {
+        int total = enemiesKilled * 50 + bossesKilled * 150 + orbsCollected * 100 + hearts * 50;
 
-        int total = enemiesKilled*50 + bossesKilled*150 + orbsCollected*100 + hearts*50;
-        HashMap<String,Integer> scoreMap = new HashMap<>();
+        HashMap<String, Integer> scoreMap = new HashMap<>();
         scoreMap.put("Enemies Slain: ", enemiesKilled);
         scoreMap.put("Boss Slain: ", bossesKilled);
         scoreMap.put("Orbs Collected: ", orbsCollected);
@@ -127,7 +151,7 @@ public class Player extends Character {
     /**
      * Moves the player as well as any bullets the player has fired in play.
      */
-    public void move(){
+    public void move() {
         super.move();
         weapon.moveShot();
     }
@@ -137,16 +161,16 @@ public class Player extends Character {
      */
     @Override
     public void switchImages() {
-        if(hurt == true) {
-            if(charDirection == 1){
+        if (hurt == true) {
+            if (charDirection == 1) {
                 setImageToPaint(hurtImageRight, 15);
-            }else{
-                setImageToPaint(hurtImageLeft,15);
+            } else {
+                setImageToPaint(hurtImageLeft, 15);
             }
 
         } else if (sideKeyPressed) {
             super.switchImages();
-        } else{
+        } else {
             if (charDirection == 1) {
                 imageToPaint = charImagesRight.get(0);
             } else {
@@ -172,18 +196,19 @@ public class Player extends Character {
     public void paintObject(Graphics2D g) {
         switchImages();
 
-        if(imageToPaint == deadImage) {
-            g.drawImage(imageToPaint, (int) posX, (int) posY+(IMG_RESIZED_H-IMG_RESIZED_W), IMG_RESIZED_H,
+        if (imageToPaint == deadImage) {
+            g.drawImage(imageToPaint, (int) posX, (int) posY + (IMG_RESIZED_H - IMG_RESIZED_W), IMG_RESIZED_H,
                     IMG_RESIZED_W, null);
-        }else {
+        } else {
             g.drawImage(imageToPaint, (int) posX, (int) posY, IMG_RESIZED_W,
                     IMG_RESIZED_H, null);
         }
+
         weapon.paintObject(g);
     }
 
-    public Player skipToEnd(){
-        weapon = new Weapon(50,350, 12,false);
+    public Player skipToEnd() {
+        weapon = new Weapon(50, 350, 12, false);
         weapon.setMaxBullets(2);
         addLives(3);
         orbsCollected = 3;

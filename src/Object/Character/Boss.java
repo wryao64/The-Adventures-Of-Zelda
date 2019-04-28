@@ -11,21 +11,21 @@ public class Boss extends Enemy {
     private final int IMG_RESIZED_H = 200;
 
     public Boss(int w, int h, int x, int y, Weapon weapon, double shootFreq, int health) {
-        super(w,h,x,y, GameState.LEVEL_BOSS, weapon,shootFreq,health);
+        super(w, h, x, y, GameState.LEVEL_BOSS, weapon, shootFreq, health);
         enemyID = "Boss";
 
         imageLocation = "Assets/boss.png";
         imageToPaint = loadImage();
     }
 
-    public void shootWeapon(){
+    public void shootWeapon() {
         BossWeapon weapon = (BossWeapon) this.weapon;
-        weapon.shoot(posX,posY,width,height);
+        weapon.shoot(posX, posY, width, height);
     }
 
     @Override
     public void paintObject(Graphics2D g) {
-        g.drawImage(imageToPaint, (int) posX-135, (int) posY, IMG_RESIZED_W,
+        g.drawImage(imageToPaint, (int) posX - 135, (int) posY, IMG_RESIZED_W,
                 IMG_RESIZED_H, null);
         weapon.paintObject(g);
     }

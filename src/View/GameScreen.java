@@ -35,7 +35,7 @@ public class GameScreen extends JPanel implements KeyListener {
 
     public GameScreen() {
         this.setLayout(new BorderLayout());
-        this.setPreferredSize(new Dimension(WIDTH,HEIGHT));
+        this.setPreferredSize(new Dimension(WIDTH, HEIGHT));
         this.setFocusable(true);
         this.addKeyListener(this);
 
@@ -56,10 +56,10 @@ public class GameScreen extends JPanel implements KeyListener {
         topBar.add(Box.createRigidArea(new Dimension(700, 0)));
 
         Sound.playBackgroundMusic();
-        timer();
+        this.timer();
     }
 
-    public void setGameController(GameController controller){
+    public void setGameController(GameController controller) {
         gameController = controller;
     }
 
@@ -75,7 +75,7 @@ public class GameScreen extends JPanel implements KeyListener {
         });
     }
 
-    public Level getLevel(){
+    public Level getLevel() {
         return level;
     }
 
@@ -89,13 +89,13 @@ public class GameScreen extends JPanel implements KeyListener {
         level.paintLevel(g2d);
         g.setColor(Color.WHITE);
         g.setFont(new Font("Helvetica", Font.BOLD, 24));
-        g.drawString("Time: "+ timeString,535,130);
+        g.drawString("Time: " + timeString, 535, 130);
     }
 
     /**
      * Updates all the logic of the game.
      */
-    public void update(){
+    public void update() {
         level.updateLevel();
     }
 
@@ -103,7 +103,8 @@ public class GameScreen extends JPanel implements KeyListener {
      * KeyListeners to handle user key input. Sets the speed of the player.
      */
     @Override
-    public void keyTyped(KeyEvent e) { }
+    public void keyTyped(KeyEvent e) {
+    }
 
     @Override
     public void keyPressed(KeyEvent e) {
@@ -138,18 +139,18 @@ public class GameScreen extends JPanel implements KeyListener {
         }
 
         if (c == KeyEvent.VK_O) {
-            if(level.getPuzzleStatus()) {
+            if (level.getPuzzleStatus()) {
 
-                if (gameController.getCurrentState() == GameState.LEVEL_BOSS){
+                if (gameController.getCurrentState() == GameState.LEVEL_BOSS) {
                     System.out.println("boss puzzle chest");
                     gameController.setPaused(true);
-                    gameController.updateGameState(GameState.END,true,level.getPlayer().getFinalStats());
-                }else {
+                    gameController.updateGameState(GameState.END, true, level.getPlayer().getFinalStats());
+                } else {
                     level.getPlayer().collectOrb();
                     gameController.setPaused(true);
                     Sound.playSound(CHEST_OPEN_SOUND);
                     window = (RootPaneContainer) SwingUtilities.getWindowAncestor(this);
-                    new PuzzleScreen((Window) window, gameController,this);
+                    new PuzzleScreen((Window) window, gameController, this);
                 }
             }
         }
@@ -191,12 +192,42 @@ public class GameScreen extends JPanel implements KeyListener {
     public void keyReleased(KeyEvent e) {
         int c = e.getKeyCode();
 
-        if (c == KeyEvent.VK_LEFT ||c == KeyEvent.VK_RIGHT) {
+        if (c == KeyEvent.VK_LEFT || c == KeyEvent.VK_RIGHT) {
             level.setSideKeyPressed(false);
-        }if (c == KeyEvent.VK_UP) {
+        }
+        if (c == KeyEvent.VK_UP) {
             level.setJumpKeyPressed(false);
         }
         level.setPlayerSpeedX(0);
+    }
+
+    public void setSuccess(boolean success) {
+        gameController.updateGameState(GameState.END, success, level.getPlayer().getFinalStats());
+    }
+
+    public void timer() {
+        Timer timer = new Timer("Timer");
+
+        TimerTask repeatedTask = new TimerTask() {
+            public void run() {
+                timeString = String.format("%02d:%02d",
+                        (timeCount % 3600) / 60,
+                        timeCount % 60);
+                if (!paused) {
+                    timeCount++;
+                } else {
+                    timer.cancel();
+                }
+            }
+        };
+
+        long delay = 1000L;
+        long period = 1000L;
+        timer.scheduleAtFixedRate(repeatedTask, delay, period);
+    }
+
+    public void setPause(Boolean paused) {
+        this.paused = paused;
     }
 
     /**
@@ -231,7 +262,7 @@ public class GameScreen extends JPanel implements KeyListener {
         // create modal JDialog for pause screen
         window = (RootPaneContainer) SwingUtilities.getWindowAncestor(this);
         this.pauseGame();
-        new PauseScreen((Window) window, gameController,this);
+        new PauseScreen((Window) window, gameController, this);
         glassPane.setVisible(false);
     }
 
@@ -243,36 +274,5 @@ public class GameScreen extends JPanel implements KeyListener {
         this.pauseGame();
         new ExitDialog((Window) window, gameController);
         glassPane.setVisible(false);
-    }
-
-    public void setSuccess(boolean success) {
-        gameController.updateGameState(GameState.END,success,level.getPlayer().getFinalStats());
-    }
-
-    public void timer (){
-        Timer timer = new Timer("Timer");
-
-        TimerTask repeatedTask = new TimerTask() {
-            public void run() {
-                timeString = String.format("%02d:%02d",
-                        (timeCount % 3600) / 60,
-                        timeCount % 60);
-                if(!paused) {
-                    timeCount++;
-                }else{
-                    timer.cancel();
-                }
-
-//                System.out.println(timeString);
-            }
-        };
-
-        long delay  = 1000L;
-        long period = 1000L;
-        timer.scheduleAtFixedRate(repeatedTask,delay,period);
-    }
-
-    public void setPause(Boolean paused) {
-        this.paused = paused;
     }
 }

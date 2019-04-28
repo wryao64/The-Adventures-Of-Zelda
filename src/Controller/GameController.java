@@ -13,12 +13,14 @@ public class GameController implements Runnable {
 
     private int fps = 60;
     private boolean running;
+
     private boolean narration = false;
+    private volatile boolean paused = false;
+    private GameState currentState = GameState.WELCOME;
 
     private WelcomeScreen welcomeScreen;
     private GameScreen gameScreen;
     private EndScreen endScreen;
-    private PuzzleScreen puzzleScreen;
     private HighScoreScreen highScoreScreen;
 
     private Level_Tutorial level_tutorial;
@@ -27,9 +29,6 @@ public class GameController implements Runnable {
     private Level_Boss level_Boss;
 
     private Player player;
-
-    private GameState currentState = GameState.WELCOME;
-    private volatile boolean paused = false;
 
     JFrame frame;
     private RootPaneContainer window;
@@ -47,13 +46,12 @@ public class GameController implements Runnable {
         runGame();
 
         while (running) {
-
             if (!paused) {
                 //Current time when loop is entered.
                 startTime = System.nanoTime();
 
-                update();
-                render();
+                this.update();
+                this.render();
 
                 //The time taken to do all the updates (in millis).
                 timeTakenMillis = (System.nanoTime() - startTime) / 1000000;
@@ -73,31 +71,45 @@ public class GameController implements Runnable {
         }
     }
 
-    /**
-     * Handles all the drawing of objects onto the screen
-     */
-    public void render() {
+    public void runGame() {
+        frame = new JFrame("The Adventures of Zelda");
+        frame.setSize(WIDTH, HEIGHT);
+        frame.setLocationRelativeTo(null); // centers window
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setResizable(false);
 
-        if (gameScreen != null && gameScreen.getLevel() != null) {
-            gameScreen.repaint();
+        WelcomeScreen welcomePanel = new WelcomeScreen();
+        welcomePanel.setGameController(this);
+        frame.setContentPane(welcomePanel);
+        frame.setVisible(true);
+    }
 
-            if (!narration && this.getCurrentState() == GameState.TUTORIAL) {
-                gameScreen.setPause(true);
-                window = (RootPaneContainer) SwingUtilities.getWindowAncestor(gameScreen);
-                new NarrationDialog((Window) window, this);
-            }
-        }
+    public void timer() {
+        gameScreen.timer();
+    }
+
+    public GameState getCurrentState() {
+        return currentState;
+    }
+
+    public void finishNarration() {
+        narration = true;
 
     }
 
-    /**
-     * Updates all the logic of the game.
-     */
-    public void update() {
+    public void setPaused(boolean paused) {
+        this.paused = paused;
+        gameScreen.setPause(paused);
+    }
 
-        if (gameScreen != null && gameScreen.getLevel() != null) {
-            gameScreen.update();
-        }
+    public void setPlayer(Player player) {
+        this.player = player;
+    }
+
+    public void setEndScreen(EndScreen endScreen) {
+        frame.setContentPane(endScreen);
+        frame.setVisible(true);
+        currentState = GameState.END;
     }
 
     public void updateGameState(GameState nextState) {
@@ -111,7 +123,7 @@ public class GameController implements Runnable {
                 break;
             case TUTORIAL:
                 gameScreen = new GameScreen();
-                player = new Player(45,55,70,600);
+                player = new Player(45, 55, 70, 600);
                 level_tutorial = new Level_Tutorial(player);
                 gameScreen.setLevel(level_tutorial, "Tutorial");
                 frame.setContentPane(gameScreen);
@@ -148,11 +160,13 @@ public class GameController implements Runnable {
             if (endScreen == null) {
                 endScreen = new EndScreen(success, stats);
             }
+
             endScreen.setGameController(this);
             paused = true;
             frame.setContentPane(endScreen);
             endScreen.setGameController(this);
         }
+
         frame.setVisible(true);
         currentState = nextState;
     }
@@ -166,54 +180,45 @@ public class GameController implements Runnable {
         frame.setContentPane(highScoreScreen);
 
         frame.setVisible(true);
-        currentState =nextState;
+        currentState = nextState;
     }
 
-    public void setEndScreen(EndScreen endScreen) {
-        frame.setContentPane(endScreen);
-        frame.setVisible(true);
-        currentState = GameState.END;
-    }
+    /**
+     * Handles all the drawing of objects onto the screen
+     */
+    private void render() {
+        if (gameScreen != null && gameScreen.getLevel() != null) {
+            gameScreen.repaint();
 
-    public void runGame() {
-        frame = new JFrame("The Adventures of Zelda");
-        frame.setSize(WIDTH, HEIGHT);
-        frame.setLocationRelativeTo(null); // centers window
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-//        frame.pack();
-        frame.setResizable(false);
+            if (!narration && this.getCurrentState() == GameState.TUTORIAL) {
+                gameScreen.setPause(true);
 
-        WelcomeScreen welcomePanel = new WelcomeScreen();
-        welcomePanel.setGameController(this);
-        frame.setContentPane(welcomePanel);
-        frame.setVisible(true);
-    }
-
-    public void setPaused(boolean paused) {
-        this.paused = paused;
-        gameScreen.setPause(paused);
-    }
-
-    public GameState getCurrentState() {
-        return currentState;
-    }
-
-    public void finishNarration() {
-        narration = true;
+                window = (RootPaneContainer) SwingUtilities.getWindowAncestor(gameScreen);
+                new NarrationDialog((Window) window, this);
+            }
+        }
 
     }
 
+    /**
+     * Updates all the logic of the game.
+     */
+    private void update() {
+        if (gameScreen != null && gameScreen.getLevel() != null) {
+            gameScreen.update();
+        }
+    }
+
+    /**
+     * Sets all variables to their initial states.
+     */
     private void resetGame() {
         Sound.stopBackgroundMusic();
         paused = false;
+        welcomeScreen = null;
         gameScreen = null;
         endScreen = null;
+        highScoreScreen = null;
         narration = false;
     }
-
-    public void timer() {
-        gameScreen.timer();
-    }
-
-    public void setPlayer(Player player){ this.player = player; }
 }
