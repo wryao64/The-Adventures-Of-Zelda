@@ -140,7 +140,6 @@ public class GameScreen extends JPanel implements KeyListener {
 
         if (c == KeyEvent.VK_O) {
             if (level.getPuzzleStatus()) {
-
                 if (gameController.getCurrentState() == GameState.LEVEL_BOSS) {
                     gameController.setPaused(true);
                     gameController.updateGameState(GameState.END, true, level.getPlayer().getFinalStats());

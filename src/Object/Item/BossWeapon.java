@@ -42,10 +42,11 @@ public class BossWeapon extends Weapon {
     public void moveShot() {
         for(String key : bulletMap.keySet()) {
             Bullet b = bulletMap.get(key);
-            if ((b.getBulletPosX() > (weaponPosX - range)) && (b.getBulletPosX() < (weaponPosX + range))) {
-                b.moveShot();
-            } else {
-                bulletMap.remove(b.toString());
+            if (b != null)
+                if ((b.getBulletPosX() > (weaponPosX - range)) && (b.getBulletPosX() < (weaponPosX + range))) {
+                    b.moveShot();
+                } else {
+                    bulletMap.remove(b.toString());
             }
         }
     }
