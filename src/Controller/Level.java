@@ -17,6 +17,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * Class that handles the co-ordination between the player, the enemies on the screen and the platforms on the screen.
@@ -265,13 +266,13 @@ public abstract class Level {
      * Checks and handles when the bullets of the player hits an enemy.
      */
     private Enemy handlePlayerHitEnemy(Enemy e) {
-        ArrayList<Bullet> bullets = player.getWeapon().getBullets();
-        ArrayList<Bullet> bulletsToRemove = new ArrayList<>();
+        ConcurrentHashMap<String,Bullet> bullets = player.getWeapon().getBullets();
         Enemy enemyToRemove = null;
 
-        for (Bullet b : bullets) {
+        for(String key : bullets.keySet()) {
+            Bullet b = bullets.get(key);
             if (b.getBounds().intersects(e.getBounds())) {
-                bulletsToRemove.add(b);
+                bullets.remove(b.toString());
                 e.takeDamage(player.getWeapon().getAttackDamage());
 
                 // Sound of enemy being hit
@@ -288,13 +289,6 @@ public abstract class Level {
                 }
             }
         }
-
-        if (bulletsToRemove.size() != 0) {
-            for (Bullet b : bulletsToRemove) {
-                player.getWeapon().removeBullet(b);
-            }
-        }
-
         return enemyToRemove;
     }
 
@@ -302,12 +296,12 @@ public abstract class Level {
      * Checks and handles when the bullets an enemy hits a player.
      */
     private void handleEnemyHitPlayer(Enemy e) {
-        ArrayList<Bullet> bullets = e.getWeapon().getBullets();
-        Bullet bulletToRemove = null;
+        ConcurrentHashMap<String,Bullet> bullets = e.getWeapon().getBullets();
 
-        for (Bullet b : bullets) {
+        for(String key : bullets.keySet()) {
+            Bullet b = bullets.get(key);
             if (b.getBounds().intersects(player.getBounds())) {
-                bulletToRemove = b;
+                bullets.remove(b.toString());
 
                 // Sound of player being hit
                 Sound.playSound(PLAYER_HIT_SOUND);
@@ -320,44 +314,31 @@ public abstract class Level {
                 }
             }
         }
-
-        if (bulletToRemove != null) {
-            e.getWeapon().removeBullet(bulletToRemove);
-        }
     }
 
     /**
      * Checks and handles when a bullet hits a platform or wall
      */
     private void bulletPlatformCollision(Platform p) {
-        ArrayList<Bullet> bulletsPlayer = player.getWeapon().getBullets();
+        ConcurrentHashMap<String,Bullet> bullets = player.getWeapon().getBullets();
         ArrayList<Bullet> bulletsToRemovePlayer = new ArrayList<>();
 
         // TODO: SOMETiMES ThrowS EXCEPTION
-        for (Bullet b : bulletsPlayer) {
+        for(String key : bullets.keySet()) {
+            Bullet b = bullets.get(key);
             if (b.getBounds().intersects(p.getBounds())) {
-                bulletsToRemovePlayer.add(b);
-            }
-        }
-
-        if (bulletsToRemovePlayer.size() != 0) {
-            for (Bullet b : bulletsToRemovePlayer) {
-                player.getWeapon().removeBullet(b);
+                bullets.remove(b.toString());
             }
         }
 
         for (Enemy e : enemies) {
-            Bullet bulletToRemoveEnemy = null;
-            ArrayList<Bullet> bulletsEnemy = e.getWeapon().getBullets();
+            ConcurrentHashMap<String,Bullet> bulletsEnemy = player.getWeapon().getBullets();
 
-            for (Bullet b : bulletsEnemy) {
+            for(String key : bullets.keySet()) {
+                Bullet b = bullets.get(key);
                 if (b.getBounds().intersects(p.getBounds())) {
-                    bulletToRemoveEnemy = b;
+                    bulletsEnemy.remove(b.toString());
                 }
-            }
-
-            if (bulletToRemoveEnemy != null) {
-                e.getWeapon().removeBullet(bulletToRemoveEnemy);
             }
         }
     }

@@ -13,30 +13,40 @@ public class BossWeapon extends Weapon {
         weaponPosX = charPosX + charWidth/2;
         weaponPosY = charPosY + charHeight/2;
 
-        bullets.add(new Bullet(charPosX, charPosY, - shotSpeed, -shotSpeed/2, range/2,gameState,true));
-        bullets.add(new Bullet(charPosX + charWidth, charPosY, shotSpeed, -shotSpeed/2, range/2,gameState,true));
+        Bullet bullet1 = new Bullet(charPosX, charPosY, - shotSpeed, -shotSpeed/2, range/2,gameState,true);
+        bulletMap.put(bullet1.toString(),bullet1);
 
-        bullets.add(new Bullet(charPosX, charPosY + (charHeight/2), - shotSpeed, shotSpeed/2, range/2,gameState,true));
-        bullets.add(new Bullet(charPosX + charWidth, charPosY + (charHeight/2), shotSpeed,
-                shotSpeed/2, range/2,gameState,true));
+        Bullet bullet2 = new Bullet(charPosX + charWidth, charPosY, shotSpeed, -shotSpeed/2, range/2,gameState,true);
+        bulletMap.put(bullet2.toString(),bullet2);
 
-        bullets.add(new Bullet(charPosX, charPosY + (charHeight/2), - shotSpeed, range,gameState,true));
-        bullets.add(new Bullet(charPosX, charPosY , - shotSpeed, range,gameState,true));
-        bullets.add(new Bullet(charPosX + charWidth, charPosY + (charHeight/2), shotSpeed, range,gameState,true));
-        bullets.add(new Bullet(charPosX + charWidth, charPosY, shotSpeed, range,gameState,true));
+        Bullet bullet3 = new Bullet(charPosX, charPosY + (charHeight/2), - shotSpeed, shotSpeed/2, range/2,gameState,true);
+        bulletMap.put(bullet3.toString(),bullet3);
+
+        Bullet bullet4 = new Bullet(charPosX + charWidth, charPosY + (charHeight/2), shotSpeed,
+                shotSpeed/2, range/2,gameState,true);
+        bulletMap.put(bullet4.toString(),bullet4);
+
+        Bullet bullet5 = new Bullet(charPosX, charPosY + (charHeight/2), - shotSpeed, range,gameState,true);
+        bulletMap.put(bullet5.toString(),bullet5);
+
+        Bullet bullet6 = new Bullet(charPosX, charPosY , - shotSpeed, range,gameState,true);
+        bulletMap.put(bullet6.toString(),bullet6);
+
+        Bullet bullet7 = new Bullet(charPosX + charWidth, charPosY + (charHeight/2), shotSpeed, range,gameState,true);
+        bulletMap.put(bullet7.toString(),bullet7);
+
+        Bullet bullet8 = new Bullet(charPosX + charWidth, charPosY, shotSpeed, range,gameState,true);
+        bulletMap.put(bullet8.toString(),bullet8);
     }
 
     public void moveShot() {
-        Bullet bulletToRemove = null;
-
-        for(Bullet b : bullets) {
+        for(String key : bulletMap.keySet()) {
+            Bullet b = bulletMap.get(key);
             if ((b.getBulletPosX() > (weaponPosX - range)) && (b.getBulletPosX() < (weaponPosX + range))) {
                 b.moveShot();
             } else {
-                bulletToRemove = b;
+                bulletMap.remove(b.toString());
             }
-        } if(bulletToRemove != null) {
-            bullets.remove(bulletToRemove);
         }
     }
 

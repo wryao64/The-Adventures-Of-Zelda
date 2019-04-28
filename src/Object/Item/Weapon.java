@@ -1,7 +1,7 @@
 package Object.Item;
 
 import java.awt.*;
-import java.util.ArrayList;
+import java.util.concurrent.ConcurrentHashMap;
 
 import Controller.GameState;
 import Object.Object;
@@ -18,7 +18,7 @@ public class Weapon extends Object {
 
     protected double maxBullets = 1;
 
-    protected ArrayList<Bullet> bullets = new ArrayList<>();
+    protected ConcurrentHashMap<String, Bullet> bulletMap = new ConcurrentHashMap<String, Bullet>();
 
     protected GameState gameState = GameState.TUTORIAL;
     protected Boolean enemy;
@@ -31,7 +31,7 @@ public class Weapon extends Object {
     }
 
     public void shoot(double posX, double posY, double dir) {
-        if (bullets.size() < maxBullets) {
+        if (bulletMap.size() < maxBullets) {
             //Sets the direction to shoot as either to the right or to the left depending on which direction the player is
             //facing.
             this.bulletDir = dir;
@@ -47,7 +47,7 @@ public class Weapon extends Object {
             this.weaponPosY = posY + 20;
 
             Bullet bullet = new Bullet(weaponPosX, weaponPosY, shotSpeed * bulletDir, range, gameState, enemy);
-            bullets.add(bullet);
+            bulletMap.put(bullet.toString(),bullet);
         }
     }
 
@@ -56,17 +56,13 @@ public class Weapon extends Object {
      * in the range of the weapon.
      */
     public void moveShot() {
-        Bullet bulletToRemove = null;
-        for (Bullet b : bullets) {
-
+        for(String key : bulletMap.keySet()) {
+            Bullet b = bulletMap.get(key);
             if ((b.getBulletPosX() > (weaponPosX - range)) && (b.getBulletPosX() < (weaponPosX + range))) {
                 b.moveShot();
             } else {
-                bulletToRemove = b;
+                bulletMap.remove(b.toString());
             }
-        }
-        if (bulletToRemove != null) {
-            bullets.remove(bulletToRemove);
         }
     }
 
@@ -74,10 +70,10 @@ public class Weapon extends Object {
      * Paint the bullet fired by the gun.
      */
     public void paintObject(Graphics2D g) {
-        for (Bullet b : bullets) {
+        for(String key : bulletMap.keySet()) {
+            Bullet b = bulletMap.get(key);
             b.paintObject(g);
         }
-
     }
 
     public void changeImage(GameState gameState) {
@@ -96,11 +92,7 @@ public class Weapon extends Object {
         this.range = range;
     }
 
-    public ArrayList<Bullet> getBullets() {
-        return bullets;
-    }
-
-    public void removeBullet(Bullet b) {
-        bullets.remove(b);
+    public ConcurrentHashMap<String,Bullet> getBullets() {
+        return bulletMap;
     }
 }
