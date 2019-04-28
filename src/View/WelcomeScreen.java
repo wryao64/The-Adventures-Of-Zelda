@@ -2,6 +2,7 @@ package View;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.image.BufferedImage;
 
 import Controller.GameController;
 import Controller.GameState;
@@ -10,20 +11,18 @@ public class WelcomeScreen extends JPanel {
     private GameController gameController;
     private GameState gameState = GameState.WELCOME;
 
-    public WelcomeScreen() {
-        this.setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
-        this.setPreferredSize(new Dimension(WIDTH, HEIGHT));
-        this.setBackground(new Color(255, 234, 206));
-        this.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
+    private final int IMAGE_WIDTH = 1200;
+    private final int IMAGE_HEIGHT = 800;
 
-        // Welcome text
-        JLabel welcomeLabel = new JLabel("The Adventures of Zelda");
-        welcomeLabel.setFont(new Font(welcomeLabel.getFont().getName(), welcomeLabel.getFont().getStyle(), 50));
-        welcomeLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+    public WelcomeScreen() {
+        this.setLayout(null);
+
+        JLabel background = new JLabel( "",new ImageIcon("Assets/welcomeBackground.png"),JLabel.CENTER);
+        background.setBounds(0,0,IMAGE_WIDTH,IMAGE_HEIGHT);
 
         // Play button
         JButton playButton = new JButton("PLAY");
-        playButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+        playButton.setBounds(540,450,120,40);
 
         playButton.addActionListener(e ->
                 gameController.updateGameState(GameState.TUTORIAL)
@@ -35,14 +34,11 @@ public class WelcomeScreen extends JPanel {
         highScoreButton.addActionListener(e ->
                 gameController.updateGameState(GameState.HIGHSCORE)
         );
+        highScoreButton.setBounds(540,500,120,40);
 
-        // Add components to panel
-        this.add(Box.createRigidArea(new Dimension(0, 200)));
-        this.add(welcomeLabel);
-        this.add(Box.createRigidArea(new Dimension(0, 10)));
-        this.add(playButton);
-        this.add(Box.createRigidArea(new Dimension(0, 10)));
-        this.add(highScoreButton);
+        background.add(playButton);
+        background.add(highScoreButton);
+        this.add(background);
     }
 
     public void setGameController(GameController controller) {
