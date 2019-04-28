@@ -23,7 +23,7 @@ public class WelcomeScreen extends JPanel {
 
         // Play button
         JButton playButton = new JButton("PLAY");
-        playButton.setBounds(540, 450, 120, 40);
+        playButton.setBounds(530, 550, 140, 40);
 
         playButton.addActionListener(e ->
                 gameController.updateGameState(GameState.TUTORIAL)
@@ -35,7 +35,7 @@ public class WelcomeScreen extends JPanel {
         highScoreButton.addActionListener(e ->
                 gameController.updateGameState(GameState.HIGHSCORE)
         );
-        highScoreButton.setBounds(540, 500, 120, 40);
+        highScoreButton.setBounds(530, 600, 140, 40);
 
         background.add(playButton);
         background.add(highScoreButton);
