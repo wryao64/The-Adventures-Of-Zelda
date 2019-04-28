@@ -155,29 +155,10 @@ public class GameScreen extends JPanel implements KeyListener {
         }
 
         // SCREEN CHANGE
-        // Shortcut: skips to boss level
+        // Shortcut: Skips to boss level
         if (c == KeyEvent.VK_PAGE_DOWN) {
             gameController.setPlayer(level.getPlayer().skipToEnd());
             gameController.updateGameState(GameState.LEVEL_BOSS);
-        }
-
-        // FOR TESTING PURPOSES: skips to next level
-        if (c == KeyEvent.VK_N) {
-            GameState state = gameController.getCurrentState();
-            switch (state) {
-                case TUTORIAL:
-                    gameController.updateGameState(GameState.LEVEL_1);
-                    break;
-                case LEVEL_1:
-                    gameController.updateGameState(GameState.LEVEL_2);
-                    break;
-                case LEVEL_2:
-                    gameController.updateGameState(GameState.LEVEL_BOSS);
-                    break;
-                case LEVEL_BOSS:
-                    gameController.updateGameState(GameState.END);
-                    break;
-            }
         }
 
         // Shortcut: Exit game
