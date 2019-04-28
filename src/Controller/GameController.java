@@ -102,7 +102,9 @@ public class GameController implements Runnable {
         gameScreen.setPause(paused);
     }
 
-    public void setPlayer(Player player){ this.player = player; }
+    public void setPlayer(Player player) {
+        this.player = player;
+    }
 
     public void setEndScreen(EndScreen endScreen) {
         frame.setContentPane(endScreen);
@@ -121,7 +123,7 @@ public class GameController implements Runnable {
                 break;
             case TUTORIAL:
                 gameScreen = new GameScreen();
-                player = new Player(45,55,70,600);
+                player = new Player(45, 55, 70, 600);
                 level_tutorial = new Level_Tutorial(player);
                 gameScreen.setLevel(level_tutorial, "Tutorial");
                 frame.setContentPane(gameScreen);
@@ -178,7 +180,7 @@ public class GameController implements Runnable {
         frame.setContentPane(highScoreScreen);
 
         frame.setVisible(true);
-        currentState =nextState;
+        currentState = nextState;
     }
 
     /**
