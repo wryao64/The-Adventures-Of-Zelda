@@ -20,42 +20,42 @@ public class Enemy extends Character {
     private double shootFreq;
 
     //The initial random frequency the enemy will shoot.
-    private double randFreq = (Math.random() * ((shootFreq+0.5)*60-(shootFreq-0.5)*60)) + (shootFreq-0.5)*60;
+    private double randFreq = (Math.random() * ((shootFreq + 0.5) * 60 - (shootFreq - 0.5) * 60)) + (shootFreq - 0.5) * 60;
 
     //Amount of score points the enemy is worth.
     protected int points;
 
     public Enemy(int w, int h, int x, int y, GameState level, Weapon weapon, double shootFreq, int health) {
-        super(w,h,x,y);
+        super(w, h, x, y);
 
         this.setImage(level);
-        BufferedImage enemySheet = loadImage();
-        SpriteSheet spriteSheet = new SpriteSheet(enemySheet,IMAGE_WIDTH,IMAGE_HEIGHT);
+        BufferedImage enemySheet = this.loadImage();
+        SpriteSheet spriteSheet = new SpriteSheet(enemySheet, IMAGE_WIDTH, IMAGE_HEIGHT);
 
         //Adding the cut out of the sprites to the character movement arrays.
-        charImagesRight.add(spriteSheet.getImage(7,42));
-        charImagesRight.add(spriteSheet.getImage(39,42));
-        charImagesRight.add(spriteSheet.getImage(71,42));
-        charImagesRight.add(spriteSheet.getImage(103,42));
+        charImagesRight.add(spriteSheet.getImage(7, 42));
+        charImagesRight.add(spriteSheet.getImage(39, 42));
+        charImagesRight.add(spriteSheet.getImage(71, 42));
+        charImagesRight.add(spriteSheet.getImage(103, 42));
 
-        hurtImageLeft = spriteSheet.getImage(39,106);
-        hurtImageRight = spriteSheet.getFlippedImage(39,106);
+        hurtImageLeft = spriteSheet.getImage(39, 106);
+        hurtImageRight = spriteSheet.getFlippedImage(39, 106);
 
-        charImagesLeft.add(spriteSheet.getFlippedImage(7,42));
-        charImagesLeft.add(spriteSheet.getFlippedImage(39,42));
-        charImagesLeft.add(spriteSheet.getFlippedImage(71,42));
-        charImagesLeft.add(spriteSheet.getFlippedImage(103,42));
+        charImagesLeft.add(spriteSheet.getFlippedImage(7, 42));
+        charImagesLeft.add(spriteSheet.getFlippedImage(39, 42));
+        charImagesLeft.add(spriteSheet.getFlippedImage(71, 42));
+        charImagesLeft.add(spriteSheet.getFlippedImage(103, 42));
 
         this.setSpeedY(SPEED_Y);
         super.weapon = weapon;
         this.shootFreq = shootFreq;
         this.health = health;
-        animSpeed = 10;
-        enemyID = "Enemy";
+        this.animSpeed = 10;
+        this.enemyID = "Enemy";
     }
 
     private void setImage(GameState level) {
-        switch(level) {
+        switch (level) {
             case TUTORIAL:
                 imageLocation = "Assets/enemy_blue.png";
                 break;
@@ -73,21 +73,28 @@ public class Enemy extends Character {
 
     public void move() {
         super.move();
+
         //Counter to keep track of when the enemy has to shoot again.
         moveCount = moveCount + 1;
         weapon.moveShot();
+
         //Once the counter reaches the desired period, shoot the weapon again.
         if (moveCount > randFreq) {
             shootWeapon();
+
             //Randomly generate the count for when next time the enemy will shoot.
-            randFreq = (Math.random() * ((shootFreq+0.5)*60-(shootFreq-0.5)*60)) + (shootFreq-0.5)*60;
+            randFreq = (Math.random() * ((shootFreq + 0.5) * 60 - (shootFreq - 0.5) * 60)) + (shootFreq - 0.5) * 60;
             moveCount = 0;
         }
     }
 
-    public int getPoints() { return points; }
+    public int getPoints() {
+        return points;
+    }
 
-    public void setShootFreq(double shootFreq) { this.shootFreq = shootFreq; }
+    public void setShootFreq(double shootFreq) {
+        this.shootFreq = shootFreq;
+    }
 
     /**
      * Paints enemy. Called by Level object.
@@ -95,19 +102,21 @@ public class Enemy extends Character {
     @Override
     public void paintObject(Graphics2D g) {
         weapon.paintObject(g);
-        if(hurt){
-            if(charDirection == 1) {
+
+        if (hurt) {
+            if (charDirection == 1) {
                 setImageToPaint(hurtImageRight, 10);
-            }else{
-                setImageToPaint(hurtImageLeft,10);
+            } else {
+                setImageToPaint(hurtImageLeft, 10);
             }
-        }else {
+        } else {
             switchImages();
         }
-        g.drawImage(imageToPaint, (int) posX, (int) posY, IMG_RESIZED_W,
-                IMG_RESIZED_H, null);
 
+        g.drawImage(imageToPaint, (int) posX, (int) posY, IMG_RESIZED_W, IMG_RESIZED_H, null);
     }
 
-    public String toString() { return enemyID; }
+    public String toString() {
+        return enemyID;
+    }
 }

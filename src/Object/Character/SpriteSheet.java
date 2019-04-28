@@ -4,12 +4,10 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 
 public class SpriteSheet {
-
     private BufferedImage image;
 
     private int imageWidth;
     private int imageHeight;
-
 
     public SpriteSheet(BufferedImage image, int imageWidth, int imageHeight) {
         this.image = image;
@@ -28,7 +26,7 @@ public class SpriteSheet {
     /**
      * Cut outs a sub image at the given co-ords.
      */
-    public BufferedImage getImage(int x, int y,int w, int h) {
+    public BufferedImage getImage(int x, int y, int w, int h) {
         BufferedImage smallImg = image.getSubimage(x, y, w, h);
         return smallImg;
     }
@@ -45,7 +43,6 @@ public class SpriteSheet {
         g.dispose();
 
         return leftImage;
-
     }
 
     public BufferedImage getPerpendicularImage(int x, int y) {
