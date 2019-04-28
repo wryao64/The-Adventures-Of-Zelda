@@ -8,10 +8,11 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
 public class NarrationDialog extends JDialog implements KeyListener {
-    int imageIndex = 0;
+    int imageIndex = 1;
     Image narrationImage;
 
     GameController gameController;
+    NarrationPane narrationPane;
 
     private final int IMAGE_WIDTH = 1200;
     private final int IMAGE_HEIGHT = 200;
@@ -27,11 +28,11 @@ public class NarrationDialog extends JDialog implements KeyListener {
         super(window, "", Dialog.ModalityType.APPLICATION_MODAL);
         this.gameController = gameController;
 
-        narrationImage = imageArray[imageIndex];
+        narrationImage = imageArray[0];
 
         setBounds(0, 300, IMAGE_WIDTH, IMAGE_HEIGHT);
 
-        NarrationPane narrationPane = new NarrationPane();
+        narrationPane = new NarrationPane();
         this.getContentPane().add(narrationPane);
         this.addKeyListener(this);
         this.setFocusable(true);
@@ -51,8 +52,13 @@ public class NarrationDialog extends JDialog implements KeyListener {
         int c = e.getKeyCode();
 
         if (c == KeyEvent.VK_ENTER) {
-            imageIndex++;
             narrationImage = imageArray[imageIndex];
+            imageIndex++;
+            narrationPane.repaint();
+        }
+
+        if (imageIndex == 4) {
+            this.dispose();
         }
     }
 

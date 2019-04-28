@@ -3,6 +3,7 @@ package Controller;
 import View.*;
 
 import javax.swing.*;
+import java.awt.*;
 import java.util.HashMap;
 
 public class GameController implements Runnable {
@@ -23,11 +24,11 @@ public class GameController implements Runnable {
     private Level_2 level_2;
     private Level_Boss level_Boss;
 
-
     private GameState currentState = GameState.WELCOME;
     private volatile boolean paused = false;
 
     JFrame frame;
+    private RootPaneContainer window;
 
     @Override
     public void run() {
@@ -75,7 +76,13 @@ public class GameController implements Runnable {
 
         if (gameScreen != null && gameScreen.getLevel() != null) {
             gameScreen.repaint();
+
+            if (this.getCurrentState() == GameState.TUTORIAL) {
+                window = (RootPaneContainer) SwingUtilities.getWindowAncestor(gameScreen);
+                new NarrationDialog((Window) window, this);
+            }
         }
+
     }
 
     /**
