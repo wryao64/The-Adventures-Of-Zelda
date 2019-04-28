@@ -27,9 +27,10 @@ public class Boss extends Enemy {
 
     @Override
     public void paintObject(Graphics2D g) {
-        g.drawImage(imageToPaint, (int) posX - 135, (int) posY, IMG_RESIZED_W,
+        g.drawImage(imageToPaint, (int) posX - 100, (int) posY, IMG_RESIZED_W,
                 IMG_RESIZED_H, null);
         weapon.paintObject(g);
+        g.draw(getBounds());
     }
 
 }

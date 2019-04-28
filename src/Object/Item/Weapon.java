@@ -72,7 +72,9 @@ public class Weapon extends Object {
     public void paintObject(Graphics2D g) {
         for(String key : bulletMap.keySet()) {
             Bullet b = bulletMap.get(key);
-            b.paintObject(g);
+            if(b != null ) {
+                b.paintObject(g);
+            }
         }
     }
 

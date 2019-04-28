@@ -64,8 +64,8 @@ public class Level_Tutorial extends Level {
 
     public void paintLevel(Graphics2D g) {
         super.paintLevel(g);
-        g.drawImage(tutorialTip1, 100, 650, 150, 50, null);
-        g.drawImage(tutorialTip2, 500, 450, 150, 50, null);
-        g.drawImage(tutorialTip3, 250, 150, 150, 50, null);
+        g.drawImage(tutorialTip1, 100, 650, 170, 50, null);
+        g.drawImage(tutorialTip2, 500, 450, 170, 50, null);
+        g.drawImage(tutorialTip3, 250, 150, 170, 50, null);
     }
 }

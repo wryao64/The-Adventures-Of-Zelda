@@ -140,9 +140,7 @@ public class GameScreen extends JPanel implements KeyListener {
 
         if (c == KeyEvent.VK_O) {
             if (level.getPuzzleStatus()) {
-
                 if (gameController.getCurrentState() == GameState.LEVEL_BOSS) {
-                    System.out.println("boss puzzle chest");
                     gameController.setPaused(true);
                     gameController.updateGameState(GameState.END, true, level.getPlayer().getFinalStats());
                 } else {
@@ -174,9 +172,6 @@ public class GameScreen extends JPanel implements KeyListener {
                     break;
                 case LEVEL_2:
                     gameController.updateGameState(GameState.LEVEL_BOSS);
-                    break;
-                case LEVEL_BOSS:
-                    gameController.updateGameState(GameState.END);
                     break;
             }
         }

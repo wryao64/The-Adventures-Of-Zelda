@@ -170,7 +170,7 @@ public abstract class Level {
                     player.setPosY((j + 1) * 50);
                     player.setInitPosition(i * 50, (j + 1) * 50);
                 } else if (tileMap[j][i] == 5) {
-                    Boss boss = new Boss(100, 100, (i + 1) * 50, (j + 1) * 50,
+                    Boss boss = new Boss(160, 125, (i + 1) * 50, (j + 1) * 50 - 25,
                             new BossWeapon(50, 250, 9), 1.5, 500);
                     enemies.add(boss);
                 }
@@ -254,6 +254,9 @@ public abstract class Level {
             if (enemyToRemove != null) {
                 enemiesToRemove.add(enemyToRemove);
             }
+            if(player.getBounds().intersects(e.getBounds())){
+                player.setSpeedX(0);
+            }
         }
 
         for (Enemy e : enemiesToRemove) {
@@ -271,20 +274,22 @@ public abstract class Level {
 
         for(String key : bullets.keySet()) {
             Bullet b = bullets.get(key);
-            if (b.getBounds().intersects(e.getBounds())) {
-                bullets.remove(b.toString());
-                e.takeDamage(player.getWeapon().getAttackDamage());
+            if(b != null) {
+                if (b.getBounds().intersects(e.getBounds())) {
+                    bullets.remove(b.toString());
+                    e.takeDamage(player.getWeapon().getAttackDamage());
 
-                // Sound of enemy being hit
-                Sound.playSound(ENEMY_HIT_SOUND);
+                    // Sound of enemy being hit
+                    Sound.playSound(ENEMY_HIT_SOUND);
 
-                if (e.getHealth() <= 0) {
-                    if (e.toString() == "Boss") {
-                        enemyToRemove = e;
-                        player.addToBossesKilled();
-                    } else {
-                        enemyToRemove = e;
-                        player.addToEnemiesKilled();
+                    if (e.getHealth() <= 0) {
+                        if (e.toString() == "Boss") {
+                            enemyToRemove = e;
+                            player.addToBossesKilled();
+                        } else {
+                            enemyToRemove = e;
+                            player.addToEnemiesKilled();
+                        }
                     }
                 }
             }
@@ -300,16 +305,18 @@ public abstract class Level {
 
         for(String key : bullets.keySet()) {
             Bullet b = bullets.get(key);
-            if (b.getBounds().intersects(player.getBounds())) {
-                bullets.remove(b.toString());
+            if (b != null) {
+                if (b.getBounds().intersects(player.getBounds())) {
+                    bullets.remove(b.toString());
 
-                // Sound of player being hit
-                Sound.playSound(PLAYER_HIT_SOUND);
+                    // Sound of player being hit
+                    Sound.playSound(PLAYER_HIT_SOUND);
 
-                if (!player.hurt()) {
-                    player.loseHeart();
-                    if (player.getLives() <= 0) {
-                        gameScreen.setSuccess(false);
+                    if (!player.hurt()) {
+                        player.loseHeart();
+                        if (player.getLives() <= 0) {
+                            gameScreen.setSuccess(false);
+                        }
                     }
                 }
             }
@@ -323,21 +330,25 @@ public abstract class Level {
         ConcurrentHashMap<String,Bullet> bullets = player.getWeapon().getBullets();
         ArrayList<Bullet> bulletsToRemovePlayer = new ArrayList<>();
 
-        // TODO: SOMETiMES ThrowS EXCEPTION
+
         for(String key : bullets.keySet()) {
             Bullet b = bullets.get(key);
-            if (b.getBounds().intersects(p.getBounds())) {
-                bullets.remove(b.toString());
+            if(b != null) {
+                if (b.getBounds().intersects(p.getBounds())) {
+                    bullets.remove(b.toString());
+                }
             }
         }
 
         for (Enemy e : enemies) {
-            ConcurrentHashMap<String,Bullet> bulletsEnemy = player.getWeapon().getBullets();
+            ConcurrentHashMap<String,Bullet> bulletsEnemy = e.getWeapon().getBullets();
 
-            for(String key : bullets.keySet()) {
-                Bullet b = bullets.get(key);
-                if (b.getBounds().intersects(p.getBounds())) {
-                    bulletsEnemy.remove(b.toString());
+            for(String key : bulletsEnemy.keySet()) {
+                Bullet b = bulletsEnemy.get(key);
+                if(b != null) {
+                    if (b.getBounds().intersects(p.getBounds())) {
+                        bulletsEnemy.remove(b.toString());
+                    }
                 }
             }
         }
