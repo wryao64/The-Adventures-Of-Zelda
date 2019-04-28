@@ -1,5 +1,6 @@
 package Controller;
 
+import Object.Character.Player;
 import View.*;
 
 import javax.swing.*;
@@ -24,6 +25,8 @@ public class GameController implements Runnable {
     private Level_1 level_1;
     private Level_2 level_2;
     private Level_Boss level_Boss;
+
+    private Player player;
 
     private GameState currentState = GameState.WELCOME;
     private volatile boolean paused = false;
@@ -108,22 +111,23 @@ public class GameController implements Runnable {
                 break;
             case TUTORIAL:
                 gameScreen = new GameScreen();
-                level_tutorial = new Level_Tutorial();
+                player = new Player(45,55,70,600);
+                level_tutorial = new Level_Tutorial(player);
                 gameScreen.setLevel(level_tutorial, "Tutorial");
                 frame.setContentPane(gameScreen);
                 gameScreen.requestFocusInWindow();
                 gameScreen.setGameController(this);
                 break;
             case LEVEL_1:
-                level_1 = new Level_1(level_tutorial.getPlayer());
+                level_1 = new Level_1(player);
                 gameScreen.setLevel(level_1, "Level 1");
                 break;
             case LEVEL_2:
-                level_2 = new Level_2(level_1.getPlayer());
+                level_2 = new Level_2(player);
                 gameScreen.setLevel(level_2, "Level 2");
                 break;
             case LEVEL_BOSS:
-                level_Boss = new Level_Boss(level_2.getPlayer());
+                level_Boss = new Level_Boss(player);
                 gameScreen.setLevel(level_Boss, "Boss");
                 break;
             case HIGHSCORE:
@@ -208,4 +212,6 @@ public class GameController implements Runnable {
     public void timer() {
         gameScreen.timer();
     }
+
+    public void setPlayer(Player player){ this.player = player; }
 }
