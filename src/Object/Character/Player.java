@@ -181,4 +181,12 @@ public class Player extends Character {
         }
         weapon.paintObject(g);
     }
+
+    public Player skipToEnd(){
+        weapon = new Weapon(50,350, 12,false);
+        weapon.setMaxBullets(2);
+        addLives(3);
+        return this;
+
+    }
 }

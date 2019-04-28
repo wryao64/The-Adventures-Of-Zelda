@@ -5,14 +5,21 @@ import Object.Character.Enemy;
 import Object.Character.Player;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.image.BufferedImage;
 
 public class Level_Tutorial extends Level {
+    BufferedImage tutorialTip1;
+    BufferedImage tutorialTip2;
+
     private final double ENEMY_SPEED = 0.75;
 
-    public Level_Tutorial() {
+    public Level_Tutorial(Player player) {
         backgroundImage = new ImageIcon("Assets/icy_mountains.png").getImage();
         inventoryImage = loadImage("Assets/tutorial_inv.png");
+        tutorialTip1 = loadImage("Assets/tutorialTip1.png");
+        tutorialTip2 = loadImage("Assets/tutorialTip2.png");
+
         setHeartImages();
 
         gameState = GameState.TUTORIAL;
@@ -35,8 +42,8 @@ public class Level_Tutorial extends Level {
                 {1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1}
         };
         //Set the player
-        player = new Player(45,55,70,600);
-        player.setWeapon(new Weapon(20,250, 7,false));
+        this.player = player;
+        this.player.setWeapon(new Weapon(20,250, 7,false));
 
         createLevel();
 
@@ -48,5 +55,11 @@ public class Level_Tutorial extends Level {
     }
     public Player getPlayer () {
         return player;
+    }
+
+    public void paintLevel(Graphics2D g) {
+        super.paintLevel(g);
+        g.drawImage(tutorialTip1, 100, 650, 150, 50, null);
+        g.drawImage(tutorialTip2, 500, 450, 150, 50, null);
     }
 }

@@ -151,7 +151,7 @@ public class GameScreen extends JPanel implements KeyListener {
         // SCREEN CHANGE
         // Shortcut: skips to boss level
         if (c == KeyEvent.VK_PAGE_DOWN) {
-            //level.getPlayer().short
+            gameController.setPlayer(level.getPlayer().skipToEnd());
             gameController.updateGameState(GameState.LEVEL_BOSS);
         }
 
