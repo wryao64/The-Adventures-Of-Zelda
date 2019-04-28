@@ -30,7 +30,5 @@ public class Boss extends Enemy {
         g.drawImage(imageToPaint, (int) posX - 100, (int) posY, IMG_RESIZED_W,
                 IMG_RESIZED_H, null);
         weapon.paintObject(g);
-        g.draw(getBounds());
     }
-
 }
