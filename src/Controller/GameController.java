@@ -120,11 +120,11 @@ public class GameController implements Runnable {
                 break;
             case LEVEL_1:
                 level_1 = new Level_1(player);
-                gameScreen.setLevel(level_1, "Level 1");
+                gameScreen.setLevel(level_1, "1");
                 break;
             case LEVEL_2:
                 level_2 = new Level_2(player);
-                gameScreen.setLevel(level_2, "Level 2");
+                gameScreen.setLevel(level_2, "2");
                 break;
             case LEVEL_BOSS:
                 level_Boss = new Level_Boss(player);
