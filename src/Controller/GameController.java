@@ -23,10 +23,10 @@ public class GameController implements Runnable {
     private EndScreen endScreen;
     private HighScoreScreen highScoreScreen;
 
-    private Level_Tutorial level_tutorial;
-    private Level_1 level_1;
-    private Level_2 level_2;
-    private Level_Boss level_Boss;
+    private LevelTutorial level_tutorial;
+    private Level1 level_1;
+    private Level2 level_2;
+    private LevelBoss level_Boss;
 
     private Player player;
 
@@ -124,22 +124,22 @@ public class GameController implements Runnable {
             case TUTORIAL:
                 gameScreen = new GameScreen();
                 player = new Player(45, 55, 70, 600);
-                level_tutorial = new Level_Tutorial(player);
+                level_tutorial = new LevelTutorial(player);
                 gameScreen.setLevel(level_tutorial, "Tutorial");
                 frame.setContentPane(gameScreen);
                 gameScreen.requestFocusInWindow();
                 gameScreen.setGameController(this);
                 break;
             case LEVEL_1:
-                level_1 = new Level_1(player);
+                level_1 = new Level1(player);
                 gameScreen.setLevel(level_1, "1");
                 break;
             case LEVEL_2:
-                level_2 = new Level_2(player);
+                level_2 = new Level2(player);
                 gameScreen.setLevel(level_2, "2");
                 break;
             case LEVEL_BOSS:
-                level_Boss = new Level_Boss(player);
+                level_Boss = new LevelBoss(player);
                 gameScreen.setLevel(level_Boss, "Boss");
                 break;
             case HIGHSCORE:
