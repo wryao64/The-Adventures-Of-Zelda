@@ -20,9 +20,10 @@ public class HighScoreScreen extends JPanel {
     private JPanel centrePanel;
     private JLabel title;
 
+    private static final String fontFamily = "Arial";
     private static final Color backgroundColor = new Color(123, 63, 0);
-    private static final Font mainFont = new Font("Courier", Font.PLAIN, 50);
-    private static final Font regularFont = new Font("Courier", Font.PLAIN, 30);
+    private static final Font mainFont = new Font(fontFamily, Font.PLAIN, 50);
+    private static final Font regularFont = new Font(fontFamily, Font.PLAIN, 30);
 
     public HighScoreScreen(String scoreToHighlight) {
         scoreManager = new ScoreManager();
@@ -35,9 +36,10 @@ public class HighScoreScreen extends JPanel {
         this.setBorder(BorderFactory.createEmptyBorder(50, 20, 20, 50));
 
         JPanel panel = new JPanel();
-        panel.setLayout(new FlowLayout());
+        panel.setLayout(new BoxLayout(panel, BoxLayout.LINE_AXIS));
+        panel.setBackground(backgroundColor);
 
-        title = new JLabel("HighScores");
+        title = new JLabel("High Scores");
         title.setForeground(Color.ORANGE);
         title.setBorder(BorderFactory.createEmptyBorder(0, 0, 20, 0));
         title.setHorizontalAlignment(SwingConstants.CENTER);
@@ -54,9 +56,10 @@ public class HighScoreScreen extends JPanel {
                 }
         );
 
+        panel.add(Box.createRigidArea(new Dimension(10, 0)));
         panel.add(button);
+        panel.add(Box.createRigidArea(new Dimension(340, 0)));
         panel.add(title);
-        panel.setBackground(backgroundColor);
 
         centrePanel = setUpCentrePanel();
         centrePanel.setBackground(backgroundColor);

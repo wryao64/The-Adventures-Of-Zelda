@@ -22,8 +22,10 @@ public class GameScreen extends JPanel implements KeyListener {
     private String timeString = "00:00";
     private int timeCount;
 
-    Color glassPaneColor = new Color(0, 0, 0, 175);
+    private static final String fontFamily = "Arial";
+    private static final Color glassPaneColor = new Color(0, 0, 0, 175);
     private static final Color backgroundColor = new Color(123, 63, 0);
+    private static final Font regularFont = new Font(fontFamily, Font.PLAIN, 20);
 
     private static final String CHEST_OPEN_SOUND = Sound.SOUND_LOCATION + "chest_open.wav";
 
@@ -45,7 +47,7 @@ public class GameScreen extends JPanel implements KeyListener {
 
         // Level label
         levelLabel = new JLabel("");
-        levelLabel.setFont(new Font(levelLabel.getFont().getName(), levelLabel.getFont().getStyle(), 20));
+        levelLabel.setFont(regularFont);
         levelLabel.setForeground(Color.ORANGE);
 
         this.add(topBar, BorderLayout.NORTH);

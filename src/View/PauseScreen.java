@@ -15,7 +15,9 @@ public class PauseScreen extends JDialog{
     private PausePane pausePane;
     private GameScreen gameScreen;
 
+    private static final String fontFamily = "Arial";
     private static final Color backgroundColor = new Color(123, 63, 0);
+    private static final Font regularFont = new Font(fontFamily, Font.BOLD, 16);
 
     public PauseScreen(Window window, GameController gameController,GameScreen gameScreen) {
         super(window, "", Dialog.ModalityType.APPLICATION_MODAL);
@@ -39,6 +41,7 @@ public class PauseScreen extends JDialog{
 
         public PausePane() {
             JLabel pausedLabel = new JLabel("PAUSED");
+            pausedLabel.setFont(regularFont);
             pausedLabel.setForeground(Color.ORANGE);
             int borderSize = 15;
 

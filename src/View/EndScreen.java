@@ -22,9 +22,10 @@ public class EndScreen extends JPanel {
     private JLabel subLabel;
     private JLabel hsLabel;
 
+    private static final String fontFamily = "Arial";
     private static final Color backgroundColor = new Color(123, 63, 0);
-    private static final Font mainFont = new Font("Courier", Font.PLAIN, 50);
-    private static final Font regularFont = new Font("Courier", Font.PLAIN, 30);
+    private static final Font mainFont = new Font(fontFamily, Font.PLAIN, 50);
+    private static final Font regularFont = new Font(fontFamily, Font.PLAIN, 30);
 
     public EndScreen(boolean success, HashMap<String,Integer> stats) {
         hasWon = success;
