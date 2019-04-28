@@ -186,7 +186,8 @@ public class Player extends Character {
         weapon = new Weapon(50,350, 12,false);
         weapon.setMaxBullets(2);
         addLives(3);
-        return this;
+        orbsCollected = 3;
 
+        return this;
     }
 }
